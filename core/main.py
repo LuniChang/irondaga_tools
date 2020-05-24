@@ -6,6 +6,7 @@ import tkinter as tk
 
 
 from control.reply_battle import ReplyBattle
+from control.reply_guess import ReplyGuess
 
 import common.screen as screen
 
@@ -23,26 +24,40 @@ handle =screen.getLdHandle()
 
 main = tk.Tk()
 
-replyBattle= ReplyBattle(handle,5)
+replyBattle= ReplyBattle(handle,10)
+replyGuess= ReplyGuess(handle,10)
+
 
 main.title("机动战队工具")
 main.geometry("480x600")
 
-tk.Button(main,text="开始重复战斗",width=10,height=1,command=replyBattle.start).pack()
+
+def initReplyBattle():
+    tk.Button(main,text="开始重复战斗",width=10,height=1,command=replyBattle.start).pack()
 
 
-userHp = tk.IntVar()
+    userHp = tk.IntVar()
 
-def checkUseHp():
-    if userHp.get()==1:
-        replyBattle.setIsUseHp(True)
-    else:
-        replyBattle.setIsUseHp(False)  
-    
+    def checkUseHp():
+        if userHp.get()==1:
+            replyBattle.setIsUseHp(True)
+        else:
+            replyBattle.setIsUseHp(False)  
 
-tk.Checkbutton(main,text="使用体力药",variable=userHp,onvalue=1,offvalue=0,command=checkUseHp).pack()
 
-tk.Button(main,text="结束重复战斗",width=10,height=1,command=replyBattle.stop).pack()
+    tk.Checkbutton(main,text="使用体力药",variable=userHp,onvalue=1,offvalue=0,command=checkUseHp).pack()
+
+    tk.Button(main,text="结束重复战斗",width=10,height=1,command=replyBattle.stop).pack()
+
+
+initReplyBattle()
+
+
+
+tk.Button(main,text="开始重复竞猜",width=10,height=1,command=replyGuess.start).pack()
+tk.Button(main,text="结束竞猜",width=10,height=1,command=replyGuess.stop).pack()
+
+
 
 catpture=tk.Button(main,text="窗口截图",width=10,height=1,command=lambda:screen.grabCaptureDef(hwnd=handle))
 catpture.pack()

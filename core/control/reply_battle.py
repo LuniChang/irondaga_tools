@@ -42,17 +42,7 @@ class ReplyBattle(BaseControl):
         win32api.mouse_event(
         win32con.MOUSEEVENTF_LEFTDOWN | win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
         
-    def closeEmptyHp(self):
-        win32gui.SetForegroundWindow(self.handle)
-        win32api.SetCursorPos((self.getPosX(80), self.getPosY(40)))#关闭体力框
-        win32api.mouse_event(
-        win32con.MOUSEEVENTF_LEFTDOWN | win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
-
-    def clickOnGoods(self):
-        win32gui.SetForegroundWindow(self.handle)
-        win32api.SetCursorPos((self.getPosX(50), self.getPosY(65)))#点击物品
-        win32api.mouse_event(
-        win32con.MOUSEEVENTF_LEFTDOWN | win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+   
 
     def clickReplyBattle(self):
         win32gui.SetForegroundWindow(self.handle)
@@ -76,18 +66,18 @@ class ReplyBattle(BaseControl):
            
             #底部菜单hash 
             hashCode=screen.screenRectPerHash(self.handle,0,90,100,95)
-            print("clickReplyBattle hashCode2",hashCode)
-            if screen.difHash(hashCode,"d53d2ac62ac2553d2ace555a959ad53ca839aac22ae52afb475ed525555ac438") < 0.4:
+            print("clickReplyBattle")
+            if screen.alikeHash(hashCode,"d52a2a572a2aadd5") :
                self.clickReplyBattle()
-               time.sleep(2)
+               time.sleep(5)
             else :
                 
                pass
 
-            hashCode=screen.screenRectPerHash(self.handle,35,63,56,67)
-            print("clickOnGoods hashCode1",hashCode)
+           
+            print("clickOnGoods")
             #获取物品执行
-            if screen.difHash(hashCode,"9c6d9e66639b91a2cea492599b638624866dc5326596b3c9e5b26536936d6536") < 0.4:
+            if self.onGetGoods() :
                 self.clickOnGoods()
                 time.sleep(2)
             else :
@@ -95,8 +85,8 @@ class ReplyBattle(BaseControl):
 
             #体力不足hash 
             hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
-            print("toUseHp hashCode1",hashCode)
-            if self._isUseHp and screen.difHash(hashCode,"e0f36a7beaa56afceafeaabd807ba0b12a1d2e85aa5691b19369955124946e04") < 0.4:
+            print("toUseHp")
+            if self._isUseHp and screen.alikeHash(hashCode,"e06aea6aeaea8aa1"):
                 self.toUseHp()
                 time.sleep(2)
                 self.closeEmptyHp()
@@ -105,6 +95,8 @@ class ReplyBattle(BaseControl):
                 
                pass
 
-            time.sleep(10)
+            time.sleep(self.interval)
             screen.grabCaptureDir(self.handle,"reply_battle")
+
+
 

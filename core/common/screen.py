@@ -5,7 +5,7 @@ import common.path as path
 import os
 
 
-hashSize=16
+hashSize=8# 大于8 明汉距离会有很大差异，即使相似图片也会低于0.1
 
 #此方式会黑屏
 def window_capture(filename,hwnd):
@@ -167,10 +167,13 @@ def screenRectPerHash(hwnd,pLeft, pTop, pRight, pBottom):
   img.close()
   return phash
 
-def difHash(hash1,hash2): #明汉距离 取小于0.5相似
-    l=len(hash1)
+def alikeHash(hash1,hash2): #明汉距离 取大于0.5相似
+    length=len(hash1)
     num = 0
     for index in range(len(hash1)): 
-        if hash1[index] != hash2[index]: 
+        if hash1[index] == hash2[index]: 
             num += 1
-    return num/l
+  
+    res=num/length
+    print("alikeHash",hash1,hash2,res)
+    return  True  if num/length>0.5 else False
