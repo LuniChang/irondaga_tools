@@ -176,4 +176,4 @@ def alikeHash(hash1,hash2): #明汉距离 取大于0.5相似
   
     res=num/length
     print("alikeHash",hash1,hash2,res)
-    return  True  if num/length>0.5 else False
+    return  True  if num/length >= 0.5 else False

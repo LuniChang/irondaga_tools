@@ -11,17 +11,12 @@ import common.screen as screen
 class ReplyGuess(BaseControl):
 
   
-    _isRun = False
   
     def __init__(self,handle,interval):
         self.handle=handle
         self.interval=interval
 
 
-    def start(self):
-        self._isRun=True
-        t=threading.Thread(target=self.run)
-        t.start()
 
 
     def onGetMoney(self):
@@ -53,12 +48,6 @@ class ReplyGuess(BaseControl):
         win32api.SetCursorPos((self.getPosX(62), self.getPosY(60)))#默认选择右边
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)      
-
-
-    def stop(self):
-        self._isRun=False
-      
-    
 
     def run(self):    
 
@@ -94,6 +83,7 @@ class ReplyGuess(BaseControl):
                 time.sleep(2)
             else :
                 pass
+            
             if self.onGuessEnd():
                 self._isRun=False
                 return

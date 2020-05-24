@@ -7,8 +7,9 @@ import tkinter as tk
 
 from control.reply_battle import ReplyBattle
 from control.reply_guess import ReplyGuess
-
+from control.reply_pvp import ReplyPvp
 import common.screen as screen
+
 
 
 # def MAKELPARAM(x,y):
@@ -53,11 +54,26 @@ def initReplyBattle():
 initReplyBattle()
 
 
-
 tk.Button(main,text="开始重复竞猜",width=10,height=1,command=replyGuess.start).pack()
 tk.Button(main,text="结束竞猜",width=10,height=1,command=replyGuess.stop).pack()
 
 
+replyPvp=ReplyPvp(handle,10)
+
+teamNo=tk.IntVar()
+
+def startPvp():
+    replyPvp.setTeamNo(int(teamNo.get()))
+    replyPvp.start()
+
+teamNo.set(3)
+pvpTeam=tk.Entry(main,textvariable=teamNo)
+
+
+tk.Button(main,text="开始pvp",width=10,height=1,command=startPvp).pack()
+tk.Label(main,text="队伍号").pack()
+pvpTeam.pack()
+tk.Button(main,text="结束pvp",width=10,height=1,command=replyPvp.stop).pack()
 
 catpture=tk.Button(main,text="窗口截图",width=10,height=1,command=lambda:screen.grabCaptureDef(hwnd=handle))
 catpture.pack()

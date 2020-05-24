@@ -2,21 +2,15 @@ import win32api
 import win32gui
 import win32con
 import time
-# import sys,os
-# sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+
 from control.base_control import BaseControl
-import threading
-# import math
-# import tkinter
-# top = tkinter.Tk()
-# # 进入消息循环
-# top.mainloop()
+
 import common.screen as screen
 
 class ReplyBattle(BaseControl):
 
   
-    _isRun = False
+  
     _needBuyHp=False
     _isUseHp=False
     def __init__(self,handle,interval):
@@ -27,10 +21,6 @@ class ReplyBattle(BaseControl):
         self._isUseHp=isUseHp
     
 
-    def start(self):
-        self._isRun=True
-        t=threading.Thread(target=self.run)
-        t.start()
 
 
     def buyHp(self):
@@ -51,9 +41,7 @@ class ReplyBattle(BaseControl):
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)        
 
 
-    def stop(self):
-        self._isRun=False
-      
+
     
 
     def run(self):    
