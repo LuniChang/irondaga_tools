@@ -59,7 +59,7 @@ def grabCaptureDir(hwnd,dirName):
   win32gui.SetForegroundWindow(hwnd)
   wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(hwnd)
   img = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
-  phash=imagehash.phash(img,hashSize,highfreq_factor).__str__()
+  phash=imgHash(img,hashSize,highfreq_factor)
   screenPath=path.getProjectPath()+"screen\\"+dirName+"\\"+phash+"_"+datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")+".png"
   if not os.path.exists(path.getProjectPath()+"screen\\"+dirName):
         os.makedirs(path.getProjectPath()+"screen\\"+dirName)
@@ -70,7 +70,7 @@ def grabCaptureDef(hwnd):
   win32gui.SetForegroundWindow(hwnd)
   wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(hwnd)
   img = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
-  phash=imagehash.phash(img,hashSize,highfreq_factor).__str__()
+  phash=imgHash(img,hashSize,highfreq_factor).__str__()
   screenPath=path.getProjectPath()+"screen\\"+phash+"_"+datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")+".png"
   if not os.path.exists(path.getProjectPath()+"screen"):
         os.makedirs(path.getProjectPath()+"screen")
@@ -114,7 +114,7 @@ def grabCaptureRectPerHash(hwnd,tLeft, tTop, tRight, tBottom):
   print(xLeft,yLeft , xRight,yRight )
 
   img = ImageGrab.grab(bbox=(xLeft,yLeft , xRight,yRight ))
-  phash=imagehash.phash(img,hashSize,highfreq_factor).__str__()
+  phash=imgHash(img,hashSize,highfreq_factor)
   screenPath=path.getProjectPath()+"screen\\rect_per\\"+phash+"_"+str(tLeft)+"_"+str(tTop) +"_"+ str(tRight)+"_"+str(tBottom) +".png"
   if not os.path.exists(path.getProjectPath()+"screen\\rect_per"):
         os.makedirs(path.getProjectPath()+"screen\\rect_per")
@@ -152,8 +152,15 @@ def getPosY(handle,srcPer):
     return int(wTop+(height*(srcPer)))
 
 
-def getImgPhash(path):
-  return imagehash.phash(Image.open(path),hashSize,highfreq_factor)
+def getImgHashByPath(path):
+  return imgHash(Image.open(path),hashSize,highfreq_factor)
+
+
+def getResImgHash(fileName):
+  imgPath=path.getProjectPath()+"res\\"+fileName
+  if not os.path.exists(path.getProjectPath()+"res"):
+        os.makedirs(path.getProjectPath()+"res")
+  return imgHash(Image.open(imgPath),hashSize,highfreq_factor)
 
 def screenRectPerHash(hwnd,pLeft, pTop, pRight, pBottom):
   win32gui.SetForegroundWindow(hwnd)
@@ -163,7 +170,7 @@ def screenRectPerHash(hwnd,pLeft, pTop, pRight, pBottom):
   yRight=getPosY(hwnd,pBottom)
   # print("screenRectPerHash" ,xLeft,yLeft , xRight,yRight )
   img = ImageGrab.grab(bbox=(xLeft,yLeft , xRight,yRight ))
-  phash=imagehash.phash(img,hashSize,highfreq_factor).__str__()
+  phash=imgHash(img,hashSize,highfreq_factor).__str__()
   img.close()
   return phash
 
@@ -178,6 +185,11 @@ def alikeHash(hash1,hash2): #明汉距离 实际缩放会在2  哈希字符串 �
     print("alikeHash",length,hash1,hash2,res)
     return  True  if num/length >= 0.3 else False
 
+
+def imgHash(img,hashSize,highfreq_factor):
+    # return imagehash.dhash(img,hashSize).__str__()
+     return imagehash.phash(img,hashSize,highfreq_factor).__str__()
+    
 
 def alikeHashValue(hash1,hash2): #明汉距离 看情况取值
     length=len(hash1)

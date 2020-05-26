@@ -54,8 +54,10 @@ class ReplyBattle(BaseControl):
            
             #底部菜单hash 
             hashCode=screen.screenRectPerHash(self.handle,0,90,100,95)
+            # hashCode2=screen.getResImgHash("")
             print("clickReplyBattle")
             if screen.alikeHash(hashCode,"d52a2a572a2aadd5") :
+            # if screen.alikeHash(hashCode,hashCode2) :
                self.clickReplyBattle()
                time.sleep(5)
             else :
@@ -75,6 +77,7 @@ class ReplyBattle(BaseControl):
             hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
             print("toUseHp")
             if self._isUseHp and screen.alikeHash(hashCode,"e06aea6aeaea8aa1"):
+            # if self._isUseHp and screen.alikeHash(hashCode,"9122d8d8948c5454"):
                 self.toUseHp()
                 time.sleep(2)
                 self.closeEmptyHp()

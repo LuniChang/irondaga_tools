@@ -38,6 +38,7 @@ class BaseControl:
         print("onGetGoods")
         hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
         return screen.alikeHash(hashCode,"f812816e2d2e69fc")
+        # return screen.alikeHash(hashCode,"7170869090a852d6")
 
 
 

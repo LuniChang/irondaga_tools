@@ -101,7 +101,7 @@ textPath=tk.Entry(main)
 textPath.pack()
 texthash=tk.Entry(main)
 texthash.pack()
-hashBtn=tk.Button(main,text="取图片哈希",width=10,height=1,command=lambda:texthash.insert(index=0,string=screen.getImgPhash(path=textPath.get())) )
+hashBtn=tk.Button(main,text="取图片哈希",width=10,height=1,command=lambda:texthash.insert(index=0,string=screen.getImgHashByPath(path=textPath.get())) )
 hashBtn.pack()
 
 
