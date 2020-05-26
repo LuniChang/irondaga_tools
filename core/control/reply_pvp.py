@@ -28,20 +28,20 @@ class ReplyPvp(BaseControl):
 
     def onPvpList(self):
         print("onPvpList")
-        hashCode=screen.screenRectPerHash(self.handle,70,20,90,90)
-        return screen.alikeHash(hashCode,"cb7874607636762c")
+        hashCode=screen.screenRectPerHash(self.handle,40,30,85,80) 
+        return screen.alikeHashValue(hashCode,"a5c27d429dcb8d43") >= 0.22  
 
 
 
     def onPvpWin(self):
         print("onPvpWin")
-        hashCode=screen.screenRectPerHash(self.handle,0,15,90,25)
-        return screen.alikeHash(hashCode,"ce9a356d6564f092")    
+        hashCode=screen.screenRectPerHash(self.handle,0,15,90,30)
+        return screen.alikeHashValue(hashCode,"ce9a31656d656466")  >= 0.22    
 
     def onPvpLost(self):
         print("onPvpLost")
         hashCode=screen.screenRectPerHash(self.handle,0,15,90,25)
-        return screen.alikeHash(hashCode,"96927169616d6d96")    
+        return screen.alikeHashValue(hashCode,"96927169616d6d96")  >= 0.22  
 
     def onPvpEnd(self):
         print("onPvpEnd")
@@ -50,8 +50,8 @@ class ReplyPvp(BaseControl):
 
     def onSelectTeam(self):
         print("onSelectTeam")
-        hashCode=screen.screenRectPerHash(self.handle,8,36,82,50)
-        return screen.alikeHash(hashCode,"eaeaaa8a393c1c35")
+        hashCode=screen.screenRectPerHash(self.handle,8,36,82,70)
+        return screen.alikeHash(hashCode,"c16e6ea1e16a6aca")
 
 
     def toPvp(self):
@@ -117,21 +117,25 @@ class ReplyPvp(BaseControl):
             else :
                 pass
 
-           
-            if self.onPvpLost():
+            if self.onPvpWin() or self.onPvpLost():
                 self.toPvpContinue()
-                time.sleep(3)
+                time.sleep(5)
             else :
                 pass
 
-
-            if self.onPvpWin():
+            if self.onPvpWin():#输赢难以判断
                 self.toSelecItemOnWin()
                 time.sleep(3)
-                self.toPvpContinue()
-                time.sleep(3)
+                self.toPvpContinue() 
+                time.sleep(5)#容易截图延迟
             else :
-                pass   
+                pass  
+                
+           
+          
+
+
+      
 
             if self.onPvpEnd():
                 self._isRun=False

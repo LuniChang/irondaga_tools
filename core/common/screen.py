@@ -6,7 +6,7 @@ import os
 
 
 hashSize=8# 大于8 明汉距离会有很大差异，即使相似图片也会低于0.1
-
+highfreq_factor=4
 #此方式会黑屏
 def window_capture(filename,hwnd):
  # hwnd = 0 # 窗口的编号，0号表示当前活跃窗口
@@ -59,7 +59,7 @@ def grabCaptureDir(hwnd,dirName):
   win32gui.SetForegroundWindow(hwnd)
   wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(hwnd)
   img = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
-  phash=imagehash.phash(img,hashSize).__str__()
+  phash=imagehash.phash(img,hashSize,highfreq_factor).__str__()
   screenPath=path.getProjectPath()+"screen\\"+dirName+"\\"+phash+"_"+datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")+".png"
   if not os.path.exists(path.getProjectPath()+"screen\\"+dirName):
         os.makedirs(path.getProjectPath()+"screen\\"+dirName)
@@ -70,7 +70,7 @@ def grabCaptureDef(hwnd):
   win32gui.SetForegroundWindow(hwnd)
   wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(hwnd)
   img = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
-  phash=imagehash.phash(img,hashSize).__str__()
+  phash=imagehash.phash(img,hashSize,highfreq_factor).__str__()
   screenPath=path.getProjectPath()+"screen\\"+phash+"_"+datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")+".png"
   if not os.path.exists(path.getProjectPath()+"screen"):
         os.makedirs(path.getProjectPath()+"screen")
@@ -114,7 +114,7 @@ def grabCaptureRectPerHash(hwnd,tLeft, tTop, tRight, tBottom):
   print(xLeft,yLeft , xRight,yRight )
 
   img = ImageGrab.grab(bbox=(xLeft,yLeft , xRight,yRight ))
-  phash=imagehash.phash(img,hashSize).__str__()
+  phash=imagehash.phash(img,hashSize,highfreq_factor).__str__()
   screenPath=path.getProjectPath()+"screen\\rect_per\\"+phash+"_"+str(tLeft)+"_"+str(tTop) +"_"+ str(tRight)+"_"+str(tBottom) +".png"
   if not os.path.exists(path.getProjectPath()+"screen\\rect_per"):
         os.makedirs(path.getProjectPath()+"screen\\rect_per")
@@ -153,7 +153,7 @@ def getPosY(handle,srcPer):
 
 
 def getImgPhash(path):
-  return imagehash.phash(Image.open(path),hashSize)
+  return imagehash.phash(Image.open(path),hashSize,highfreq_factor)
 
 def screenRectPerHash(hwnd,pLeft, pTop, pRight, pBottom):
   win32gui.SetForegroundWindow(hwnd)
@@ -161,13 +161,25 @@ def screenRectPerHash(hwnd,pLeft, pTop, pRight, pBottom):
   yLeft=getPosY(hwnd,pTop)
   xRight=getPosX(hwnd,pRight)
   yRight=getPosY(hwnd,pBottom)
-  print("screenRectPerHash" ,xLeft,yLeft , xRight,yRight )
+  # print("screenRectPerHash" ,xLeft,yLeft , xRight,yRight )
   img = ImageGrab.grab(bbox=(xLeft,yLeft , xRight,yRight ))
-  phash=imagehash.phash(img,hashSize).__str__()
+  phash=imagehash.phash(img,hashSize,highfreq_factor).__str__()
   img.close()
   return phash
 
-def alikeHash(hash1,hash2): #明汉距离 取大于0.5相似
+def alikeHash(hash1,hash2): #明汉距离 实际缩放会在2  哈希字符串 比较差异过大
+    length=len(hash1)
+    num = 0
+    for index in range(len(hash1.encode())): 
+        if hash1[index] == hash2[index]: 
+            num += 1
+  
+    res=num/length
+    print("alikeHash",length,hash1,hash2,res)
+    return  True  if num/length >= 0.3 else False
+
+
+def alikeHashValue(hash1,hash2): #明汉距离 看情况取值
     length=len(hash1)
     num = 0
     for index in range(len(hash1)): 
@@ -175,5 +187,7 @@ def alikeHash(hash1,hash2): #明汉距离 取大于0.5相似
             num += 1
   
     res=num/length
-    print("alikeHash",hash1,hash2,res)
-    return  True  if num/length >= 0.5 else False
+    print("alikeHashValue",hash1,hash2,res)
+    return  res
+
+

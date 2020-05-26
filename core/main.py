@@ -58,7 +58,7 @@ tk.Button(main,text="开始重复竞猜",width=10,height=1,command=replyGuess.st
 tk.Button(main,text="结束竞猜",width=10,height=1,command=replyGuess.stop).pack()
 
 
-replyPvp=ReplyPvp(handle,10)
+replyPvp=ReplyPvp(handle,5)
 
 teamNo=tk.IntVar()
 
