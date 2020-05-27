@@ -28,30 +28,54 @@ class ReplyPvp(BaseControl):
 
     def onPvpList(self):
         print("onPvpList")
-        hashCode=screen.screenRectPerHash(self.handle,40,30,85,80) 
-        return screen.alikeHashValue(hashCode,"a5c27d429dcb8d43") >= 0.22  
-
+        # hashCode=screen.screenRectPerHash(self.handle,40,30,85,80) 
+        # return screen.alikeHashValue(hashCode,"a5c27d429dcb8d43") >= 0.22  
+        # hashCode=screen.screenRectPerHash(self.handle,70,20,90,90)
+        # hashCode1=screen.getResImgHash("pvp_list_70_20_90_90.png")
+        # return screen.alikeHash(hashCode,hashCode1)
+        return screen.autoCompareResImgHash(self.handle,"pvp_list_70_20_90_90.png")
 
 
     def onPvpWin(self):
         print("onPvpWin")
-        hashCode=screen.screenRectPerHash(self.handle,0,15,90,30)
-        return screen.alikeHashValue(hashCode,"ce9a31656d656466")  >= 0.22    
+        # hashCode=screen.screenRectPerHash(self.handle,0,15,90,30)
+        # return screen.alikeHashValue(hashCode,"ce9a31656d656466")  >= 0.22  
+        # hashCode=screen.screenRectPerHash(self.handle,0,15,90,25)
+        # hashCode1=screen.getResImgHash("onwin_0_15_90_25.png")
+        # return screen.alikeHash(hashCode,hashCode1)
+        return screen.autoCompareResImgHash(self.handle,"onpvpwin_10_50_80_60.png")
+
 
     def onPvpLost(self):
         print("onPvpLost")
-        hashCode=screen.screenRectPerHash(self.handle,0,15,90,25)
-        return screen.alikeHashValue(hashCode,"96927169616d6d96")  >= 0.22  
+        # hashCode=screen.screenRectPerHash(self.handle,0,15,90,25)
+        # return screen.alikeHashValue(hashCode,"96927169616d6d96")  >= 0.22  
+        # hashCode=screen.screenRectPerHash(self.handle,0,15,90,25)
+        # hashCode1=screen.getResImgHash("onlost_0_15_90_25.png")
+        # return screen.alikeHash(hashCode,hashCode1)
+        return screen.autoCompareResImgHash(self.handle,"onpvplost_10_60_80_80.png")
+
+
 
     def onPvpEnd(self):
         print("onPvpEnd")
-        hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
-        return screen.alikeHash(hashCode,"c242e76a6bcbcae0")  
+        # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
+        # return screen.alikeHash(hashCode,"c242e76a6bcbcae0")  
+        # hashCode=screen.screenRectPerHash(self.handle,0,15,90,25)
+        # hashCode1=screen.getResImgHash("pvp_end_10_40_80_65.png")
+        # return screen.alikeHash(hashCode,hashCode1)
+        return screen.autoCompareResImgHash(self.handle,"pvp_end_10_40_80_65.png")
+
+
 
     def onSelectTeam(self):
         print("onSelectTeam")
-        hashCode=screen.screenRectPerHash(self.handle,8,36,82,70)
-        return screen.alikeHash(hashCode,"c16e6ea1e16a6aca")
+        # hashCode=screen.screenRectPerHash(self.handle,8,36,82,70)
+        # return screen.alikeHash(hashCode,"c16e6ea1e16a6aca")
+        # hashCode=screen.screenRectPerHash(self.handle,8,36,82,50)
+        # hashCode1=screen.getResImgHash("select_team_8_36_82_50.png")
+        # return screen.alikeHash(hashCode,hashCode1)
+        return screen.autoCompareResImgHash(self.handle,"select_team_8_36_82_50.png")
 
 
     def toPvp(self):
@@ -118,8 +142,9 @@ class ReplyPvp(BaseControl):
                 pass
 
             if self.onPvpWin() or self.onPvpLost():
+                time.sleep(3)
                 self.toPvpContinue()
-                time.sleep(5)
+                time.sleep(3)
             else :
                 pass
 

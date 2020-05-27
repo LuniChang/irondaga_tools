@@ -34,11 +34,14 @@ class BaseControl:
         height = wBottom-wTop
         return int(wTop+(height*(srcPer)))
 
-    def onGetGoods(self):
-        print("onGetGoods")
-        hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
-        return screen.alikeHash(hashCode,"f812816e2d2e69fc")
-        # return screen.alikeHash(hashCode,"7170869090a852d6")
+    def onGetItems(self):
+        print("onGetItems")
+        # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
+        # hashCode2=screen.getResImgHash("onget_item_10_40_80_65.png")
+        # return screen.alikeHash(hashCode,hashCode2) 
+        # return screen.alikeHash(hashCode,"f812816e2d2e69fc")
+        return screen.autoCompareResImgHash(self.handle,"onget_item_10_40_80_65.png")
+
 
 
 

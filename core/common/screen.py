@@ -162,6 +162,20 @@ def getResImgHash(fileName):
         os.makedirs(path.getProjectPath()+"res")
   return imgHash(Image.open(imgPath),hashSize,highfreq_factor)
 
+
+def autoCompareResImgHash(handle,fileName):
+  imgPath=path.getProjectPath()+"res\\"+fileName
+  if not os.path.exists(path.getProjectPath()+"res"):
+        os.makedirs(path.getProjectPath()+"res")
+  tmp=fileName.split(".")
+  fSplit=tmp[0].split("_")
+  fLen=len(fSplit)
+  hashCode1=screenRectPerHash(handle,fSplit[fLen-4],fSplit[fLen-3],fSplit[fLen-2],fSplit[fLen-1])
+  hashCode2=imgHash(Image.open(imgPath),hashSize,highfreq_factor)
+  return alikeHash(hashCode2,hashCode1)
+
+
+
 def screenRectPerHash(hwnd,pLeft, pTop, pRight, pBottom):
   win32gui.SetForegroundWindow(hwnd)
   xLeft=getPosX(hwnd,pLeft)

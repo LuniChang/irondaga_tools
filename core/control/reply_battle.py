@@ -53,11 +53,12 @@ class ReplyBattle(BaseControl):
 
            
             #底部菜单hash 
-            hashCode=screen.screenRectPerHash(self.handle,0,90,100,95)
-            # hashCode2=screen.getResImgHash("")
+            # hashCode=screen.screenRectPerHash(self.handle,0,90,100,95)
+            # hashCode2=screen.getResImgHash("battle_end_0_90_100_95.png")
             print("clickReplyBattle")
-            if screen.alikeHash(hashCode,"d52a2a572a2aadd5") :
+            # if screen.alikeHash(hashCode,"d52a2a572a2aadd5") :
             # if screen.alikeHash(hashCode,hashCode2) :
+            if screen.autoCompareResImgHash(self.handle,"battle_end_0_90_100_95.png"):
                self.clickReplyBattle()
                time.sleep(5)
             else :
@@ -67,7 +68,7 @@ class ReplyBattle(BaseControl):
            
             print("clickOnGoods")
             #获取物品执行
-            if self.onGetGoods() :
+            if self.onGetItems() :
                 self.clickOnGoods()
                 time.sleep(2)
             else :
@@ -76,8 +77,11 @@ class ReplyBattle(BaseControl):
             #体力不足hash 
             hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
             print("toUseHp")
-            if self._isUseHp and screen.alikeHash(hashCode,"e06aea6aeaea8aa1"):
+            # hashCode2=screen.getResImgHash("hpempty_10_40_80_65.png")
+            # if self._isUseHp and screen.alikeHash(hashCode,hashCode2) :
+            # if self._isUseHp and screen.alikeHash(hashCode,"e06aea6aeaea8aa1"):
             # if self._isUseHp and screen.alikeHash(hashCode,"9122d8d8948c5454"):
+            if screen.autoCompareResImgHash(self.handle,"hpempty_10_40_80_65.png"):
                 self.toUseHp()
                 time.sleep(2)
                 self.closeEmptyHp()

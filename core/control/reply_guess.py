@@ -22,7 +22,10 @@ class ReplyGuess(BaseControl):
     def onGetMoney(self):
         print("onGetMoney")
         hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
-        return screen.alikeHash(hashCode,"d81a8f8ef8e82e29")
+        # return screen.alikeHash(hashCode,"d81a8f8ef8e82e29")
+        return screen.autoCompareResImgHash(self.handle,"guess_select_10_40_80_65.png")
+
+
     def clickOnMoney(self):
         win32gui.SetForegroundWindow(self.handle)
         win32api.SetCursorPos((self.getPosX(50), self.getPosY(61)))#点击物品
@@ -31,9 +34,9 @@ class ReplyGuess(BaseControl):
 
     def onGuessEnd(self):
         print("onGuessEnd")
-        hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
-        return screen.alikeHash(hashCode,"c242e76a6bcbcae0")    
-
+        # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
+        # return screen.alikeHash(hashCode,"c242e76a6bcbcae0")    
+        return screen.autoCompareResImgHash(self.handle,"onget_money_10_40_80_65.png")
 
 
 
@@ -58,19 +61,21 @@ class ReplyGuess(BaseControl):
 
            
             #精彩页面hash 
-            hashCode=screen.screenRectPerHash(self.handle,5,20,90,40)
+            # hashCode=screen.screenRectPerHash(self.handle,5,20,90,40)
             print("toGuess")
-            if screen.alikeHash(hashCode,"8b6ca513d20fa96d"):
+            # if screen.alikeHash(hashCode,"8b6ca513d20fa96d"):
+            if screen.autoCompareResImgHash(self.handle,"guess_5_20_90_40.png"):
                self.toGuess()
                time.sleep(5)
             else :
                 
                pass
 
-            hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
+            # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
             print("selecGuess")
             
-            if screen.alikeHash(hashCode,"c966a921de295b66"):
+            # if screen.alikeHash(hashCode,"c966a921de295b66"):
+            if screen.autoCompareResImgHash(self.handle,"guess_select_10_40_80_65.png"):
                self.selecGuessRight()
                time.sleep(5)
             else :
