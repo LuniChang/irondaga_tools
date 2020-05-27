@@ -21,7 +21,7 @@ class ReplyGuess(BaseControl):
 
     def onGetMoney(self):
         print("onGetMoney")
-        hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
+        # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
         # return screen.alikeHash(hashCode,"d81a8f8ef8e82e29")
         return screen.autoCompareResImgHash(self.handle,"guess_select_10_40_80_65.png")
 

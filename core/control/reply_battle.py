@@ -75,7 +75,7 @@ class ReplyBattle(BaseControl):
                 pass
 
             #体力不足hash 
-            hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
+            # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
             print("toUseHp")
             # hashCode2=screen.getResImgHash("hpempty_10_40_80_65.png")
             # if self._isUseHp and screen.alikeHash(hashCode,hashCode2) :
