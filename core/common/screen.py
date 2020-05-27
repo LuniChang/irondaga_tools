@@ -157,16 +157,14 @@ def getImgHashByPath(path):
 
 
 def getResImgHash(fileName):
-  imgPath=path.getProjectPath()+"res\\"+fileName
-  if not os.path.exists(path.getProjectPath()+"res"):
-        os.makedirs(path.getProjectPath()+"res")
+  imgPath=path.getResDirPath()+fileName
+  if not os.path.exists(path.getProjectPath()):
+        os.makedirs(path.getProjectPath())
   return imgHash(Image.open(imgPath),hashSize,highfreq_factor)
 
 
 def autoCompareResImgHash(handle,fileName):
-  imgPath=path.getProjectPath()+"res\\"+fileName
-  if not os.path.exists(path.getProjectPath()+"res"):
-        os.makedirs(path.getProjectPath()+"res")
+  imgPath=path.getResDirPath()+fileName
   tmp=fileName.split(".")
   fSplit=tmp[0].split("_")
   fLen=len(fSplit)
