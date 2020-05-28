@@ -6,7 +6,7 @@ import os
 
 
 hashSize=8# 大于8 明汉距离会有很大差异，即使相似图片也会低于0.1
-highfreq_factor=4
+highfreq_factor=6
 #此方式会黑屏
 def window_capture(filename,hwnd):
  # hwnd = 0 # 窗口的编号，0号表示当前活跃窗口
@@ -195,7 +195,7 @@ def alikeHash(hash1,hash2): #明汉距离 实际缩放会在2  哈希字符串 �
   
     res=num/length
     print("alikeHash",length,hash1,hash2,res)
-    return  True  if num/length >= 0.3 else False
+    return  True  if num/length >= 0.35 else False
 
 
 def imgHash(img,hashSize,highfreq_factor):

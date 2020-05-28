@@ -23,7 +23,7 @@ class ReplyGuess(BaseControl):
         print("onGetMoney")
         # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
         # return screen.alikeHash(hashCode,"d81a8f8ef8e82e29")
-        return screen.autoCompareResImgHash(self.handle,"guess_select_10_40_80_65.png")
+        return screen.autoCompareResImgHash(self.handle,"onget_money_10_40_80_65.png")
 
 
     def clickOnMoney(self):
@@ -36,7 +36,7 @@ class ReplyGuess(BaseControl):
         print("onGuessEnd")
         # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
         # return screen.alikeHash(hashCode,"c242e76a6bcbcae0")    
-        return screen.autoCompareResImgHash(self.handle,"onget_money_10_40_80_65.png")
+        return screen.autoCompareResImgHash(self.handle,"pvp_end_10_40_80_65.png")
 
 
 
