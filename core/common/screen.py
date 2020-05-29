@@ -90,13 +90,11 @@ def grabCaptureRect(hwnd,tLeft, tTop, tRight, tBottom):
 
 def grabCaptureRectPer(hwnd,tLeft, tTop, tRight, tBottom):
   win32gui.SetForegroundWindow(hwnd)
-
   xLeft=getPosX(hwnd,tLeft)
   yLeft=getPosY(hwnd,tTop)
   xRight=getPosX(hwnd,tRight)
   yRight=getPosY(hwnd,tBottom)
   print(xLeft,yLeft , xRight,yRight )
-
   img = ImageGrab.grab(bbox=(xLeft,yLeft , xRight,yRight ))
   screenPath=path.getProjectPath()+"screen\\rect_per\\"+datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")+"_"+str(xLeft)+"_"+str(yLeft) +"_"+ str(xRight)+"_"+str(yRight) +".png"
   if not os.path.exists(path.getProjectPath()+"screen\\rect_per"):
@@ -153,7 +151,18 @@ def getPosY(handle,srcPer):
 
 
 def getImgHashByPath(path):
-  return imgHash(Image.open(path),hashSize,highfreq_factor)
+   img=Image.open(path)
+   hashCode=imgHash(img,hashSize,highfreq_factor)
+   img.close()
+   return hashCode
+
+def getImgHashSizeByPath(path):
+   img=Image.open(path)
+   xSize=img.xSize
+   ySize=img.ySize
+   hashCode=imgHash(img,hashSize,highfreq_factor)
+   img.close()
+   return hashCode,xSize,ySize
 
 
 def getResImgHash(fileName):
@@ -182,7 +191,7 @@ def screenRectPerHash(hwnd,pLeft, pTop, pRight, pBottom):
   yRight=getPosY(hwnd,pBottom)
   # print("screenRectPerHash" ,xLeft,yLeft , xRight,yRight )
   img = ImageGrab.grab(bbox=(xLeft,yLeft , xRight,yRight ))
-  phash=imgHash(img,hashSize,highfreq_factor).__str__()
+  phash=imgHash(img,hashSize,highfreq_factor)
   img.close()
   return phash
 
@@ -215,3 +224,32 @@ def alikeHashValue(hash1,hash2): #明汉距离 看情况取值
     return  res
 
 
+
+def screenRectPHash(hwnd,pLeft, pTop, pRight, pBottom):
+  win32gui.SetForegroundWindow(hwnd)
+
+  # print("screenRectPerHash" ,xLeft,yLeft , xRight,yRight )
+  img = ImageGrab.grab(bbox=(pLeft, pTop, pRight, pBottom ))
+  phash=imgHash(img,hashSize,highfreq_factor)
+  img.close()
+  return phash
+
+
+def findImgCenterXyInWindow(handle,imgPath):
+     imgHash,xSize,ySize=getImgHashSizeByPath(imgPath)
+     
+
+     wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(handle)
+     xWinSize=wRight-wLeft
+     yWinSize=wBottom-wTop
+
+
+     for x in xWinSize-xSize:
+       for y in yWinSize-ySize:
+         foundHashCode=screenRectPerHash(handle,x,y,x+xSize,y+ySize)
+         if alikeHashValue(imgHash,foundHashCode) >0.3:
+           return (x+x+xSize)>>1,(y+y+ySize)>>1
+
+
+
+     
