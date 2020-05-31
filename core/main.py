@@ -8,6 +8,7 @@ import tkinter as tk
 from control.reply_battle import ReplyBattle
 from control.reply_guess import ReplyGuess
 from control.reply_pvp import ReplyPvp
+from control.reply_map import ReplyMap
 import common.screen as screen
 
 
@@ -27,7 +28,7 @@ main = tk.Tk()
 
 replyBattle= ReplyBattle(handle,10)
 replyGuess= ReplyGuess(handle,10)
-
+replyMap= ReplyMap(handle,10)
 
 main.title("机动战队工具")
 main.geometry("480x600")
@@ -74,6 +75,9 @@ tk.Button(main,text="开始pvp",width=10,height=1,command=startPvp).pack()
 tk.Label(main,text="队伍号").pack()
 pvpTeam.pack()
 tk.Button(main,text="结束pvp",width=10,height=1,command=replyPvp.stop).pack()
+
+tk.Button(main,text="开始38图",width=10,height=1,command=replyMap.start).pack()
+tk.Button(main,text="结束推图",width=10,height=1,command=replyMap.stop).pack()
 
 catpture=tk.Button(main,text="窗口截图",width=10,height=1,command=lambda:screen.grabCaptureDef(hwnd=handle))
 catpture.pack()

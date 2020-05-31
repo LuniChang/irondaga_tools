@@ -12,7 +12,7 @@ class ReplyPvp(BaseControl):
 
   
    
-    _teamNo=3
+  
 
     def setTeamNo(self,teamNo):
         print("setTeamNo",teamNo)
@@ -68,14 +68,7 @@ class ReplyPvp(BaseControl):
 
 
 
-    def onSelectTeam(self):
-        print("onSelectTeam")
-        # hashCode=screen.screenRectPerHash(self.handle,8,36,82,70)
-        # return screen.alikeHash(hashCode,"c16e6ea1e16a6aca")
-        # hashCode=screen.screenRectPerHash(self.handle,8,36,82,50)
-        # hashCode1=screen.getResImgHash("select_team_8_36_82_50.png")
-        # return screen.alikeHash(hashCode,hashCode1)
-        return screen.autoCompareResImgHash(self.handle,"select_team_8_36_82_50.png")
+
 
 
     def toPvp(self):
@@ -84,27 +77,7 @@ class ReplyPvp(BaseControl):
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)       
 
-    def toSelectTeam(self): #阵容 小于3或者大于6不能用
-        win32gui.SetForegroundWindow(self.handle)
-        if self._teamNo==1 :
-           win32api.SetCursorPos((self.getPosX(25), self.getPosY(52)))#点击1队
-        elif self._teamNo==2:
-           win32api.SetCursorPos((self.getPosX(50), self.getPosY(52)))#点击2队
-        elif self._teamNo==3:    
-           win32api.SetCursorPos((self.getPosX(75), self.getPosY(52)))#点击3队
-        elif self._teamNo==4:    
-           win32api.SetCursorPos((self.getPosX(25), self.getPosY(58)))#点击4队
-        elif self._teamNo==5:    
-           win32api.SetCursorPos((self.getPosX(50), self.getPosY(58)))#点击5队
-        elif self._teamNo==6:    
-           win32api.SetCursorPos((self.getPosX(75), self.getPosY(58)))#点击6队
-        else :
-            pass
-
-        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
-        win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)    
-
-
+ 
     def toSelecItemOnWin(self):
         win32gui.SetForegroundWindow(self.handle)
         win32api.SetCursorPos((self.getPosX(47), self.getPosY(64)))#默认选择中间
@@ -136,7 +109,7 @@ class ReplyPvp(BaseControl):
                 pass
 
             if self.onSelectTeam():
-                self.toSelectTeam()   
+                self.toSelectTeam(self._teamNo)   
                 time.sleep(3)
             else :
                 pass

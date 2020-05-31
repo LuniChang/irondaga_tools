@@ -7,7 +7,7 @@ from control.base_control import BaseControl
 
 import common.screen as screen
 
-class ReplyBattle(BaseControl):
+class ReplyMap(BaseControl):
 
   
   
@@ -48,24 +48,27 @@ class ReplyBattle(BaseControl):
 
         while self._isRun:
             win32gui.SetForegroundWindow(self.handle)
-            wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(self.handle)
-            print("reply_battle",wLeft, wTop, wRight, wBottom)
+       
+
+    
+            print("findUnKnowMap")
+            x,y= screen.findImgCenterXyInWindow(self.handle,"map_unknow_40_45_55_55.png") 
+            if(x>=0 and y>=0):
+                print(x,y)
+                self.leftClick(x,y)
+            else:
+                pass   
+           
 
            
-            #底部菜单hash 
-            # hashCode=screen.screenRectPerHash(self.handle,0,90,100,95)
-            # hashCode2=screen.getResImgHash("battle_end_0_90_100_95.png")
-            print("clickReplyBattle")
-            # if screen.alikeHash(hashCode,"d52a2a572a2aadd5") :
-            # if screen.alikeHash(hashCode,hashCode2) :
-            if screen.autoCompareResImgHash(self.handle,"battle_end_0_90_100_95.png"):
-               self.clickReplyBattle()
-               time.sleep(5)
+            print("getitem2")
+            if screen.autoCompareResImgHash(self.handle,"getitem2_10_40_80_65.png"):
+                win32gui.SetForegroundWindow(self.handle)
+                self.leftClick(self.getPosX(55), self.getPosY(60))
+                time.sleep(2)
             else :
-                
-               pass
-
-           
+                pass
+            
             print("clickOnGoods")
             #获取物品执行
             if self.onGetItems() :
@@ -74,14 +77,23 @@ class ReplyBattle(BaseControl):
             else :
                 pass
 
+            print("hpempty")
+            if screen.autoCompareResImgHash(self.handle,"hpempty_10_40_80_65.png"):
+                self.clickOnGoods()
+                time.sleep(2)
+            else :
+                pass
+
+            if self.onSelectTeam():
+                self.toSelectTeam(5)   
+                time.sleep(3)
+            else :
+                pass
+
+
             #体力不足hash 
-            # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
             print("toUseHp")
-            # hashCode2=screen.getResImgHash("hpempty_10_40_80_65.png")
-            # if self._isUseHp and screen.alikeHash(hashCode,hashCode2) :
-            # if self._isUseHp and screen.alikeHash(hashCode,"e06aea6aeaea8aa1"):
-            # if self._isUseHp and screen.alikeHash(hashCode,"9122d8d8948c5454"):
-            if self._isUseHp and screen.autoCompareResImgHash(self.handle,"hpempty_10_40_80_65.png"):
+            if screen.autoCompareResImgHash(self.handle,"hpempty_10_40_80_65.png"):
                 self.toUseHp()
                 time.sleep(2)
                 self.closeEmptyHp()
@@ -91,7 +103,6 @@ class ReplyBattle(BaseControl):
                pass
 
             time.sleep(self.interval)
-            screen.grabCaptureDir(self.handle,"reply_battle")
-
+           
 
 
