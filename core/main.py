@@ -33,10 +33,11 @@ replyMap= ReplyMap(handle,10)
 main.title("机动战队工具")
 main.geometry("480x600")
 
-
+fm1=tk.Frame(main)
+fm1.pack()
 def initReplyBattle():
-    tk.Button(main,text="开始重复战斗",width=10,height=1,command=replyBattle.start).pack()
-
+  
+ 
 
     userHp = tk.IntVar()
 
@@ -47,16 +48,16 @@ def initReplyBattle():
             replyBattle.setIsUseHp(False)  
 
 
-    tk.Checkbutton(main,text="使用体力药",variable=userHp,onvalue=1,offvalue=0,command=checkUseHp).pack()
-
-    tk.Button(main,text="结束重复战斗",width=10,height=1,command=replyBattle.stop).pack()
+    tk.Checkbutton(fm1,text="使用体力药",variable=userHp,onvalue=1,offvalue=0,command=checkUseHp).grid(row=1,column=1)
+    tk.Button(fm1,text="开始重复战斗",width=10,height=1,command=replyBattle.start).grid(row=1,column=2)
+    tk.Button(fm1,text="结束重复战斗",width=10,height=1,command=replyBattle.stop).grid(row=1,column=3)
 
 
 initReplyBattle()
 
 
-tk.Button(main,text="开始重复竞猜",width=10,height=1,command=replyGuess.start).pack()
-tk.Button(main,text="结束竞猜",width=10,height=1,command=replyGuess.stop).pack()
+tk.Button(fm1,text="开始重复竞猜",width=10,height=1,command=replyGuess.start).grid(row=2,column=1)
+tk.Button(fm1,text="结束竞猜",width=10,height=1,command=replyGuess.stop).grid(row=2,column=2)
 
 
 replyPvp=ReplyPvp(handle,5)
@@ -68,19 +69,27 @@ def startPvp():
     replyPvp.start()
 
 teamNo.set(3)
-pvpTeam=tk.Entry(main,textvariable=teamNo)
+
+tk.Label(fm1,text="队伍号").grid(row=3,column=1)
+pvpTeam=tk.Entry(fm1,textvariable=teamNo,width=10).grid(row=3,column=2)
+
+tk.Button(fm1,text="开始pvp",width=10,height=1,command=startPvp).grid(row=3,column=3)
 
 
-tk.Button(main,text="开始pvp",width=10,height=1,command=startPvp).pack()
-tk.Label(main,text="队伍号").pack()
-pvpTeam.pack()
-tk.Button(main,text="结束pvp",width=10,height=1,command=replyPvp.stop).pack()
 
-tk.Button(main,text="开始38图",width=10,height=1,command=replyMap.start).pack()
-tk.Button(main,text="结束推图",width=10,height=1,command=replyMap.stop).pack()
+tk.Button(fm1,text="结束pvp",width=10,height=1,command=replyPvp.stop).grid(row=3,column=4)
 
-catpture=tk.Button(main,text="窗口截图",width=10,height=1,command=lambda:screen.grabCaptureDef(hwnd=handle))
-catpture.pack()
+
+tk.Button(fm1,text="开始38图",width=10,height=1,command=replyMap.start).grid(row=4,column=1)
+tk.Button(fm1,text="结束推图",width=10,height=1,command=replyMap.stop).grid(row=4,column=2)
+
+
+
+tk.Label(main,text="工具操作").pack()
+
+fmTools=tk.Frame(main).pack()
+tk.Button(main,text="窗口截图",width=10,height=1,command=lambda:screen.grabCaptureDef(hwnd=handle)).pack()
+
 
 tk.Label(main,text="左X百分比").pack()
 xLeft=tk.Entry(main,textvariable=float)

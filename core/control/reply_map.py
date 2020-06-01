@@ -52,7 +52,7 @@ class ReplyMap(BaseControl):
 
     
             print("findUnKnowMap")
-            x,y= screen.findImgCenterXyInWindow(self.handle,"map_unknow_40_45_55_55.png") 
+            x,y= screen.findResImgCenterXyInWindow(self.handle,"map_unknow_40_45_55_55.png") 
             if(x>=0 and y>=0):
                 print(x,y)
                 self.leftClick(x,y)

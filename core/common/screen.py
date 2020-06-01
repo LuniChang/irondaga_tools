@@ -239,30 +239,37 @@ def alikeHashValue(hash1,hash2): #明汉距离 看情况取值
 
 
 
-def screenRectPHash(hwnd,pLeft, pTop, pRight, pBottom):
-  win32gui.SetForegroundWindow(hwnd)
+# def screenRectPHash(hwnd,pLeft, pTop, pRight, pBottom):
+#   win32gui.SetForegroundWindow(hwnd)
 
-  # print("screenRectPerHash" ,xLeft,yLeft , xRight,yRight )
-  img = ImageGrab.grab(bbox=(pLeft, pTop, pRight, pBottom ))
-  phash=imgHash(img,hashSize,highfreq_factor)
-  img.close()
-  return phash
+#   # print("screenRectPerHash" ,xLeft,yLeft , xRight,yRight )
+#   img = ImageGrab.grab(bbox=(pLeft, pTop, pRight, pBottom ))
+#   phash=imgHash(img,hashSize,highfreq_factor)
+#   img.close()
+#   return phash
 
 
 
-def findImgCenterXyInWindow(handle,imgName):
+def findResImgCenterXyInWindow(handle,imgName):
+
+     tmp=imgName.split(".")
+     fSplit=tmp[0].split("_")
+     fLen=len(fSplit)
+
+     targetImgPerLeftX=fSplit[fLen-4]
+     targetImgPerLeftY=fSplit[fLen-3]
+     targetImgPerRightX=fSplit[fLen-2]
+     targetImgPerRightY=fSplit[fLen-1]
+
      imgPath=path.getResDirPath()+imgName
      if not os.path.exists(path.getProjectPath()):
         os.makedirs(path.getProjectPath())
      targetImg=Image.open(imgPath)
      targetImgHash=imgHash(targetImg,hashSize,highfreq_factor)
+     targetImg.close
+    #  targetImgWith=targetImg.size[0]
+    #  targetImgHeight=targetImg.size[1]
 
-     targetImgWith=targetImg.size[0]
-     targetImgHeight=targetImg.size[1]
-
-     targetImgLeftTop=targetImg.getpixel((0,0))  
-     targetImgRightBottom=targetImg.getpixel((targetImgWith-1,targetImgHeight-1))  
-     targetImgCenter=targetImg.getpixel(((targetImgWith-1)>>1,(targetImgHeight-1)>>1)) 
      #取三个像素点，左上角，中点，右下角
      
      wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(handle)
@@ -274,27 +281,36 @@ def findImgCenterXyInWindow(handle,imgName):
      wWidth = winImg.size[0]#获取宽度
      wHeight = winImg.size[1]#获取长度
 
+     targetImgPerWith=int(wWidth*(targetImgPerLeftX-targetImgPerRightX)*0.01)
+     targetImgPerHeight=int(wHeight*(targetImgPerLeftY-targetImgPerRightY)*0.01)
+
+
+     targetImgLeftTop=targetImg.getpixel((0,0))  
+     targetImgRightBottom=targetImg.getpixel((targetImgPerWith-1,targetImgPerHeight-1))  
+     targetImgCenter=targetImg.getpixel(((targetImgPerWith-1)>>1,(targetImgPerHeight-1)>>1)) 
+
+
      for x in range(wWidth):
        for y in range(wHeight):
         # 、 遍历像素点，再根据中心找hash
             r,g,b,a = winImg.getpixel((x,y))   
             if r==targetImgLeftTop[0] and  g==targetImgLeftTop[1] and   b==targetImgLeftTop[2] :
-               targetHash= winScreenRectHash(handle,x,y,x+targetImgWith,y+targetImgHeight)
+               targetHash= winScreenRectHash(handle,x,y,x+targetImgPerWith,y+targetImgPerRightY)
                if  alikeHashValue(targetImgHash,targetHash)>0.3:
-                   return x+(targetImgWith>>1),y+(targetImgHeight>>1)
+                   return x+(targetImgPerWith>>1),y+(targetImgPerRightY>>1)
                else:
                    pass
               
             elif  r==targetImgCenter[0] and  g==targetImgCenter[1] and   b==targetImgCenter[2] :
-               targetHash= winScreenRectHash(handle,x,y,x+targetImgWith,y+targetImgHeight)
+               targetHash= winScreenRectHash(handle,x,y,x+targetImgPerWith,y+targetImgPerRightY)
                if  alikeHashValue(targetImgHash,targetHash)>0.3:
                    return x,y
                else:
                    pass
             elif  r==targetImgRightBottom[0] and  g==targetImgRightBottom[1] and   b==targetImgRightBottom[2] :
-               targetHash= winScreenRectHash(handle,x,y,x-targetImgWith,y-targetImgHeight)
+               targetHash= winScreenRectHash(handle,x,y,x-targetImgPerWith,y-targetImgPerRightY)
                if  alikeHashValue(targetImgHash,targetHash)>0.3:
-                   return  x-(targetImgWith>>1),y-(targetImgHeight>>1)
+                   return  x-(targetImgPerWith>>1),y-(targetImgPerRightY>>1)
                else:
                    pass      
             else:
