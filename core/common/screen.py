@@ -3,7 +3,6 @@ import win32gui, win32ui, win32con, win32api
 import datetime
 import common.path as path
 import os
-import numpy as np
 
 hashSize=8# 大于8 明汉距离会有很大差异，即使相似图片也会低于0.1
 highfreq_factor=6
@@ -202,7 +201,7 @@ def screenRectPerHash(hwnd,pLeft, pTop, pRight, pBottom):
 
 
 
-def screenRectHash(hwnd,pLeft, pTop, pRight, pBottom):
+def winScreenRectHash(hwnd,pLeft, pTop, pRight, pBottom):
   win32gui.SetForegroundWindow(hwnd)
   wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(hwnd)
   img = ImageGrab.grab(bbox=(wLeft+pLeft,wTop+pTop , wRight+pRight,wBottom+pBottom ))
@@ -250,74 +249,56 @@ def screenRectPHash(hwnd,pLeft, pTop, pRight, pBottom):
   return phash
 
 
-# def findImgCenterXyInWindow(handle,imgName):
-#      imgHash,xImgSize,yImgSize=getResImgHashAndSize(imgName)
-     
-#      wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(handle)
-#      xWinSize=wRight-wLeft
-#      yWinSize=wBottom-wTop
-
-#      width=xWinSize-xImgSize
-#      height=yWinSize-yImgSize
-#      xIndex=int(width/xImgSize)
-#      yIndex=int(height/yImgSize)
-#      for x in range(xIndex):
-#        for y in range(yIndex):
-#          win32gui.SetForegroundWindow(handle)
-#          xTag=x*xImgSize
-#          yTag=y*xImgSize
-#          print(  
-#            xTag,
-#            yTag,
-#            xTag+xImgSize,
-#            yTag+yImgSize)
-
-         
-#          foundHashCode=screenRectHash(
-#            handle,
-#            xTag,
-#            yTag,
-#            xTag+xImgSize,
-#            yTag+yImgSize
-#            )
-#          print("findImgCenterXyInWindow")
-
-#          if alikeHashValue(imgHash,foundHashCode) >0.2:
-#            resX=xTag+(xImgSize>>1)+wLeft
-#            resY=yTag+(yImgSize>>1)+wTop
-#            return resX,resY
-     
-#      return -1,-1
-
 
 def findImgCenterXyInWindow(handle,imgName):
-     imgPath=path.getResDirPath()+fileName
+     imgPath=path.getResDirPath()+imgName
      if not os.path.exists(path.getProjectPath()):
         os.makedirs(path.getProjectPath())
-     targerImg=Image.open(imgPath)
+     targetImg=Image.open(imgPath)
+     targetImgHash=imgHash(targetImg,hashSize,highfreq_factor)
 
+     targetImgWith=targetImg.size[0]
+     targetImgHeight=targetImg.size[1]
+
+     targetImgLeftTop=targetImg.getpixel((0,0))  
+     targetImgRightBottom=targetImg.getpixel((targetImgWith-1,targetImgHeight-1))  
+     targetImgCenter=targetImg.getpixel(((targetImgWith-1)>>1,(targetImgHeight-1)>>1)) 
      #取三个像素点，左上角，中点，右下角
-    #  for
      
      wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(handle)
 
-     xWinSize=wRight-wLeft
-     yWinSize=wBottom-wTop
+    
 
-     width=xWinSize-xImgSize
-     height=yWinSize-yImgSize
-     xIndex=width
-     yIndex=height
-     img = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
+     winImg = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
     #  pix = img.load()#导入像素
-     wWidth = img.size[0]#获取宽度
-     wHeight = img.size[1]#获取长度
+     wWidth = winImg.size[0]#获取宽度
+     wHeight = winImg.size[1]#获取长度
 
-    #  for x in range(wWidth):
-    #    for y in range(wHeight):
-    #     # 、 遍历像素点，再根据中心找hash
-    #         r,g,b,a = img.getpixel((x,y))  
-    #         if r= g= g =
+     for x in range(wWidth):
+       for y in range(wHeight):
+        # 、 遍历像素点，再根据中心找hash
+            r,g,b,a = winImg.getpixel((x,y))   
+            if r==targetImgLeftTop[0] and  g==targetImgLeftTop[1] and   b==targetImgLeftTop[2] :
+               targetHash= winScreenRectHash(handle,x,y,x+targetImgWith,y+targetImgHeight)
+               if  alikeHashValue(targetImgHash,targetHash)>0.3:
+                   return x+(targetImgWith>>1),y+(targetImgHeight>>1)
+               else:
+                   pass
+              
+            elif  r==targetImgCenter[0] and  g==targetImgCenter[1] and   b==targetImgCenter[2] :
+               targetHash= winScreenRectHash(handle,x,y,x+targetImgWith,y+targetImgHeight)
+               if  alikeHashValue(targetImgHash,targetHash)>0.3:
+                   return x,y
+               else:
+                   pass
+            elif  r==targetImgRightBottom[0] and  g==targetImgRightBottom[1] and   b==targetImgRightBottom[2] :
+               targetHash= winScreenRectHash(handle,x,y,x-targetImgWith,y-targetImgHeight)
+               if  alikeHashValue(targetImgHash,targetHash)>0.3:
+                   return  x-(targetImgWith>>1),y-(targetImgHeight>>1)
+               else:
+                   pass      
+            else:
+               pass
 
-     img.close()
+     winImg.close()
      return -1,-1
