@@ -50,6 +50,14 @@ class BaseControl:
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)  
 
+    def leftClickPer(self,x,y):
+        win32api.SetCursorPos((self.getPosX(x), self.getPosY(y)))
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
+        win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)    
+
+    
+
+
     def clickOnGoods(self):
         win32gui.SetForegroundWindow(self.handle)
         # win32api.SetCursorPos((self.getPosX(50), self.getPosY(65)))#点击物品

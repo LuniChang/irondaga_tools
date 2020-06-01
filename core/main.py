@@ -9,6 +9,7 @@ from control.reply_battle import ReplyBattle
 from control.reply_guess import ReplyGuess
 from control.reply_pvp import ReplyPvp
 from control.reply_map import ReplyMap
+from control.reply_wushaung import ReplyWuShuang
 import common.screen as screen
 
 
@@ -29,7 +30,7 @@ main = tk.Tk()
 replyBattle= ReplyBattle(handle,10)
 replyGuess= ReplyGuess(handle,10)
 replyMap= ReplyMap(handle,10)
-
+replyWuShuang= ReplyWuShuang(handle,10)
 main.title("机动战队工具")
 main.geometry("480x600")
 
@@ -71,7 +72,7 @@ def startPvp():
 teamNo.set(3)
 
 tk.Label(fm1,text="队伍号").grid(row=3,column=1)
-pvpTeam=tk.Entry(fm1,textvariable=teamNo,width=10).grid(row=3,column=2)
+tk.Entry(fm1,textvariable=teamNo,width=10).grid(row=3,column=2)
 
 tk.Button(fm1,text="开始pvp",width=10,height=1,command=startPvp).grid(row=3,column=3)
 
@@ -80,14 +81,21 @@ tk.Button(fm1,text="开始pvp",width=10,height=1,command=startPvp).grid(row=3,co
 tk.Button(fm1,text="结束pvp",width=10,height=1,command=replyPvp.stop).grid(row=3,column=4)
 
 
+
 tk.Button(fm1,text="开始38图",width=10,height=1,command=replyMap.start).grid(row=4,column=1)
 tk.Button(fm1,text="结束推图",width=10,height=1,command=replyMap.stop).grid(row=4,column=2)
+
+tk.Button(fm1,text="开始无双",width=10,height=1,command=replyWuShuang.start).grid(row=5,column=1)
+tk.Button(fm1,text="结束无双",width=10,height=1,command=replyWuShuang.stop).grid(row=5,column=2)
+
+
+
 
 
 
 tk.Label(main,text="工具操作").pack()
 
-fmTools=tk.Frame(main).pack()
+# fmTools=tk.Frame(main).pack()
 tk.Button(main,text="窗口截图",width=10,height=1,command=lambda:screen.grabCaptureDef(hwnd=handle)).pack()
 
 
