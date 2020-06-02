@@ -9,7 +9,7 @@ from control.reply_battle import ReplyBattle
 from control.reply_guess import ReplyGuess
 from control.reply_pvp import ReplyPvp
 from control.reply_map import ReplyMap
-from control.reply_wushaung import ReplyWuShuang
+from control.reply_wushuang import ReplyWuShuang
 import common.screen as screen
 
 
@@ -32,7 +32,7 @@ replyGuess= ReplyGuess(handle,10)
 replyMap= ReplyMap(handle,10)
 replyWuShuang= ReplyWuShuang(handle,10)
 main.title("机动战队工具")
-main.geometry("480x600")
+main.geometry("480x780")
 
 fm1=tk.Frame(main)
 fm1.pack()
