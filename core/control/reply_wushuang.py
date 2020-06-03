@@ -108,9 +108,12 @@ class ReplyWuShuang(BaseControl):
                if self._battleOneMapCount>8:#防止获取物品影响次数
                    self._MapNo=self._MapNo+1
                    self._isInBattle=False
-                   self.leftClickPerLong(85,92)#回到地图，快速点击会失效
+                   self._battleOneMapCount=0
+                   time.sleep(3)
+                   self.leftClickPerLong(83,92)#回到地图，快速点击会失效
                    time.sleep(2)
                    
+
                self._battleOneMapCount=self._battleOneMapCount+1  
                time.sleep(5)
 
