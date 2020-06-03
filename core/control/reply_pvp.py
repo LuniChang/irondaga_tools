@@ -116,7 +116,7 @@ class ReplyPvp(BaseControl):
 
             if self.onPvpLost():
                 self.toPvpContinue()
-                time.sleep(5)
+                time.sleep(7)
                 continue
             else :
                 pass

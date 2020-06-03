@@ -48,17 +48,41 @@ class ReplyWuShuang(BaseControl):
 
 
     
-    
+    _MapNo=3
+    _isInBattle=False
+
     def run(self):    
         self._wsCount=0
-        while self._isRun and  self._wsCount<8:
+        while self._isRun and self._MapNo<=6:
             win32gui.SetForegroundWindow(self.handle)
             wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(self.handle)
-            print("reply_battle",wLeft, wTop, wRight, wBottom)
+      
 
-            self.leftClickPerLong(70,30)
-            self.leftClickPerLong(70,10)
 
+            if  self._isInBattle==False:
+                #如果在地图
+                if screen.autoCompareResImgHash(self.handle,"on_ws_map_70_70_90_80.png"):
+                    if self._MapNo<3:
+                       self.leftClickPer(15+30*self._MapNo,35)
+                    else :
+                       self.leftClickPer(15+30*(self._MapNo-3),50)
+                    time.sleep(1)
+                #如果在准备页面
+                if screen.autoCompareResImgHash(self.handle,"ws_ready_10_75_90_85.png"):
+                    self.leftClickPer(80,80)
+                    self._isInBattle=True
+                    time.sleep(1)
+    
+
+
+
+
+            if  self._isInBattle or self._wsCount<5:
+                self.leftClickPerLong(70,30)
+                self.leftClickPerLong(70,10)
+          
+                  
+     
             #底部菜单hash 
             print("clickReplyBattle")
 
@@ -66,9 +90,13 @@ class ReplyWuShuang(BaseControl):
                self.clickReplyBattle()
                time.sleep(5)
                self._wsCount=self._wsCount+1
-            else :
-                
-               pass
+               if self._wsCount>5:
+                   self._MapNo=self._MapNo+1
+                   self._isInBattle=False
+                   self.leftClickPer(85,92)
+                   time.sleep(2)
+                   
+    
 
            
             print("clickOnGoods")
@@ -78,6 +106,17 @@ class ReplyWuShuang(BaseControl):
                 time.sleep(2)
             else :
                 pass
+
+            #章节完毕
+            if screen.autoCompareResImgHash(self.handle,"ws_map_end_20_40_80_65.png") :
+                self._wsCount=0
+                self._isInBattle=False
+                self._MapNo=self._MapNo+1
+                self.leftClickPer(80,40)
+                time.sleep(1)
+                self.leftClickPer(2,8)
+                time.sleep(2)
+      
 
             #体力不足hash 
             # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
@@ -92,8 +131,11 @@ class ReplyWuShuang(BaseControl):
                 
                pass
 
-       
+            
+    
             time.sleep(1)
 
-
+        self._MapNo=0
+        self._wsCount=0
+        self._isInBattle=False
         self._isRun=False
