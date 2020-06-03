@@ -13,7 +13,7 @@ class ReplyWuShuang(BaseControl):
   
     _needBuyHp=False
     _isUseHp=False
-    _wsCount=0
+    _battleOneMapCount=0
     def __init__(self,handle,interval):
         self.handle=handle
         self.interval=interval
@@ -48,11 +48,13 @@ class ReplyWuShuang(BaseControl):
 
 
     
-    _MapNo=3
+    _MapNo=0#章节号
     _isInBattle=False
 
     def run(self):    
-        self._wsCount=0
+        self._battleOneMapCount=0
+        self._MapNo=0
+        self._isInBattle=False
         while self._isRun and self._MapNo<=6:
             win32gui.SetForegroundWindow(self.handle)
             wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(self.handle)
@@ -61,12 +63,18 @@ class ReplyWuShuang(BaseControl):
 
             if  self._isInBattle==False:
                 #如果在地图
-                if screen.autoCompareResImgHash(self.handle,"on_ws_map_70_70_90_80.png"):
+                print("onmap")
+                if screen.autoCompareResImgHash(self.handle,"on_ws_map_70_72_90_74.png"):
+                    # self._MapNo=self._MapNo%6
                     if self._MapNo<3:
                        self.leftClickPer(15+30*self._MapNo,35)
-                    else :
+                    elif self._MapNo<6:
                        self.leftClickPer(15+30*(self._MapNo-3),50)
-                    time.sleep(1)
+                    else:
+                       self._MapNo=self._MapNo%6
+                       self.leftClickPer(75,73)
+                        
+                    time.sleep(5)
                 #如果在准备页面
                 if screen.autoCompareResImgHash(self.handle,"ws_ready_10_75_90_85.png"):
                     self.leftClickPer(80,80)
@@ -77,28 +85,11 @@ class ReplyWuShuang(BaseControl):
 
 
 
-            if  self._isInBattle or self._wsCount<5:
+            if  self._isInBattle or self._battleOneMapCount<8:
                 self.leftClickPerLong(70,30)
                 self.leftClickPerLong(70,10)
           
-                  
-     
-            #底部菜单hash 
-            print("clickReplyBattle")
 
-            if screen.autoCompareResImgHash(self.handle,"wushuang_end_0_90_80_100.png"):
-               self.clickReplyBattle()
-               time.sleep(5)
-               self._wsCount=self._wsCount+1
-               if self._wsCount>5:
-                   self._MapNo=self._MapNo+1
-                   self._isInBattle=False
-                   self.leftClickPer(85,92)
-                   time.sleep(2)
-                   
-    
-
-           
             print("clickOnGoods")
             #获取物品执行
             if self.onGetItems() :
@@ -106,15 +97,36 @@ class ReplyWuShuang(BaseControl):
                 time.sleep(2)
             else :
                 pass
+        
+            #底部菜单hash 
+            print("clickReplyBattle")
+
+            if screen.autoCompareResImgHash(self.handle,"wushuang_end_0_90_80_100.png"):
+               self.clickReplyBattle()
+               print("_battleOneMapCount",self._battleOneMapCount)
+               #第五次需要弹出买次数，所以   _MapNo可能会多1
+               if self._battleOneMapCount>8:#防止获取物品影响次数
+                   self._MapNo=self._MapNo+1
+                   self._isInBattle=False
+                   self.leftClickPerLong(85,92)#回到地图，快速点击会失效
+                   time.sleep(2)
+                   
+               self._battleOneMapCount=self._battleOneMapCount+1  
+               time.sleep(5)
+
+           
+         
 
             #章节完毕
+            print("章节完毕")
             if screen.autoCompareResImgHash(self.handle,"ws_map_end_20_40_80_65.png") :
-                self._wsCount=0
+                self._battleOneMapCount=0
                 self._isInBattle=False
                 self._MapNo=self._MapNo+1
                 self.leftClickPer(80,40)
-                time.sleep(1)
-                self.leftClickPer(2,8)
+                self.leftClickPerLong(80,40)
+                time.sleep(2)
+                self.leftClickPer(8,8)
                 time.sleep(2)
       
 
@@ -136,6 +148,6 @@ class ReplyWuShuang(BaseControl):
             time.sleep(1)
 
         self._MapNo=0
-        self._wsCount=0
+        self._battleOneMapCount=0
         self._isInBattle=False
         self._isRun=False
