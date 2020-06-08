@@ -56,7 +56,7 @@ def initReplyBattle():
 
 initReplyBattle()
 
-
+tk.Label(fm1,text="请将模拟器调整和窗口相似的高度").grid(row=0,column=2)
 tk.Button(fm1,text="开始重复竞猜",width=10,height=1,command=replyGuess.start).grid(row=2,column=1)
 tk.Button(fm1,text="结束竞猜",width=10,height=1,command=replyGuess.stop).grid(row=2,column=2)
 
