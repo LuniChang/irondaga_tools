@@ -91,7 +91,7 @@ class ReplyBattle(BaseControl):
                pass
 
             time.sleep(self.interval)
-            screen.grabCaptureDir(self.handle,"reply_battle")
+            # screen.grabCaptureDir(self.handle,"reply_battle")
 
 
 

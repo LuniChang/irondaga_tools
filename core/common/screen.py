@@ -278,11 +278,8 @@ def findResImgCenterXyInWindow(handle,imgName):
      targetImgWith=targetImg.size[0]
      targetImgHeight=targetImg.size[1]
 
-    
-     
-     wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(handle)
 
-    
+     wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(handle)
 
      winImg = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
     #  pix = img.load()#导入像素
@@ -302,6 +299,7 @@ def findResImgCenterXyInWindow(handle,imgName):
     #  targetImgCenterBottom=targetImg.getpixel(((targetImgWith-1)>>1,(targetImgHeight-1)>>1+1)) 
      print("targetImgCenter",targetImgCenter)
 
+     xylist = [] 
      for x in range(wWidth):
        for y in range(wHeight):
         # 、 遍历像素点，再根据中心找hash
@@ -325,8 +323,10 @@ def findResImgCenterXyInWindow(handle,imgName):
                      rightB==targetImgCenterRight[2] :
                        
                     targetHash= winScreenRectHash(handle,x-(targetImgPerWith>>1),y-(targetImgPerWith>>1),x+(targetImgPerWith>>1),y+(targetImgPerHeight>>1))
-                    if  alikeHashValue(targetImgHash,targetHash)>0.15:
-                      return wLeft+x,wTop+y
+                    if  alikeHashValue(targetImgHash,targetHash)>0.1:
+                      print("findResImgCenterXyInWindow",x,y )
+                      xylist.append([x,y])
+                      # return wLeft+x,wTop+y
            
 
 
@@ -340,4 +340,4 @@ def findResImgCenterXyInWindow(handle,imgName):
                pass
 
      winImg.close()
-     return -1,-1
+     return xylist
