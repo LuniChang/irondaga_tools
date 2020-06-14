@@ -314,7 +314,8 @@ def findResImgCenterXyInWindow(handle,imgName):
 
 
 
-def matchResImgInWindow(handle,imgName):
+
+def matchResImgInWindow(handle,imgName,threshold=0.8,mult=True):
   #获取目标图片
   tmp=imgName.split(".")
   fSplit=tmp[0].split("_")
@@ -352,15 +353,21 @@ def matchResImgInWindow(handle,imgName):
   winImg.close()
 
   res = cv2.matchTemplate(toMatchWinImg,temImg,cv2.TM_CCOEFF_NORMED)
-  # min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
-  # top_left = min_loc #左上角的位置
-  # bottom_right = (top_left[0] + w, top_left[1] + h) #右下角的位
 
-  threshold = 0.5
-  loc = numpy.where(res>=threshold)
   xyList=[]
-  for pt in zip(*loc[::-1]):
-    xyList.append((wLeft+pt[0]+(targetImgWidth>>1),wTop+pt[1]+(targetImgHeigth>>1)))
+  if mult==True :
+    loc = numpy.where(res>=threshold)
+
+    for pt in zip(*loc[::-1]):
+      xyList.append((wLeft+pt[0]+(targetImgWidth>>1),wTop+pt[1]+(targetImgHeigth>>1)))
+
+   
+   
+  else: #单个很不准确
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+    top_left = min_loc #左上角的位置
+    xyList.append((wLeft+top_left[0]+(targetImgWidth>>1),wTop+top_left[1]+(targetImgHeigth>>1)))
+
 
   print(xyList)
   return  xyList

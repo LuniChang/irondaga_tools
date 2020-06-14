@@ -3,7 +3,7 @@ import win32gui
 import win32con
 import common.screen as screen
 import threading
-
+import time
 class BaseControl:
     
     handle=0
@@ -44,6 +44,15 @@ class BaseControl:
         # return screen.alikeHash(hashCode,"f812816e2d2e69fc")
         return screen.autoCompareResImgHash(self.handle,"onget_item_10_40_80_65.png")
 
+
+    def dragPer(self,x,y,toX,toY):
+        win32api.SetCursorPos((self.getPosX(x), self.getPosY(y)))
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN , 0, 0, 0, 0)
+        time.sleep(1)  
+        win32api.mouse_event(win32con.MOUSEEVENTF_ABSOLUTE + win32con.MOUSEEVENTF_MOVE, self.getPosX(toX), self.getPosY(toY), 0, 0)  
+        time.sleep(1)
+        win32api.SetCursorPos((self.getPosX(toX), self.getPosY(toY)))
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)  
 
     def leftClick(self,x,y):
         win32api.SetCursorPos((x, y))

@@ -21,6 +21,22 @@ class ReplyMap(BaseControl):
         self._isUseHp=isUseHp
     
 
+    #点在判断窗口中点位置的哪个方向
+    def xyDirection(self,x,y):
+        wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(self.handle)
+        
+        centerX=(wRight-wLeft)>>1
+        centerY=(wTop-wBottom)>>1
+        inLeft=True
+        inTop=True
+        if x>centerX:
+          inLeft=False
+        if y>centerY:
+          inTop=False
+        return inLeft,inTop
+
+        
+        
 
 
     def buyHp(self):
@@ -46,6 +62,7 @@ class ReplyMap(BaseControl):
 
     def run(self):    
 
+        diretionLast=0
         while self._isRun:
             win32gui.SetForegroundWindow(self.handle)
        
@@ -54,16 +71,18 @@ class ReplyMap(BaseControl):
             print("findUnKnowMap")
             xylist=screen.matchResImgInWindow(self.handle,"map_unknow3_45_47_52_50.png")
            
-            for i in xylist:
-                x,y=i
+            
+            if  len(xylist)>0:
+                # for i in xylist:
+                x,y=xylist[0]
                 self.leftClick(x,y)
                 time.sleep(2)
-            # if(x>=0 and y>=0):
-            #     print(xylist)
-            #     self.leftClick(x,y)
-            # else:
-            #     pass   
-           
+            else:
+                #这就要查看是否地图完结了，然后根据未知地点方向进一步操作...
+                self.dragPer(50,50,1,50)
+                time.sleep(2)
+
+               
 
            
             print("getitem2")
