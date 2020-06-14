@@ -52,12 +52,10 @@ class ReplyMap(BaseControl):
 
     
             print("findUnKnowMap")
-            xylist=[]
-            xylist.extend(screen.findResImgCenterXyInWindow(self.handle,"map_unknow_40_45_55_55.png") )
+            xylist=screen.matchResImgInWindow(self.handle,"map_unknow3_45_47_52_50.png")
            
             for i in xylist:
-                x=xylist[i][0]
-                y=xylist[i][1]
+                x,y=i
                 self.leftClick(x,y)
                 time.sleep(2)
             # if(x>=0 and y>=0):

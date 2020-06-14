@@ -82,8 +82,8 @@ tk.Button(fm1,text="结束pvp",width=10,height=1,command=replyPvp.stop).grid(row
 
 
 
-# tk.Button(fm1,text="开始38图",width=10,height=1,command=replyMap.start).grid(row=4,column=1)
-# tk.Button(fm1,text="结束推图",width=10,height=1,command=replyMap.stop).grid(row=4,column=2)
+tk.Button(fm1,text="开始38图",width=10,height=1,command=replyMap.start).grid(row=4,column=1)
+tk.Button(fm1,text="结束推图",width=10,height=1,command=replyMap.stop).grid(row=4,column=2)
 
 tk.Button(fm1,text="开始无双",width=10,height=1,command=replyWuShuang.start).grid(row=5,column=1)
 tk.Button(fm1,text="结束无双",width=10,height=1,command=replyWuShuang.stop).grid(row=5,column=2)

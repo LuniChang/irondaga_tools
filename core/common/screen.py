@@ -3,6 +3,8 @@ import win32gui, win32ui, win32con, win32api
 import datetime
 import common.path as path
 import os
+import cv2
+import numpy
 
 hashSize=8# 大于8 明汉距离会有很大差异，即使相似图片也会低于0.1
 highfreq_factor=6
@@ -290,54 +292,75 @@ def findResImgCenterXyInWindow(handle,imgName):
      targetImgPerHeight=int(wHeight*abs(targetImgPerRightY-targetImgPerLeftY)*0.01)
 
      #取连续三个像素点
-    #  targetImgLeftTop=targetImg.getpixel((0,0))  
-    #  targetImgRightBottom=targetImg.getpixel((targetImgWith-1,targetImgHeight-1))  
      targetImgCenter=targetImg.getpixel(((targetImgWith-1)>>1,(targetImgHeight-1)>>1)) 
-     targetImgCenterLeft=targetImg.getpixel(((targetImgWith-1)>>1-1,(targetImgHeight-1)>>1)) 
-     targetImgCenterRight=targetImg.getpixel(((targetImgWith-1)>>1+1,(targetImgHeight-1)>>1)) 
-    #  targetImgCenterTop=targetImg.getpixel(((targetImgWith-1)>>1,(targetImgHeight-1)>>1-1)) 
-    #  targetImgCenterBottom=targetImg.getpixel(((targetImgWith-1)>>1,(targetImgHeight-1)>>1+1)) 
-     print("targetImgCenter",targetImgCenter)
-
+ 
      xylist = [] 
      for x in range(wWidth):
        for y in range(wHeight):
         # 、 遍历像素点，再根据中心找hash
             r,g,b = winImg.getpixel((x,y))   
-            # if r==targetImgLeftTop[0] and  g==targetImgLeftTop[1] and   b==targetImgLeftTop[2] :
-            #    targetHash= winScreenRectHash(handle,x,y,x+targetImgPerWith,y+targetImgPerHeight)
-            #    if  alikeHashValue(targetImgHash,targetHash)>0.3:
-            #        return wLeft+x+(targetImgPerWith>>1),wTop+y+(targetImgPerHeight>>1)
-            #    else:
-            #        pass
-              
             if  r==targetImgCenter[0] and  g==targetImgCenter[1] and   b==targetImgCenter[2] :
-               if x-1>0 and x+1<wWidth:
-                 leftR,leftG,leftB= winImg.getpixel((x-1,y))
-                 rightR,rightG,rightB= winImg.getpixel((x+1,y))
-                 if  leftR==targetImgCenterLeft[0] and \
-                     leftG==targetImgCenterLeft[1] and \
-                     leftB==targetImgCenterLeft[2] and \
-                     rightR==targetImgCenterRight[0] and \
-                     rightG==targetImgCenterRight[1] and  \
-                     rightB==targetImgCenterRight[2] :
-                       
                     targetHash= winScreenRectHash(handle,x-(targetImgPerWith>>1),y-(targetImgPerWith>>1),x+(targetImgPerWith>>1),y+(targetImgPerHeight>>1))
                     if  alikeHashValue(targetImgHash,targetHash)>0.1:
                       print("findResImgCenterXyInWindow",x,y )
                       xylist.append([x,y])
-                      # return wLeft+x,wTop+y
-           
+     
 
-
-            # elif  r==targetImgRightBottom[0] and  g==targetImgRightBottom[1] and   b==targetImgRightBottom[2] :
-            #    targetHash= winScreenRectHash(handle,x-targetImgPerWith,y-targetImgPerHeight,x,y)
-            #    if  alikeHashValue(targetImgHash,targetHash)>0.3:
-            #        return  wLeft+x-(targetImgPerWith>>1),wTop+y-(targetImgPerHeight>>1)
-            #    else:
-            #        pass      
-            else:
-               pass
 
      winImg.close()
+     print("xylist:",xylist)
      return xylist
+
+
+
+
+def matchResImgInWindow(handle,imgName):
+  #获取目标图片
+  tmp=imgName.split(".")
+  fSplit=tmp[0].split("_")
+  fLen=len(fSplit)
+  targetImgPerLeftX=int(fSplit[fLen-4])
+  targetImgPerLeftY=int(fSplit[fLen-3])
+  targetImgPerRightX=int(fSplit[fLen-2])
+  targetImgPerRightY=int(fSplit[fLen-1])
+
+  imgPath=path.getResDirPath()+imgName
+  if not os.path.exists(path.getProjectPath()):
+    os.makedirs(path.getProjectPath())
+  targetImg=Image.open(imgPath)
+
+  targetImgWidth=targetImg.size[0]
+  targetImgHeigth=targetImg.size[1]
+
+  perSize=(targetImgPerRightX-targetImgPerLeftX)*0.01
+  resWinWidth=int(targetImgWidth/perSize)
+  perSize=(targetImgPerRightY-targetImgPerLeftY)*0.01
+  resWinHeight=int(targetImgHeigth/perSize)
+
+
+  #模板图片
+  temImg=cv2.cvtColor(numpy.asarray(targetImg),cv2.COLOR_RGB2BGR)  
+  targetImg.close()
+
+  wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(handle)
+  winImg = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
+
+  #对截图缩放，适配资源图片
+  toMatchWinImgSrc=cv2.cvtColor(numpy.asarray(winImg),cv2.COLOR_RGB2BGR)  
+
+  toMatchWinImg=cv2.resize(toMatchWinImgSrc, (resWinWidth,resWinHeight),interpolation=cv2.INTER_AREA)
+  winImg.close()
+
+  res = cv2.matchTemplate(toMatchWinImg,temImg,cv2.TM_CCOEFF_NORMED)
+  # min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+  # top_left = min_loc #左上角的位置
+  # bottom_right = (top_left[0] + w, top_left[1] + h) #右下角的位
+
+  threshold = 0.5
+  loc = numpy.where(res>=threshold)
+  xyList=[]
+  for pt in zip(*loc[::-1]):
+    xyList.append((wLeft+pt[0]+(targetImgWidth>>1),wTop+pt[1]+(targetImgHeigth>>1)))
+
+  print(xyList)
+  return  xyList
