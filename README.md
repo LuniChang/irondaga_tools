@@ -11,3 +11,5 @@ pip install tkinter
 pip install PIL   (for 3.7 pip install pillow)
 
 pip install imagehash
+
+pip install opencv-python
