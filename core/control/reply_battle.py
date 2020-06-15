@@ -28,7 +28,7 @@ class ReplyBattle(BaseControl):
 
     def toUseHp(self):
         win32gui.SetForegroundWindow(self.handle)
-        win32api.SetCursorPos((self.getPosX(60), self.getPosY(62)))#点击使用体力药
+        win32api.SetCursorPos((self.getPosX(62), self.getPosY(60)))#点击使用体力药
         win32api.mouse_event(
         win32con.MOUSEEVENTF_LEFTDOWN | win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
         
@@ -36,7 +36,7 @@ class ReplyBattle(BaseControl):
 
     def clickReplyBattle(self):
         win32gui.SetForegroundWindow(self.handle)
-        win32api.SetCursorPos((self.getPosX(27), self.getPosY(93)))#点击重复战斗
+        win32api.SetCursorPos((self.getPosX(35), self.getPosY(93)))#点击重复战斗
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)        
 
@@ -50,17 +50,12 @@ class ReplyBattle(BaseControl):
             win32gui.SetForegroundWindow(self.handle)
            
             #底部菜单hash 
-            # hashCode=screen.screenRectPerHash(self.handle,0,90,100,95)
-            # hashCode2=screen.getResImgHash("battle_end_0_90_100_95.png")
+
             print("clickReplyBattle")
-            # if screen.alikeHash(hashCode,"d52a2a572a2aadd5") :
-            # if screen.alikeHash(hashCode,hashCode2) :
-            if screen.autoCompareResImgHash(self.handle,"battle_end_0_90_100_95.png"):
+            if screen.autoCompareResImgHash(self.handle,"reply//end_0_90_100_95.png"):
                self.clickReplyBattle()
                time.sleep(5)
-            else :
-                
-               pass
+
 
            
             print("clickOnGoods")
@@ -72,13 +67,8 @@ class ReplyBattle(BaseControl):
                 pass
 
             #体力不足hash 
-            # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
             print("toUseHp")
-            # hashCode2=screen.getResImgHash("hpempty_10_40_80_65.png")
-            # if self._isUseHp and screen.alikeHash(hashCode,hashCode2) :
-            # if self._isUseHp and screen.alikeHash(hashCode,"e06aea6aeaea8aa1"):
-            # if self._isUseHp and screen.alikeHash(hashCode,"9122d8d8948c5454"):
-            if self._isUseHp and screen.autoCompareResImgHash(self.handle,"hpempty_10_40_80_65.png"):
+            if self._isUseHp and screen.autoCompareResImgHash(self.handle,"hp_empty_10_40_90_62.png"):
                 self.toUseHp()
                 time.sleep(2)
                 self.closeEmptyHp()

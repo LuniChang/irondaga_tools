@@ -38,10 +38,6 @@ class BaseControl:
 
     def onGetItems(self):
         print("onGetItems")
-        # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
-        # hashCode2=screen.getResImgHash("onget_item_10_40_80_65.png")
-        # return screen.alikeHash(hashCode,hashCode2) 
-        # return screen.alikeHash(hashCode,"f812816e2d2e69fc")
         return screen.autoCompareResImgHash(self.handle,"on_get_item_10_35_85_65.png")
 
 
@@ -78,13 +74,9 @@ class BaseControl:
     def closeEmptyHp(self):
         win32gui.SetForegroundWindow(self.handle)
         self.leftClick(self.getPosX(80), self.getPosY(40))
-        # win32api.SetCursorPos((self.getPosX(80), self.getPosY(40)))#关闭体力框
-        # win32api.mouse_event(
-        # win32con.MOUSEEVENTF_LEFTDOWN | win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
-
+  
     def onSelectTeam(self):
         print("onSelectTeam")
-        # return screen.autoCompareResImgHash(self.handle,"on_select_team_10_35_90_45.png")
         return self.matchResImgInWindow("on_select_team_10_35_90_45.png")
 
     #阵容小于3或者大于6不能用
