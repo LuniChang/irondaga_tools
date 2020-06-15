@@ -102,7 +102,7 @@ class ReplyMap(BaseControl):
                 pass
 
             print("hpempty")
-            if screen.autoCompareResImgHash(self.handle,"hpempty_10_40_80_65.png"):
+            if self.isHpEmpty():
                 self.clickOnGoods()
                 time.sleep(2)
             else :

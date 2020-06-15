@@ -68,7 +68,7 @@ class ReplyBattle(BaseControl):
 
             #体力不足hash 
             print("toUseHp")
-            if self._isUseHp and screen.autoCompareResImgHash(self.handle,"hp_empty_10_40_90_62.png"):
+            if self._isUseHp and self.isHpEmpty():
                 self.toUseHp()
                 time.sleep(2)
                 self.closeEmptyHp()

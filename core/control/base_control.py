@@ -108,6 +108,9 @@ class BaseControl:
         else:
             return False
 
+    
+    def isHpEmpty(self):
+        return screen.autoCompareResImgHash(self.handle,"hp_empty_10_40_90_62.png")
 
     def run(self):
         pass
