@@ -28,24 +28,27 @@ class ReplyPvp(BaseControl):
 
     def onPvpList(self):
         print("onPvpList")
-
-        return screen.autoCompareResImgHash(self.handle,"pvp_list_70_20_90_90.png")
+        # return screen.autoCompareResImgHash(self.handle,"pvp_list_70_20_90_90.png")
+        return self.matchResImgInWindow("pvp\\pvp_list_76_20_96_90.png")
 
 
     def onPvpWin(self):
         print("onPvpWin")
-        return screen.autoCompareResImgHash(self.handle,"onpvpwin_10_50_80_60.png")
+        # return screen.autoCompareResImgHash(self.handle,"onpvpwin_10_50_80_60.png")
+        return self.matchResImgInWindow("pvp\\pvp_win_0_0_100_25.png")
+
 
 
     def onPvpLost(self):
         print("onPvpLost")
-        return screen.autoCompareResImgHash(self.handle,"onpvplost_10_60_80_80.png")
+        # return screen.autoCompareResImgHash(self.handle,"onpvplost_10_60_80_80.png")
+        return self.matchResImgInWindow("pvp\\pvp_lost_0_0_100_25.png")
 
 
 
     def onPvpEnd(self):
         print("onPvpEnd")
-        return screen.autoCompareResImgHash(self.handle,"pvp_end_10_40_80_65.png")
+        return screen.autoCompareResImgHash(self.handle,"pvp\\pvp_end_10_40_90_60.png")
 
 
 
@@ -54,20 +57,20 @@ class ReplyPvp(BaseControl):
 
     def toPvp(self):
         win32gui.SetForegroundWindow(self.handle)
-        win32api.SetCursorPos((self.getPosX(75), self.getPosY(30)))#点击pvp
+        win32api.SetCursorPos((self.getPosX(80), self.getPosY(28)))#点击pvp
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)       
 
  
     def toSelecItemOnWin(self):
         win32gui.SetForegroundWindow(self.handle)
-        win32api.SetCursorPos((self.getPosX(47), self.getPosY(64)))#默认选择中间
+        win32api.SetCursorPos((self.getPosX(52), self.getPosY(60)))#默认选择中间
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)      
 
     def toPvpContinue(self):
         win32gui.SetForegroundWindow(self.handle)
-        win32api.SetCursorPos((self.getPosX(75), self.getPosY(92)))
+        win32api.SetCursorPos((self.getPosX(80), self.getPosY(90)))
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)      
 
@@ -89,7 +92,7 @@ class ReplyPvp(BaseControl):
 
             if self.onSelectTeam():
                 self.toSelectTeam(self._teamNo)   
-                time.sleep(3)
+                time.sleep(20)
             else :
                 pass
 

@@ -64,30 +64,42 @@ class ReplyWuShuang(BaseControl):
             if  self._isInBattle==False:
                 #如果在地图
                 print("onmap")
-                if screen.autoCompareResImgHash(self.handle,"on_ws_map_70_72_90_74.png"):
+                if screen.autoCompareResImgHash(self.handle,"ws\\on_ws_map_40_70_60_74.png"):
                     # self._MapNo=self._MapNo%6
                     if self._MapNo<3:
-                       self.leftClickPer(15+30*self._MapNo,35)
+                       self.leftClickPer(20+35*self._MapNo,30)
                     elif self._MapNo<6:
-                       self.leftClickPer(15+30*(self._MapNo-3),50)
+                       self.leftClickPer(20+35*(self._MapNo-3),50)
                     else:
                        self._MapNo=self._MapNo%6
-                       self.leftClickPer(75,73)
+                       self.leftClickPer(80,70)
                         
                     time.sleep(5)
                 #如果在准备页面
-                if screen.autoCompareResImgHash(self.handle,"ws_ready_10_75_90_85.png"):
-                    self.leftClickPer(80,80)
+                if screen.autoCompareResImgHash(self.handle,"ws\\wx_ready_10_75_90_90.png"):
+                    self.leftClickPer(85,78)
                     self._isInBattle=True
-                    time.sleep(1)
+                    time.sleep(5)
     
 
-
+            #挑战次数不不足
+            print("挑战次数不不足",self._MapNo)
+            if screen.autoCompareResImgHash(self.handle,"ws\\on_map_end_20_40_80_65.png") :
+                self._battleOneMapCount=0
+                self._isInBattle=False
+                self._MapNo=self._MapNo+1
+                self.leftClickPer(85,36)
+                self.leftClickPerLong(85,36)
+                time.sleep(2)
+                self.leftClickPer(6,4)
+                time.sleep(2)
+                continue
+      
 
 
             if  self._isInBattle or self._battleOneMapCount<8:
-                self.leftClickPerLong(70,30)
-                self.leftClickPerLong(70,10)
+                self.leftClickPerLong(75,25)
+                self.leftClickPerLong(75,5)
           
 
             print("clickOnGoods")
@@ -100,8 +112,7 @@ class ReplyWuShuang(BaseControl):
         
             #底部菜单hash 
             print("clickReplyBattle")
-
-            if screen.autoCompareResImgHash(self.handle,"wushuang_end_0_90_80_100.png"):
+            if screen.autoCompareResImgHash(self.handle,"ws//ws_end_0_90_100_100.png"):
                self.clickReplyBattle()
                print("_battleOneMapCount",self._battleOneMapCount)
                #第五次需要弹出买次数，所以   _MapNo可能会多1
@@ -120,18 +131,7 @@ class ReplyWuShuang(BaseControl):
            
          
 
-            #章节完毕
-            print("章节完毕")
-            if screen.autoCompareResImgHash(self.handle,"ws_map_end_20_40_80_65.png") :
-                self._battleOneMapCount=0
-                self._isInBattle=False
-                self._MapNo=self._MapNo+1
-                self.leftClickPer(80,40)
-                self.leftClickPerLong(80,40)
-                time.sleep(2)
-                self.leftClickPer(8,8)
-                time.sleep(2)
-      
+          
 
             #体力不足hash 
             # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)

@@ -9,9 +9,11 @@ import numpy
 hashSize=8# 大于8 明汉距离会有很大差异，即使相似图片也会低于0.1
 highfreq_factor=6
 
+TOP_OFFSET=40
+RIGHT_OFFSET=-37
 
-
-
+BOTTOM_OFFSET=-1
+LEFT_OFFSET=1
 
 from PIL import ImageGrab,Image
 import imagehash
@@ -21,7 +23,7 @@ import imagehash
 def appGetWindowRect(handle):
    #有改变就加偏移量
    wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(handle)
-   return wLeft, wTop, wRight, wBottom
+   return wLeft+LEFT_OFFSET, wTop+TOP_OFFSET, wRight+RIGHT_OFFSET, wBottom+BOTTOM_OFFSET
 
 
 def grab_capture(filename,hwnd):
