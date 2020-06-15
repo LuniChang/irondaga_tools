@@ -23,20 +23,18 @@ class ReplyGuess(BaseControl):
         print("onGetMoney")
         # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
         # return screen.alikeHash(hashCode,"d81a8f8ef8e82e29")
-        return screen.autoCompareResImgHash(self.handle,"onget_money_10_40_80_65.png")
+        return screen.autoCompareResImgHash(self.handle,"get_mony_10_36_85_62.png")
 
 
     def clickOnMoney(self):
         win32gui.SetForegroundWindow(self.handle)
-        win32api.SetCursorPos((self.getPosX(50), self.getPosY(61)))#点击物品
+        win32api.SetCursorPos((self.getPosX(55), self.getPosY(62)))#点击物品
         win32api.mouse_event(
         win32con.MOUSEEVENTF_LEFTDOWN | win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
 
     def onGuessEnd(self):
-        print("onGuessEnd")
-        # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
-        # return screen.alikeHash(hashCode,"c242e76a6bcbcae0")    
-        return screen.autoCompareResImgHash(self.handle,"pvp_end_10_40_80_65.png")
+        print("onGuessEnd")  
+        return screen.autoCompareResImgHash(self.handle,"guess//end_10_40_85_65.png")
 
 
 
@@ -48,7 +46,7 @@ class ReplyGuess(BaseControl):
 
     def selecGuessRight(self):
         win32gui.SetForegroundWindow(self.handle)
-        win32api.SetCursorPos((self.getPosX(62), self.getPosY(60)))#默认选择右边
+        win32api.SetCursorPos((self.getPosX(65), self.getPosY(58)))#默认选择右边
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)      
 
@@ -59,21 +57,14 @@ class ReplyGuess(BaseControl):
            
            
             #精彩页面hash 
-            # hashCode=screen.screenRectPerHash(self.handle,5,20,90,40)
             print("toGuess")
-            # if screen.alikeHash(hashCode,"8b6ca513d20fa96d"):
-            if screen.autoCompareResImgHash(self.handle,"guess_5_20_90_40.png"):
+            if screen.autoCompareResImgHash(self.handle,"guess\\main_0_18_100_36.png"):
                self.toGuess()
                time.sleep(5)
-            else :
-                
-               pass
+    
 
-            # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
             print("selecGuess")
-            
-            # if screen.alikeHash(hashCode,"c966a921de295b66"):
-            if screen.autoCompareResImgHash(self.handle,"guess_select_10_40_80_65.png"):
+            if screen.autoCompareResImgHash(self.handle,"guess\\select_10_40_85_65.png"):
                self.selecGuessRight()
                time.sleep(5)
             else :
