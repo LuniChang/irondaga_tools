@@ -57,8 +57,8 @@ class ReplyWuShuang(BaseControl):
         self._isInBattle=False
         while self._isRun and self._MapNo<=6:
             win32gui.SetForegroundWindow(self.handle)
-            wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(self.handle)
-      
+     
+ 
 
 
             if  self._isInBattle==False:

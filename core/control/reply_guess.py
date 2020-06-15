@@ -56,9 +56,7 @@ class ReplyGuess(BaseControl):
 
         while self._isRun:
             win32gui.SetForegroundWindow(self.handle)
-            wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(self.handle)
-            print("reply_battle",wLeft, wTop, wRight, wBottom)
-
+           
            
             #精彩页面hash 
             # hashCode=screen.screenRectPerHash(self.handle,5,20,90,40)

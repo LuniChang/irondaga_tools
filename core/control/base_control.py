@@ -26,13 +26,13 @@ class BaseControl:
 
     def getPosX(self,srcPer):
         srcPer=srcPer*0.01
-        wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(self.handle)
+        wLeft, wTop, wRight, wBottom = screen.appGetWindowRect(self.handle)
         width = wRight-wLeft
         return int(wLeft+(width*srcPer))
 
     def getPosY(self,srcPer):
         srcPer=srcPer*0.01
-        wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(self.handle)
+        wLeft, wTop, wRight, wBottom = screen.appGetWindowRect(self.handle)
         height = wBottom-wTop
         return int(wTop+(height*(srcPer)))
 

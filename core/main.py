@@ -133,7 +133,7 @@ hashBtn.pack()
 main.mainloop()
 
 # while True:
-#   wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(handle)
+#   wLeft, wTop, wRight, wBottom = appGetWindowRect(handle)
 
 #   print(wLeft, wTop, wRight, wBottom)
 #   win32api.SetCursorPos((getWidthPer(0.27),getHeightPer(0.93)))

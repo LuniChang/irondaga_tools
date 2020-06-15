@@ -48,9 +48,6 @@ class ReplyBattle(BaseControl):
 
         while self._isRun:
             win32gui.SetForegroundWindow(self.handle)
-            wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(self.handle)
-            print("reply_battle",wLeft, wTop, wRight, wBottom)
-
            
             #底部菜单hash 
             # hashCode=screen.screenRectPerHash(self.handle,0,90,100,95)

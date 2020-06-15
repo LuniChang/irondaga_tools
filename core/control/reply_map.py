@@ -23,7 +23,7 @@ class ReplyMap(BaseControl):
 
     #点在判断窗口中点位置的哪个方向
     def xyDirection(self,x,y):
-        wLeft, wTop, wRight, wBottom = win32gui.GetWindowRect(self.handle)
+        wLeft, wTop, wRight, wBottom = screen.appGetWindowRect(self.handle)
         
         centerX=(wRight-wLeft)>>1
         centerY=(wTop-wBottom)>>1
