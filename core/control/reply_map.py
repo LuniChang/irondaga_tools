@@ -58,7 +58,8 @@ class ReplyMap(BaseControl):
 
 
 
-    
+    def canResetMap(self):
+        return screen.autoCompareResImgHash(self.handle,"map//map_can_reset_51_86_72_89.png")
 
     def run(self):    
 
@@ -69,7 +70,7 @@ class ReplyMap(BaseControl):
 
     
             print("findUnKnowMap")
-            xylist=screen.matchResImgInWindow(self.handle,"map_unknow3_45_47_52_50.png")
+            xylist=screen.matchResImgInWindow(self.handle,"map//unkown_52_50_58_54.png")
            
             
             if  len(xylist)>0:
@@ -79,31 +80,30 @@ class ReplyMap(BaseControl):
                 time.sleep(2)
             else:
                 #这就要查看是否地图完结了，然后根据未知地点方向进一步操作...
-                self.dragPer(50,50,1,50)
+                self.dragPer(10,50,90,50) #移动到左视图 会抓不到..
                 time.sleep(2)
 
                
 
            
             print("getitem2")
-            if screen.autoCompareResImgHash(self.handle,"getitem2_10_40_80_65.png"):
-                win32gui.SetForegroundWindow(self.handle)
-                self.leftClick(self.getPosX(55), self.getPosY(60))
+            if self.onGetItems():
+                self.clickOnGetItems()
                 time.sleep(2)
             else :
                 pass
             
-            print("clickOnGoods")
+            print("clickOnGetItems")
             #获取物品执行
             if self.onGetItems() :
-                self.clickOnGoods()
+                self.clickOnGetItems()
                 time.sleep(2)
             else :
                 pass
 
             print("hpempty")
             if self.isHpEmpty():
-                self.clickOnGoods()
+                self.clickOnGetItems()
                 time.sleep(2)
             else :
                 pass

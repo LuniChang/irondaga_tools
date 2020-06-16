@@ -58,10 +58,10 @@ class ReplyBattle(BaseControl):
 
 
            
-            print("clickOnGoods")
+            print("clickOnGetItems")
             #获取物品执行
             if self.onGetItems() :
-                self.clickOnGoods()
+                self.clickOnGetItems()
                 time.sleep(2)
             else :
                 pass

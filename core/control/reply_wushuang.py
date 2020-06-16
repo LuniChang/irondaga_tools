@@ -102,10 +102,10 @@ class ReplyWuShuang(BaseControl):
                 self.leftClickPerLong(78,5)
           
 
-            print("clickOnGoods")
+            print("clickOnGetItems")
             #获取物品执行
             if self.onGetItems() :
-                self.clickOnGoods()
+                self.clickOnGetItems()
                 time.sleep(5)
             else :
                 pass

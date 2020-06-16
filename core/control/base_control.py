@@ -44,10 +44,12 @@ class BaseControl:
     def dragPer(self,x,y,toX,toY):
         win32api.SetCursorPos((self.getPosX(x), self.getPosY(y)))
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN , 0, 0, 0, 0)
-        time.sleep(1)  
-        win32api.mouse_event(win32con.MOUSEEVENTF_ABSOLUTE + win32con.MOUSEEVENTF_MOVE, self.getPosX(toX), self.getPosY(toY), 0, 0)  
-        time.sleep(1)
-        win32api.SetCursorPos((self.getPosX(toX), self.getPosY(toY)))
+        time.sleep(0.2)  
+        moveToX=self.getPosX(toX)
+        moveToY=self.getPosY(toY)
+        win32api.mouse_event(win32con.MOUSEEVENTF_ABSOLUTE + win32con.MOUSEEVENTF_MOVE, moveToX*47, moveToY*85, 0, 0)  
+        time.sleep(0.2)
+        win32api.SetCursorPos((moveToX, moveToY))
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)  
 
     def leftClick(self,x,y):
@@ -63,11 +65,8 @@ class BaseControl:
     
 
 
-    def clickOnGoods(self):
+    def clickOnGetItems(self):
         win32gui.SetForegroundWindow(self.handle)
-        # win32api.SetCursorPos((self.getPosX(50), self.getPosY(65)))#点击物品
-        # win32api.mouse_event(
-        # win32con.MOUSEEVENTF_LEFTDOWN | win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
         self.leftClick(self.getPosX(50), self.getPosY(65))
 
 

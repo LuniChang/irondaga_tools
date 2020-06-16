@@ -195,14 +195,7 @@ def autoCompareResImgHashValue(handle,fileName):
 
 
 def screenRectPerHash(hwnd,pLeft, pTop, pRight, pBottom):
-  # win32gui.SetForegroundWindow(hwnd)
-  # xLeft=getPosX(hwnd,pLeft)
-  # yLeft=getPosY(hwnd,pTop)
-  # xRight=getPosX(hwnd,pRight)
-  # yRight=getPosY(hwnd,pBottom)
-  # print("screenRectPerHash" ,xLeft,yLeft , xRight,yRight )
-  # img = ImageGrab.grab(bbox=(xLeft,yLeft , xRight,yRight ))
-  
+
   img=getScreenRectPerImg(hwnd,pLeft, pTop, pRight, pBottom)
   phash=imgHash(img,hashSize,highfreq_factor)
   img.close()
@@ -215,7 +208,6 @@ def getScreenRectPerImg(hwnd,pLeft, pTop, pRight, pBottom):
   yLeft=getPosY(hwnd,pTop)
   xRight=getPosX(hwnd,pRight)
   yRight=getPosY(hwnd,pBottom)
-  print("getScreenRectPerImg" ,xLeft,yLeft , xRight,yRight )
   img = ImageGrab.grab(bbox=(xLeft,yLeft , xRight,yRight ))
   return img
 
@@ -223,9 +215,17 @@ def getScreenRectPerImg(hwnd,pLeft, pTop, pRight, pBottom):
 def winScreenRectHash(hwnd,pLeft, pTop, pRight, pBottom):
   win32gui.SetForegroundWindow(hwnd)
   wLeft, wTop, wRight, wBottom = appGetWindowRect(hwnd)
-  print("winScreenRectHash",wLeft, wTop, wRight, wBottom)
-  print("winScreenRectHash2",wLeft+pLeft,wTop+pTop , wLeft+pRight,wTop+pBottom)
   img = ImageGrab.grab(bbox=(wLeft+pLeft,wTop+pTop , wLeft+pRight,wTop+pBottom ))
+  phash=imgHash(img,hashSize,highfreq_factor)
+  saveTmpImg(img,phash)
+  img.close()
+  return phash
+
+#窗口hash
+def winScreenHash(hwnd):
+  win32gui.SetForegroundWindow(hwnd)
+  wLeft, wTop, wRight, wBottom = appGetWindowRect(hwnd)
+  img = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
   phash=imgHash(img,hashSize,highfreq_factor)
   saveTmpImg(img,phash)
   img.close()
