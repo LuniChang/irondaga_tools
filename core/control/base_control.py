@@ -83,11 +83,11 @@ class BaseControl:
     def toSelectTeam(self,teamNo):
         win32gui.SetForegroundWindow(self.handle)
         if teamNo==1 :
-           win32api.SetCursorPos((self.getPosX(30), self.getPosY(48)))#点击1队
+           win32api.SetCursorPos((self.getPosX(30), self.getPosY(50)))#点击1队
         elif teamNo==2:
-           win32api.SetCursorPos((self.getPosX(55), self.getPosY(48)))#点击2队
+           win32api.SetCursorPos((self.getPosX(55), self.getPosY(50)))#点击2队
         elif teamNo==3:    
-           win32api.SetCursorPos((self.getPosX(80), self.getPosY(48)))#点击3队
+           win32api.SetCursorPos((self.getPosX(80), self.getPosY(50)))#点击3队
         elif teamNo==4:    
            win32api.SetCursorPos((self.getPosX(30), self.getPosY(55)))#点击4队
         elif teamNo==5:    

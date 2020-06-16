@@ -98,15 +98,15 @@ class ReplyWuShuang(BaseControl):
 
 
             if  self._isInBattle or self._battleOneMapCount<8:
-                self.leftClickPerLong(75,25)
-                self.leftClickPerLong(75,5)
+                self.leftClickPerLong(78,25)
+                self.leftClickPerLong(78,5)
           
 
             print("clickOnGoods")
             #获取物品执行
             if self.onGetItems() :
                 self.clickOnGoods()
-                time.sleep(2)
+                time.sleep(5)
             else :
                 pass
         
@@ -116,7 +116,7 @@ class ReplyWuShuang(BaseControl):
                self.clickReplyBattle()
                print("_battleOneMapCount",self._battleOneMapCount)
                #第五次需要弹出买次数，所以   _MapNo可能会多1
-               if self._battleOneMapCount>8:#防止获取物品影响次数
+               if self._battleOneMapCount>5:#防止获取物品影响次数
                    self._MapNo=self._MapNo+1
                    self._isInBattle=False
                    self._battleOneMapCount=0
