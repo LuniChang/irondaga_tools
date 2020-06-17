@@ -100,8 +100,8 @@ class BaseControl:
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)    
 
 
-    def matchResImgInWindow(self,imgName):
-        xylist=screen.matchResImgInWindow(self.handle,imgName,0.8)
+    def matchResImgInWindow(self,imgName,threshold=0.8):
+        xylist=screen.matchResImgInWindow(self.handle,imgName,threshold)
         if len(xylist) >0:
             return True
         else:
