@@ -80,7 +80,8 @@ class ReplyMap(BaseControl):
                 time.sleep(2)
             else:
                 #这就要查看是否地图完结了，然后根据未知地点方向进一步操作...
-                self.dragPer(10,50,90,50) #移动到左视图 会抓不到..
+                # self.dragPer(10,50,90,50) #移动到左视图 会抓不到..
+                self.dragPer(10,50,50,50)
                 time.sleep(2)
 
                
