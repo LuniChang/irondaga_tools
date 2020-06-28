@@ -32,7 +32,7 @@ replyGuess= ReplyGuess(handle,10)
 replyMap= ReplyMap(handle,10)
 replyWuShuang= ReplyWuShuang(handle,10)
 main.title("机动战队工具")
-main.geometry("396x701")
+main.geometry("600x700")
 
 fm1=tk.Frame(main)
 fm1.pack()
@@ -56,7 +56,7 @@ def initReplyBattle():
 
 initReplyBattle()
 
-tk.Label(fm1,text="用管理员运行，请将模拟器调整和窗口相似的高度,模拟器分辨率765*448").grid(row=0,column=2,columnspan=3)
+tk.Label(fm1,text="用管理员运行，请将模拟器调整和窗口相似的高度,模拟器分辨率396x701").grid(row=0,column=2,columnspan=4)
 tk.Button(fm1,text="开始重复竞猜",width=10,height=1,command=replyGuess.start).grid(row=2,column=1)
 tk.Button(fm1,text="结束竞猜",width=10,height=1,command=replyGuess.stop).grid(row=2,column=2)
 
@@ -145,4 +145,4 @@ main.mainloop()
 #   time.sleep(5)
 
 
-# exit()
+exit()
