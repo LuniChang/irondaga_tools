@@ -44,7 +44,7 @@ def grabCaptureDir(hwnd,dirName):
   img.save(screenPath)
   img.close()
 
-def grabCaptureDef(hwnd):
+def grabCaptureDef(hwnd,needShow=False):
   win32gui.SetForegroundWindow(hwnd)
   wLeft, wTop, wRight, wBottom = appGetWindowRect(hwnd)
   img = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
@@ -53,20 +53,24 @@ def grabCaptureDef(hwnd):
   if not os.path.exists(path.getProjectPath()+"screen"):
         os.makedirs(path.getProjectPath()+"screen")
   img.save(screenPath)
+  if needShow==True:
+     img.show()
   img.close()
 
 
-def grabCaptureRect(hwnd,tLeft, tTop, tRight, tBottom):
+def grabCaptureRect(hwnd,tLeft, tTop, tRight, tBottom,needShow=False):
   win32gui.SetForegroundWindow(hwnd)
   img = ImageGrab.grab(bbox=(tLeft, tTop, tRight, tBottom))
   screenPath=path.getProjectPath()+"screen\\rect\\"+datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")+".png"
   if not os.path.exists(path.getProjectPath()+"screen\\rect"):
         os.makedirs(path.getProjectPath()+"screen\\rect")
   img.save(screenPath)
+  if needShow==True:
+     img.show()
   img.close()
 
 
-def grabCaptureRectPer(hwnd,tLeft, tTop, tRight, tBottom):
+def grabCaptureRectPer(hwnd,tLeft, tTop, tRight, tBottom,needShow=False):
   win32gui.SetForegroundWindow(hwnd)
   xLeft=getPosX(hwnd,tLeft)
   yLeft=getPosY(hwnd,tTop)
@@ -78,9 +82,11 @@ def grabCaptureRectPer(hwnd,tLeft, tTop, tRight, tBottom):
   if not os.path.exists(path.getProjectPath()+"screen\\rect_per"):
         os.makedirs(path.getProjectPath()+"screen\\rect_per")
   img.save(screenPath)
+  if needShow==True:
+     img.show()
   img.close()
 
-def grabCaptureRectPerHash(hwnd,tLeft, tTop, tRight, tBottom):
+def grabCaptureRectPerHash(hwnd,tLeft, tTop, tRight, tBottom,needShow=False):
   win32gui.SetForegroundWindow(hwnd)
 
   xLeft=getPosX(hwnd,tLeft)
@@ -94,6 +100,8 @@ def grabCaptureRectPerHash(hwnd,tLeft, tTop, tRight, tBottom):
   if not os.path.exists(path.getProjectPath()+"screen\\rect_per"):
         os.makedirs(path.getProjectPath()+"screen\\rect_per")
   img.save(screenPath)
+  if needShow==True:
+     img.show()
   img.close()
 
 

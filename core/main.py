@@ -96,7 +96,7 @@ tk.Button(fm1,text="结束无双",width=10,height=1,command=replyWuShuang.stop).
 tk.Label(main,text="工具操作").pack()
 
 # fmTools=tk.Frame(main).pack()
-tk.Button(main,text="窗口截图",width=10,height=1,command=lambda:screen.grabCaptureDef(hwnd=handle)).pack()
+tk.Button(main,text="窗口截图",width=10,height=1,command=lambda:screen.grabCaptureDef(hwnd=handle,needShow=True)).pack()
 
 
 tk.Label(main,text="左X百分比").pack()
@@ -114,7 +114,7 @@ xRight.pack()
 tk.Label(main,text="右Y百分比").pack()
 yRight=tk.Entry(main)
 yRight.pack()
-btnPerCap=tk.Button(main,text="百分比截图",width=10,height=1,command=lambda:screen.grabCaptureRectPerHash(hwnd=handle,tLeft=xLeft.get(),tTop=yLeft.get(), tRight=xRight.get(), tBottom=yRight.get()))
+btnPerCap=tk.Button(main,text="百分比截图",width=10,height=1,command=lambda:screen.grabCaptureRectPerHash(hwnd=handle,tLeft=xLeft.get(),tTop=yLeft.get(), tRight=xRight.get(), tBottom=yRight.get(),needShow=True))
 btnPerCap.pack()
 
 tk.Label(main,text="取图片哈希路径").pack()
