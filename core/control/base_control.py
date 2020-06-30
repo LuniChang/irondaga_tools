@@ -72,7 +72,7 @@ class BaseControl:
 
     def closeEmptyHp(self):
         win32gui.SetForegroundWindow(self.handle)
-        self.leftClick(self.getPosX(80), self.getPosY(40))
+        self.leftClick(self.getPosX(85), self.getPosY(38))
   
     def onSelectTeam(self):
         print("onSelectTeam")
