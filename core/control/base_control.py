@@ -52,16 +52,20 @@ class BaseControl:
         win32api.SetCursorPos((moveToX, moveToY))
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)  
 
+
     def leftClick(self,x,y):
         win32api.SetCursorPos((x, y))
-        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
-        win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)  
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN , 0, 0, 0, 0)  
+        time.sleep(0.2)
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP , 0, 0, 0, 0)  
+ 
 
     def leftClickPer(self,x,y):
         win32api.SetCursorPos((self.getPosX(x), self.getPosY(y)))
-        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
-        win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)    
-
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN , 0, 0, 0, 0)  
+        time.sleep(0.2)
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP , 0, 0, 0, 0)  
+     
     
 
 

@@ -46,7 +46,7 @@ class ReplyGuess(BaseControl):
 
     def selecGuessRight(self):
         win32gui.SetForegroundWindow(self.handle)
-        win32api.SetCursorPos((self.getPosX(65), self.getPosY(58)))#默认选择右边
+        win32api.SetCursorPos((self.getPosX(68), self.getPosY(58)))#默认选择右边
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)      
 
