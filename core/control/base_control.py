@@ -71,7 +71,7 @@ class BaseControl:
 
     def clickOnGetItems(self):
         win32gui.SetForegroundWindow(self.handle)
-        self.leftClick(self.getPosX(50), self.getPosY(65))
+        self.leftClick(self.getPosX(50), self.getPosY(64))
 
 
     def closeEmptyHp(self):
