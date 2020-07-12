@@ -71,14 +71,28 @@ def startPvp():
 
 teamNo.set(3)
 
-tk.Label(fm1,text="队伍号").grid(row=3,column=1)
-tk.Entry(fm1,textvariable=teamNo,width=10).grid(row=3,column=2)
+def initReplyPvp():
+  
 
-tk.Button(fm1,text="开始pvp",width=10,height=1,command=startPvp).grid(row=3,column=3)
+    upPoint = tk.IntVar()
+
+    def toUpPoint():
+        if upPoint.get()==1:
+            replyPvp.setUpPonit(True)
+        else:
+            replyPvp.setUpPonit(False)  
 
 
+    tk.Checkbutton(fm1,text="上分",variable=upPoint,onvalue=1,offvalue=0,command=toUpPoint).grid(row=3,column=1)
+    tk.Label(fm1,text="队伍号").grid(row=3,column=2)
+    tk.Entry(fm1,textvariable=teamNo,width=10).grid(row=3,column=3)
 
-tk.Button(fm1,text="结束pvp",width=10,height=1,command=replyPvp.stop).grid(row=3,column=4)
+    tk.Button(fm1,text="开始pvp",width=10,height=1,command=startPvp).grid(row=3,column=4)
+
+    tk.Button(fm1,text="结束pvp",width=10,height=1,command=replyPvp.stop).grid(row=3,column=5)
+
+initReplyPvp()
+    
 
 
 

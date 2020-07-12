@@ -11,7 +11,11 @@ import common.screen as screen
 class ReplyPvp(BaseControl):
 
   
-   
+    _upPonit=False
+
+
+    def setUpPonit(self,upPonit):
+        self._upPonit=upPonit
   
 
     def setTeamNo(self,teamNo):
@@ -57,9 +61,17 @@ class ReplyPvp(BaseControl):
 
     def toPvp(self):
         win32gui.SetForegroundWindow(self.handle)
-        win32api.SetCursorPos((self.getPosX(80), self.getPosY(28)))#点击pvp
-        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
-        win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)       
+        # win32api.SetCursorPos((self.getPosX(80), self.getPosY(28)))#点击pvp
+        # win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
+        # win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)  
+        if self._upPonit :
+           self.leftClickPer(80,28)  
+        else:
+           for i in range(3):
+             self.dragPer(50,70 ,50,30)
+             time.sleep(2)
+           self.leftClickPer(80,82)    
+            
 
  
     def toSelecItemOnWin(self):
