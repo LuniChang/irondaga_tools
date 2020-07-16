@@ -36,6 +36,8 @@ class ReplyGuess(BaseControl):
         print("onGuessEnd")  
         return screen.autoCompareResImgHash(self.handle,"guess//end_10_40_85_65.png")
 
+    def getGuessLocation(self):
+        return screen.matchResImgInWindow(self.handle,"guess//guess_10_20_90_30.png")
 
 
     def toGuess(self):
@@ -67,9 +69,13 @@ class ReplyGuess(BaseControl):
             if screen.autoCompareResImgHash(self.handle,"guess\\select_10_40_85_65.png"):
                self.selecGuessRight()
                time.sleep(5)
-            else :
+         
+            xylist= self.getGuessLocation() 
+            if  len(xylist)>0:
+                x,y=xylist[0]
+                self.leftClick(x,y)
                 
-               pass
+                time.sleep(10)
             
 
             if self.onGetMoney():
