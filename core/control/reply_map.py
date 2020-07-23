@@ -10,7 +10,10 @@ import common.screen as screen
 class ReplyMap(BaseControl):
 
   
-  
+    mapTeamNo=2
+    pvpTeamNo=3
+    blueTeamNo=2
+    
     _needBuyHp=False
     _isUseHp=False
     def __init__(self,handle,interval):
@@ -56,7 +59,11 @@ class ReplyMap(BaseControl):
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)        
 
+    def resetMap(self):
+        pass
 
+    def dragPerLeft(self):
+        self.dragPer(10,50,80,50)
 
     def canResetMap(self):
         return screen.autoCompareResImgHash(self.handle,"map//map_can_reset_51_86_72_89.png")
@@ -78,9 +85,11 @@ class ReplyMap(BaseControl):
                 x,y=xylist[0]
                 self.leftClick(x,y)
                 time.sleep(2)
+                self.leftClick(x,y)#需要恋点
             else:
                 #这就要查看是否地图完结了，然后根据未知地点方向进一步操作...
                 # self.dragPer(10,50,90,50) #移动到左视图 会抓不到..
+                #要记录拖拽方向，以便回溯
                 self.dragPer(10,50,50,50)
                 time.sleep(2)
 

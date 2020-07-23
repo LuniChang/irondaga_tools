@@ -93,14 +93,38 @@ def initReplyPvp():
 
 initReplyPvp()
     
+tk.Button(fm1,text="开始无双",width=10,height=1,command=replyWuShuang.start).grid(row=4,column=1)
+tk.Button(fm1,text="结束无双",width=10,height=1,command=replyWuShuang.stop).grid(row=4,column=2)
 
 
 
-tk.Button(fm1,text="开始38图",width=10,height=1,command=replyMap.start).grid(row=4,column=1)
-tk.Button(fm1,text="结束推图",width=10,height=1,command=replyMap.stop).grid(row=4,column=2)
 
-tk.Button(fm1,text="开始无双",width=10,height=1,command=replyWuShuang.start).grid(row=5,column=1)
-tk.Button(fm1,text="结束无双",width=10,height=1,command=replyWuShuang.stop).grid(row=5,column=2)
+mapTeamNo=tk.IntVar()
+blueTeamNo=tk.IntVar()
+pvpTeamNo=tk.IntVar()
+def startMap():
+    replyMap.mapTeamNo=int(mapTeamNo.get())
+    replyMap.blueTeamNo=int(blueTeamNo.get())
+    replyMap.pvpTeamNo=int(pvpTeamNo.get())
+    replyMap.start()
+
+mapTeamNo.set(2)
+blueTeamNo.set(2)
+pvpTeamNo.set(3)
+
+
+tk.Label(fm1,text="推图队伍").grid(row=5,column=1)
+tk.Entry(fm1,textvariable=mapTeamNo,width=10).grid(row=5,column=2)
+tk.Label(fm1,text="佣兵队伍").grid(row=6,column=1)
+tk.Entry(fm1,textvariable=blueTeamNo,width=10).grid(row=6,column=2)
+tk.Label(fm1,text="pvp队伍").grid(row=7,column=1)
+tk.Entry(fm1,textvariable=pvpTeamNo,width=10).grid(row=7,column=2)
+
+
+
+
+tk.Button(fm1,text="开始图",width=10,height=1,command=startMap).grid(row=8,column=1)
+tk.Button(fm1,text="结束推图",width=10,height=1,command=replyMap.stop).grid(row=8,column=2)
 
 
 

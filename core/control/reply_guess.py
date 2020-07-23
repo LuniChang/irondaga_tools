@@ -37,7 +37,7 @@ class ReplyGuess(BaseControl):
         return screen.autoCompareResImgHash(self.handle,"guess//end_10_40_85_65.png")
 
     def getGuessLocation(self):
-        return screen.matchResImgInWindow(self.handle,"guess//guess_10_20_90_30.png")
+        return screen.matchResImgInWindow(self.handle,"guess//guess_10_22_90_30.png")
 
 
     def toGuess(self):
