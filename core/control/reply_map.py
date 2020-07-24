@@ -16,6 +16,12 @@ class ReplyMap(BaseControl):
     
     _needBuyHp=False
     _isUseHp=False
+    _needResetMap=True
+    # _startLoopSearch=False
+    _scranDirection=0  #0 → 1 ↓ 2← 
+    _nextScranDirection=0
+    _scranMapEnd=False
+
     def __init__(self,handle,interval):
         self.handle=handle
         self.interval=interval
@@ -62,8 +68,63 @@ class ReplyMap(BaseControl):
     def resetMap(self):
         pass
 
+
+
     def dragPerLeft(self):
         self.dragPer(10,50,80,50)
+    def dragPerRight(self):
+        self.dragPer(80,50,10,50)
+    def dragPerUp(self):
+        self.dragPer(50,20,50,70)
+    def dragPerDown(self):
+        self.dragPer(50,70,50,20)
+
+
+
+    def resetMapPosition(self):
+        winHash=""
+        while winHash != screen.winScreenRectHash(self.handle,0,0,50,50):
+               self.dragPer(20,20,70,70)
+               winHash = screen.winScreenRectHash(self.handle,0,0,50,50)
+        self._needResetMap=False
+        self._scranMapEnd=False
+        self._scranDirection=0
+
+    def scranDragMap(self):#全图扫描
+        winHash = screen.winScreenRectHash(self.handle,0,0,50,50)
+      
+        if self._scranDirection==0:
+           self.dragPerRight()
+           if winHash==screen.winScreenRectHash(self.handle,0,0,50,50):
+               self._nextScranDirection=2     
+               self._scranDirection=1
+               return
+        if self._scranDirection==1:
+           self.dragPerDown()
+           #换方向左右
+           if winHash==screen.winScreenRectHash(self.handle,0,0,50,50):
+               self._needResetMap=True
+               self._scranMapEnd=True#扫完全图
+               return
+           self._scranDirection=self._nextScranDirection   
+        if self._scranDirection==2:
+            self.dragPerLeft()
+            if winHash==screen.winScreenRectHash(self.handle,0,0,50,50):
+               self._nextScranDirection=0       #左边到尽头 下去后往右
+               self._scranDirection=1
+               return
+        
+    def inStoryLevel(self):
+        return self.matchResImgInWindow("map//story_level_40_50_55_70.png")
+
+
+    def onEvenSelectBattle():
+        return self.matchResImgInWindow("map//even_select_20_58_80_62.png")
+        
+    def toEvenBattle():
+        self.leftClickPer(70,60)
+        
+
 
     def canResetMap(self):
         return screen.autoCompareResImgHash(self.handle,"map//map_can_reset_51_86_72_89.png")
@@ -77,52 +138,44 @@ class ReplyMap(BaseControl):
 
     
             print("findUnKnowMap")
-            xylist=screen.matchResImgInWindow(self.handle,"map//unkown_52_50_58_54.png")
-           
-            
+            xylist=screen.matchResImgInWindow(self.handle,"map//unkown_52_50_58_54.png",threshold=0.9)
             if  len(xylist)>0:
                 # for i in xylist:
                 x,y=xylist[0]
                 self.leftClick(x,y)
                 time.sleep(2)
-                self.leftClick(x,y)#需要恋点
+                self.leftClick(x,y)#需要连点
             else:
-                #这就要查看是否地图完结了，然后根据未知地点方向进一步操作...
-                # self.dragPer(10,50,90,50) #移动到左视图 会抓不到..
-                #要记录拖拽方向，以便回溯
-                self.dragPer(10,50,50,50)
-                time.sleep(2)
+                if self._needResetMap == True:
+                   self.resetMapPosition()
+                   time.sleep(2)
+                elif self._scranMapEnd != True:
+                   self.scranDragMap()
 
                
 
            
-            print("getitem2")
-            if self.onGetItems():
-                self.clickOnGetItems()
-                time.sleep(2)
-            else :
-                pass
+     
             
             print("clickOnGetItems")
             #获取物品执行
             if self.onGetItems() :
                 self.clickOnGetItems()
                 time.sleep(2)
-            else :
-                pass
 
             print("hpempty")
             if self.isHpEmpty():
                 self.clickOnGetItems()
                 time.sleep(2)
-            else :
-                pass
+            
+
+            if self.inStoryLevel():
+                self.leftClickPer(2,2)
 
             if self.onSelectTeam():
-                self.toSelectTeam(5)   
+                self.toSelectTeam(blueTeamNo)   
                 time.sleep(3)
-            else :
-                pass
+         
 
 
             #体力不足hash 
@@ -132,10 +185,7 @@ class ReplyMap(BaseControl):
                 time.sleep(2)
                 self.closeEmptyHp()
 
-            else :
-                
-               pass
-
+     
             time.sleep(self.interval)
            
 
