@@ -29,7 +29,7 @@ main = tk.Tk()
 
 replyBattle= ReplyBattle(handle,10)
 replyGuess= ReplyGuess(handle,10)
-replyMap= ReplyMap(handle,10)
+replyMap= ReplyMap(handle,3)
 replyWuShuang= ReplyWuShuang(handle,10)
 main.title("机动战队工具")
 main.geometry("600x700")
@@ -108,9 +108,9 @@ def startMap():
     replyMap.pvpTeamNo=int(pvpTeamNo.get())
     replyMap.start()
 
-mapTeamNo.set(2)
+mapTeamNo.set(5)
 blueTeamNo.set(2)
-pvpTeamNo.set(3)
+pvpTeamNo.set(4)
 
 
 tk.Label(fm1,text="推图队伍").grid(row=5,column=1)
