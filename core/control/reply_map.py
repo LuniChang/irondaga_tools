@@ -7,6 +7,11 @@ from control.base_control import BaseControl
 
 import common.screen as screen
 
+RIGHT=0
+DOWN=1
+LEFT=2
+
+
 class ReplyMap(BaseControl):
 
   
@@ -16,11 +21,12 @@ class ReplyMap(BaseControl):
     
     _needBuyHp=False
     _isUseHp=False
-    _needResetMap=True
-    # _startLoopSearch=False
+
+    
+    _isScranMap = False
     _scranDirection=0  #0 → 1 ↓ 2← 
     _nextScranDirection=0
-    _scranMapEnd=False
+
 
     def __init__(self,handle,interval):
         self.handle=handle
@@ -81,38 +87,41 @@ class ReplyMap(BaseControl):
 
 
 
+   
     def resetMapPosition(self):
-        winHash=""
-        while winHash != screen.winScreenRectHash(self.handle,0,0,50,50):
-               self.dragPer(20,20,70,70)
-               winHash = screen.winScreenRectHash(self.handle,0,0,50,50)
-        self._needResetMap=False
-        self._scranMapEnd=False
-        self._scranDirection=0
+        if  not self._isScranMap:
+            winHash = ""
+            while winHash != screen.winScreenRectHash(self.handle, 0, 0, 50, 50):
+                self.dragPer(20, 20, 70, 70)
+                winHash = screen.winScreenRectHash(self.handle, 0, 0, 50, 50)
+            self._needResetMap = False
+            self._scranMapEnd = False
+            self._scranDirection = 0
 
-    def scranDragMap(self):#全图扫描
-        winHash = screen.winScreenRectHash(self.handle,0,0,50,50)
-      
-        if self._scranDirection==0:
-           self.dragPerRight()
-           if winHash==screen.winScreenRectHash(self.handle,0,0,50,50):
-               self._nextScranDirection=2     
-               self._scranDirection=1
-               return
-        if self._scranDirection==1:
-           self.dragPerDown()
-           #换方向左右
-           if winHash==screen.winScreenRectHash(self.handle,0,0,50,50):
-               self._needResetMap=True
-               self._scranMapEnd=True#扫完全图
-               return
-           self._scranDirection=self._nextScranDirection   
-        if self._scranDirection==2:
+    def scranDragMap(self):  # 全图扫描
+        winHash = screen.winScreenRectHash(self.handle, 0, 0, 50, 50)
+        self._isScranMap=True
+        if self._scranDirection == RIGHT:
+            self.dragPerRight()
+            if winHash == screen.winScreenRectHash(self.handle, 0, 0, 50, 50):
+                self._nextScranDirection = LEFT
+                self._scranDirection = DOWN
+                return
+        if self._scranDirection == DOWN:
+            self.dragPerDown()
+            # 换方向左右
+            if winHash == screen.winScreenRectHash(self.handle, 0, 0, 50, 50):
+                self._isScranMap = False  # 扫完全图
+                return
+
+            self._scranDirection = self._nextScranDirection
+        if self._scranDirection == LEFT:
             self.dragPerLeft()
-            if winHash==screen.winScreenRectHash(self.handle,0,0,50,50):
-               self._nextScranDirection=0       #左边到尽头 下去后往右
-               self._scranDirection=1
-               return
+            if winHash == screen.winScreenRectHash(self.handle, 0, 0, 50, 50):
+                self._nextScranDirection = RIGHT  # 左边到尽头 下去后往右
+                self._scranDirection = DOWN
+                return
+
         
     def inStoryLevel(self):
         return self.matchResImgInWindow("map//story_level_40_50_55_70.png")
