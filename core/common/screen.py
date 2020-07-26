@@ -347,3 +347,25 @@ def matchResImgInWindow(handle,imgName,threshold=0.8,mult=True):
 
   print(xyList)
   return  xyList
+
+
+
+
+
+def featResImgInWindow(handle,imgName):
+  targetImg=Image.open(imgName)
+ 
+  wLeft, wTop, wRight, wBottom = appGetWindowRect(handle)
+  winImg = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
+
+  imgTag=cv2.cvtColor(numpy.asarray(targetImg),cv2.COLOR_RGB2BGR)  
+  imgWin=cv2.cvtColor(numpy.asarray(winImg),cv2.COLOR_RGB2BGR) 
+  targetImg.close()
+  winImg.close() 
+  sift = cv2.xfeatures2d.SIFT_create()
+  kp1, des1 = sift.detectAndCompute(imgTag,None)
+  kp2, des2 = sift.detectAndCompute(imgWin,None)
+  bf = cv.BFMatcher(cv.NORM_HAMMING, crossCheck=True) # 匹配描述符.
+  matches = bf.match(des1,des2) # 根据距离排序
+  matches = sorted(matches, key = lambda x:x.distance) # 绘制前10的匹配项
+  return matches

@@ -98,9 +98,7 @@ class BaseControl:
     def clickDlgOK(self):
         win32gui.SetForegroundWindow(self.handle)
         self.leftClick(self.getPosX(75), self.getPosY(60))
-        xylist=screen.matchResImgInWindow(self.handle,imgName,threshold)
-        if len(xylist) >0:
-            return True
+
        
     def onDlgOkAndClick(self):
         win32gui.SetForegroundWindow(self.handle)

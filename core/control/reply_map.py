@@ -66,16 +66,20 @@ class ReplyMap(BaseControl):
 
 
     def dragPerLeft(self):
-        self.dragPer(20, 50, 80, 50)
+        self.dragPer(5, 50, 95, 50)
+        time.sleep(0.3)
 
     def dragPerRight(self):
-        self.dragPer(80, 50, 20, 50)
+        self.dragPer(95, 50, 5, 50)
+        time.sleep(0.3)
 
     def dragPerUp(self):
         self.dragPer(50, 20, 50, 70)
+        time.sleep(0.3)
 
     def dragPerDown(self):
         self.dragPer(50, 70, 50, 20)
+        time.sleep(0.3)
 
     def resetMapPosition(self):
         if not self._isScranMap:
@@ -90,25 +94,25 @@ class ReplyMap(BaseControl):
             self._scranDirection = 0
 
     def scranDragMap(self):  # 全图扫描
-        winHash = screen.winScreenRectHash(self.handle, 0, 0, 50, 50)
+        winHash = screen.winScreenHash(self.handle)
         self._isScranMap = True
         if self._scranDirection == RIGHT:
             self.dragPerRight()
-            if winHash == screen.winScreenRectHash(self.handle, 0, 0, 50, 50):
+            if winHash == screen.winScreenHash(self.handle):
                 self._nextScranDirection = LEFT
                 self._scranDirection = DOWN
                 return
         if self._scranDirection == DOWN:
             self.dragPerDown()
             # 换方向左右
-            if winHash == screen.winScreenRectHash(self.handle, 0, 0, 50, 50):
+            if winHash == screen.winScreenHash(self.handle):
                 self._isScranMap = False  # 扫完全图
                 return
 
             self._scranDirection = self._nextScranDirection
         if self._scranDirection == LEFT:
             self.dragPerLeft()
-            if winHash == screen.winScreenRectHash(self.handle, 0, 0, 50, 50):
+            if winHash == screen.winScreenHash(self.handle):
                 self._nextScranDirection = RIGHT  # 左边到尽头 下去后往右
                 self._scranDirection = DOWN
                 return
@@ -169,7 +173,7 @@ class ReplyMap(BaseControl):
 
     def onDlgChallengeAndClick(self):
         win32gui.SetForegroundWindow(self.handle)
-        xylist=screen.matchResImgInWindow(self.handle,"map//challenge_60_58_80_62.png",0.9)
+        xylist=screen.matchResImgInWindow(self.handle,"map//challenge_60_58_80_62.png",0.965)
         if len(xylist) >0:
              x, y = xylist[0]
              self.leftClick(x+2, y+2)
@@ -177,7 +181,7 @@ class ReplyMap(BaseControl):
 
     def onDlgBuyRoadAndClick(self):
         win32gui.SetForegroundWindow(self.handle)
-        xylist=screen.matchResImgInWindow(self.handle,"map//buy_road_20_58_40_62.png",0.9)
+        xylist=screen.matchResImgInWindow(self.handle,"map//buy_road_20_58_40_62.png",0.965)
         if len(xylist) >0:
              x, y = xylist[0]
              self.leftClick(x+2, y+2)
@@ -187,7 +191,6 @@ class ReplyMap(BaseControl):
 
     def run(self):
 
-        diretionLast = 0
         while self._isRun:
             win32gui.SetForegroundWindow(self.handle)
             self.resetCursorPos()
@@ -196,9 +199,9 @@ class ReplyMap(BaseControl):
                 # self.toEvenBattle()
                 self.battleEvenCode == 0
                 
-            self.onDlgBuyRoadAndClick()
+            
             self.onDlgChallengeAndClick()
-           
+            self.onDlgBuyRoadAndClick()
                 # time.sleep(2)
             # if self.onPvpSelectBattle():
             #     self.noPvp()
@@ -265,23 +268,24 @@ class ReplyMap(BaseControl):
                 self.leftClickPer(65, 88)
                 self._isScranMap = False
 
-            print("findUnKnowMap")
-            xylist = screen.matchResImgInWindow(
-                self.handle, "map//unkown_46_46_54_50.png", threshold=0.85)
-            if len(xylist) > 0:
-                # for i in xylist:
-                x, y = xylist[0]
-                self.leftClick(x, y)
-                time.sleep(2)
-                self.leftClick(x, y)  # 需要连点
-                # time.sleep(2)
-                # self.leftClick(x,y)#需要连点
-            elif self.onMap():
-                
+            if self.onMap():
+                print("findUnKnowMap")
+                xylist = screen.matchResImgInWindow(
+                    self.handle, "map//unkown_46_46_54_50.png", threshold=0.85)
+                if len(xylist) > 0:
+                    # for i in xylist:
+                    x, y = xylist[0]
+                    self.leftClick(x, y)
+                    time.sleep(2)
+                    self.leftClick(x, y)  # 需要连点
+                    # time.sleep(2)
+                    # self.leftClick(x,y)#需要连点
+                elif self.onMap():
+                    
 
-                self.resetMapPosition()
-                time.sleep(2)
-                self.scranDragMap()
-                time.sleep(2)
+                    self.resetMapPosition()
+                    time.sleep(2)
+                    self.scranDragMap()
+                    time.sleep(2)
 
             time.sleep(self.interval)
