@@ -136,7 +136,9 @@ class ReplyMap(BaseControl):
         self.leftClickPer(70, 60)
 
     def onPvpSelectBattle(self):
-        return screen.autoCompareResImgHash(self.handle,"map//pvp_select_20_58_80_62.png", 0.9)
+        # return screen.autoCompareResImgHash(self.handle,"map//buy_road_20_58_40_62.png", 0.9)
+        return self.matchResImgInWindow("map//buy_road_20_48_80_62.png")
+        
 
     def noPvp(self):
         self.leftClickPer(22, 60)
@@ -198,7 +200,7 @@ class ReplyMap(BaseControl):
 
     def onDlgBuyRoadAndClick(self):
         win32gui.SetForegroundWindow(self.handle)
-        xylist=screen.matchResImgInWindow(self.handle,"map//buy_road_20_58_40_62.png",0.965)
+        xylist=screen.matchResImgInWindow(self.handle,"map//buy_road_20_58_40_62.png",0.98)
         if len(xylist) >0:
              x, y = xylist[0]
              self.leftClick(x+2, y+2)
@@ -219,8 +221,9 @@ class ReplyMap(BaseControl):
             if self.onPvpSelectBattle():
                 self.noPvp()
                 time.sleep(2)
-            self.onDlgChallengeAndClick()
             # self.onDlgBuyRoadAndClick()
+            self.onDlgChallengeAndClick()
+           
                 # time.sleep(2)
            
 
