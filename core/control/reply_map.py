@@ -229,8 +229,9 @@ class ReplyMap(BaseControl):
             #     self.noPvp()
             #     time.sleep(2)
             # self.onDlgBuyRoadAndClick()
-            self.onDlgChallengeAndClick()
             self.onDlgBuyRoadAndClick()
+            self.onDlgChallengeAndClick()
+           
             self.onYellowPvpAndBattle()
            
 
