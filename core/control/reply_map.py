@@ -84,35 +84,44 @@ class ReplyMap(BaseControl):
     def resetMapPosition(self):
         if not self._isScranMap:
             winHash = ""
-            while winHash != screen.winScreenRectHash(self.handle, 0, 0, 50, 50):
-                self.dragPer(20, 20, 70, 70)
-                time.sleep(1)
-                winHash = screen.winScreenRectHash(self.handle, 0, 0, 50, 50)
-
+            while  not screen.alikeHash(winHash ,screen.winScreenHash(self.handle),0.9) :
+                winHash = screen.winScreenHash(self.handle )
+                self.dragPerUp()
+               
+            winHash = ""   
+            while not screen.alikeHash(winHash ,screen.winScreenHash(self.handle),0.9) :
+                winHash = screen.winScreenHash(self.handle )
+                self.dragPerLeft()
+             
+               
             self._needResetMap = False
             self._scranMapEnd = False
             self._scranDirection = 0
 
+   
     def scranDragMap(self):  # 全图扫描
-        winHash = screen.winScreenHash(self.handle)
+        winHash = screen.winScreenHash(self.handle )
         self._isScranMap = True
         if self._scranDirection == RIGHT:
             self.dragPerRight()
-            if winHash == screen.winScreenHash(self.handle):
+           
+            if screen.alikeHash(winHash ,screen.winScreenHash(self.handle),0.9) :
                 self._nextScranDirection = LEFT
                 self._scranDirection = DOWN
                 return
         if self._scranDirection == DOWN:
             self.dragPerDown()
             # 换方向左右
-            if winHash == screen.winScreenHash(self.handle):
+        
+            if screen.alikeHash(winHash ,screen.winScreenHash(self.handle),0.9) :
                 self._isScranMap = False  # 扫完全图
                 return
 
             self._scranDirection = self._nextScranDirection
         if self._scranDirection == LEFT:
             self.dragPerLeft()
-            if winHash == screen.winScreenHash(self.handle):
+    
+            if screen.alikeHash(winHash ,screen.winScreenHash(self.handle),0.9) :
                 self._nextScranDirection = RIGHT  # 左边到尽头 下去后往右
                 self._scranDirection = DOWN
                 return
@@ -127,7 +136,7 @@ class ReplyMap(BaseControl):
         self.leftClickPer(70, 60)
 
     def onPvpSelectBattle(self):
-        return self.matchResImgInWindow("map//pvp_select_20_58_80_62.png", 0.9)
+        return screen.autoCompareResImgHash(self.handle,"map//pvp_select_20_58_80_62.png", 0.9)
 
     def noPvp(self):
         self.leftClickPer(22, 60)
@@ -162,6 +171,14 @@ class ReplyMap(BaseControl):
     def toEndBusiness(self):
         self.leftClickPer(70, 74)
 
+    def onBusinessAndClose(self):
+        win32gui.SetForegroundWindow(self.handle)
+        xylist=screen.matchResImgInWindow(self.handle,"map//on_business_65_73_85_76.png",0.8)
+        if len(xylist) >0:
+             x, y = xylist[0]
+             self.leftClick(x+2, y+2)
+             self.battleEvenCode == 0    
+
     def onSupportDlg(self):
         return self.matchResImgInWindow("map//on_support_20_75_80_84.png")
 
@@ -169,7 +186,7 @@ class ReplyMap(BaseControl):
         self.leftClickPer(50, 82)
 
     def onMap(self):
-        return self.matchResImgInWindow("map//on_map_5_86_22_89.png",0.9)
+        return screen.autoCompareResImgHash(self.handle,"map//on_map_5_86_22_89.png",0.9)
 
     def onDlgChallengeAndClick(self):
         win32gui.SetForegroundWindow(self.handle)
@@ -185,7 +202,7 @@ class ReplyMap(BaseControl):
         if len(xylist) >0:
              x, y = xylist[0]
              self.leftClick(x+2, y+2)
-             self.battleEvenCode == 0
+             self.battleEvenCode == 3
 
              
 
@@ -199,13 +216,13 @@ class ReplyMap(BaseControl):
                 # self.toEvenBattle()
                 self.battleEvenCode == 0
                 
-            
+            if self.onPvpSelectBattle():
+                self.noPvp()
+                time.sleep(2)
             self.onDlgChallengeAndClick()
-            self.onDlgBuyRoadAndClick()
+            # self.onDlgBuyRoadAndClick()
                 # time.sleep(2)
-            # if self.onPvpSelectBattle():
-            #     self.noPvp()
-            #     time.sleep(2)
+           
 
             if self.inStoryLevel() or self.onGoldBar() or self.onBlackMarket():
                 self.pressBack()
@@ -237,10 +254,10 @@ class ReplyMap(BaseControl):
             
             self.onDlgOkAndClick()
       
-            
-            if self.onBusiness():
-                self.toEndBusiness()
-                time.sleep(2)
+            self.onBusinessAndClose()
+            # if self.onBusiness():
+            #     self.toEndBusiness()
+            #     time.sleep(2)
 
             print("clickOnGetItems")
             # 获取物品执行
@@ -271,7 +288,7 @@ class ReplyMap(BaseControl):
             if self.onMap():
                 print("findUnKnowMap")
                 xylist = screen.matchResImgInWindow(
-                    self.handle, "map//unkown_46_46_54_50.png", threshold=0.85)
+                    self.handle, "map//unkown_46_46_54_50.png", threshold=0.8)
                 if len(xylist) > 0:
                     # for i in xylist:
                     x, y = xylist[0]

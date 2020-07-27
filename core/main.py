@@ -29,7 +29,7 @@ main = tk.Tk()
 
 replyBattle= ReplyBattle(handle,10)
 replyGuess= ReplyGuess(handle,10)
-replyMap= ReplyMap(handle,3)
+replyMap= ReplyMap(handle,1)
 replyWuShuang= ReplyWuShuang(handle,10)
 main.title("机动战队工具")
 main.geometry("600x700")
@@ -182,5 +182,5 @@ main.mainloop()
 
 #   time.sleep(5)
 
-
-exit()
+exit(0)
+# win.protocol("WM_DELETE_WINDOW", lambda: sys.exit(0))

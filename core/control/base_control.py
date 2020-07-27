@@ -46,11 +46,11 @@ class BaseControl:
     def dragPer(self,x,y,toX,toY):
         win32api.SetCursorPos((self.getPosX(x), self.getPosY(y)))
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN , 0, 0, 0, 0)
-        time.sleep(0.2)  
+        time.sleep(0.5)  
         moveToX=int(self.getPosX(toX)*(65535/win32api.GetSystemMetrics(0)))
         moveToY=int(self.getPosY(toY)*(65535/win32api.GetSystemMetrics(1)))
         win32api.mouse_event(win32con.MOUSEEVENTF_ABSOLUTE + win32con.MOUSEEVENTF_MOVE, moveToX, moveToY, 0, 0)  
-        time.sleep(0.2)
+        time.sleep(0.3)
         win32api.SetCursorPos((moveToX, moveToY))
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)  
 

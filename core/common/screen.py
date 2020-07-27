@@ -164,9 +164,9 @@ def getResImgHash(fileName):
 
 
 
-def autoCompareResImgHash(handle,fileName):
+def autoCompareResImgHash(handle,fileName,alikeValue=0.3):
   
-  return autoCompareResImgHashValue(handle,fileName)>0.3
+  return autoCompareResImgHashValue(handle,fileName)>alikeValue
 
 def autoCompareResImgHashValue(handle,fileName):
   imgPath=path.getResDirPath()+fileName
@@ -239,8 +239,10 @@ def winScreenHash(hwnd):
   img.close()
   return phash
 
-def alikeHash(hash1,hash2): #明汉距离 实际缩放会在2  哈希字符串 比较差异过大
+def alikeHash(hash1,hash2,alikeValue): #明汉距离 实际缩放会在2  哈希字符串 比较差异过大
     length=len(hash1)
+    if length==0 :
+      return False
     num = 0
     for index in range(len(hash1.encode())): 
         if hash1[index] == hash2[index]: 
@@ -248,7 +250,7 @@ def alikeHash(hash1,hash2): #明汉距离 实际缩放会在2  哈希字符串 �
   
     res=num/length
     print("alikeHash",length,hash1,hash2,res)
-    return  True  if num/length >= 0.35 else False
+    return  True  if num/length >= alikeValue else False
 
 
 def imgHash(img,hashSize,highfreq_factor):
