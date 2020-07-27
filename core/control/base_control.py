@@ -94,7 +94,7 @@ class BaseControl:
 
     def onDlgOK(self):
         print("onDlgOK")
-        return self.matchResImgInWindow("on_dlg_ok_61_62_80_65.png")
+        return self.matchResImgInWindow("on_dlg_ok_61_62_80_65.png",0.95)
     def clickDlgOK(self):
         win32gui.SetForegroundWindow(self.handle)
         self.leftClick(self.getPosX(75), self.getPosY(60))
@@ -102,7 +102,7 @@ class BaseControl:
        
     def onDlgOkAndClick(self):
         win32gui.SetForegroundWindow(self.handle)
-        xylist=screen.matchResImgInWindow(self.handle,"on_dlg_ok_60_62_80_66.png")
+        xylist=screen.matchResImgInWindow(self.handle,"on_dlg_ok_60_62_80_66.png",0.95)
         if len(xylist) >0:
              x, y = xylist[0]
              self.leftClick(x+2, y+2)

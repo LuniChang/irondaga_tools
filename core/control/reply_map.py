@@ -192,7 +192,7 @@ class ReplyMap(BaseControl):
 
     def onDlgChallengeAndClick(self):
         win32gui.SetForegroundWindow(self.handle)
-        xylist=screen.matchResImgInWindow(self.handle,"map//challenge_60_58_80_62.png",0.965)
+        xylist=screen.matchResImgInWindow(self.handle,"map//challenge_60_58_80_62.png",0.95)
         if len(xylist) >0:
              x, y = xylist[0]
              self.leftClick(x+2, y+2)
@@ -200,7 +200,7 @@ class ReplyMap(BaseControl):
 
     def onDlgBuyRoadAndClick(self):
         win32gui.SetForegroundWindow(self.handle)
-        xylist=screen.matchResImgInWindow(self.handle,"map//buy_road_20_58_40_62.png",0.98)
+        xylist=screen.matchResImgInWindow(self.handle,"map//buy_road_20_58_40_62.png",1)
         if len(xylist) >0:
              x, y = xylist[0]
              self.leftClick(x+2, y+2)
@@ -291,7 +291,7 @@ class ReplyMap(BaseControl):
             if self.onMap():
                 print("findUnKnowMap")
                 xylist = screen.matchResImgInWindow(
-                    self.handle, "map//unkown_46_46_54_50.png", threshold=0.8)
+                    self.handle, "map//unkown_46_46_54_50.png", threshold=0.7)
                 if len(xylist) > 0:
                     # for i in xylist:
                     x, y = xylist[0]
