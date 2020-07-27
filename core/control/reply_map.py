@@ -200,12 +200,19 @@ class ReplyMap(BaseControl):
 
     def onDlgBuyRoadAndClick(self):
         win32gui.SetForegroundWindow(self.handle)
-        xylist=screen.matchResImgInWindow(self.handle,"map//buy_road_20_58_40_62.png",1)
+        xylist=screen.matchResImgInWindow(self.handle,"map//buy_road_20_58_40_62.png",0.95)
         if len(xylist) >0:
              x, y = xylist[0]
              self.leftClick(x+2, y+2)
              self.battleEvenCode == 3
 
+    def onYellowPvpAndBattle(self):
+        win32gui.SetForegroundWindow(self.handle)
+        xylist=screen.matchResImgInWindow(self.handle,"map//yellow_pvp_60_76_80_82.png",0.9)
+        if len(xylist) >0:
+             x, y = xylist[0]
+             self.leftClick(x+2, y+2)
+             self.battleEvenCode == 3
              
 
     def run(self):
@@ -218,18 +225,19 @@ class ReplyMap(BaseControl):
                 # self.toEvenBattle()
                 self.battleEvenCode == 0
                 
-            if self.onPvpSelectBattle():
-                self.noPvp()
-                time.sleep(2)
+            # if self.onPvpSelectBattle():
+            #     self.noPvp()
+            #     time.sleep(2)
             # self.onDlgBuyRoadAndClick()
             self.onDlgChallengeAndClick()
-           
-                # time.sleep(2)
+            self.onDlgBuyRoadAndClick()
+            self.onYellowPvpAndBattle()
            
 
             if self.inStoryLevel() or self.onGoldBar() or self.onBlackMarket():
                 self.pressBack()
-                time.sleep(2)
+                time.sleep(3)
+                continue
 
             if self.onYellowPvp():
                 self.leftClick(78, 78)
@@ -291,14 +299,14 @@ class ReplyMap(BaseControl):
             if self.onMap():
                 print("findUnKnowMap")
                 xylist = screen.matchResImgInWindow(
-                    self.handle, "map//unkown_46_46_54_50.png", threshold=0.7)
+                    self.handle, "map//unkown_48_48_54_50.png", threshold=0.7)
                 if len(xylist) > 0:
                     # for i in xylist:
                     x, y = xylist[0]
                     self.leftClick(x, y)
                     time.sleep(2)
                     self.leftClick(x, y)  # 需要连点
-                    # time.sleep(2)
+                    time.sleep(2)
                     # self.leftClick(x,y)#需要连点
                 elif self.onMap():
                     
