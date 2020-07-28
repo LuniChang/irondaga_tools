@@ -46,7 +46,7 @@ class BaseControl:
     def dragPer(self,x,y,toX,toY):
         win32api.SetCursorPos((self.getPosX(x), self.getPosY(y)))
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN , 0, 0, 0, 0)
-        time.sleep(0.5)  
+        time.sleep(0.3)  
         moveToX=int(self.getPosX(toX)*(65535/win32api.GetSystemMetrics(0)))
         moveToY=int(self.getPosY(toY)*(65535/win32api.GetSystemMetrics(1)))
         win32api.mouse_event(win32con.MOUSEEVENTF_ABSOLUTE + win32con.MOUSEEVENTF_MOVE, moveToX, moveToY, 0, 0)  
@@ -57,8 +57,20 @@ class BaseControl:
         # win32gui.sendMessage(self.handle,win32con.WM_LBUTTONDOWN,win32con.MK_LBUTTON, (self.getPosX(x), self.getPosY(y))   #   起始点按住
         # win32gui.sendMessage(self.handle,win32con.WM_MOUSEMOVE, win32con.MK_LBUTTON,moveToX, moveToY)   #   移动到终点
         # win32gui.sendMessage(self.handle, win32con.WM_LBUTTONUP, 0, 0)   # 松开
+    def drag(self,x,y,toX,toY):
+        win32api.SetCursorPos((x, y))
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN , 0, 0, 0, 0)
+        time.sleep(0.3)  
+        sw = win32api.GetSystemMetrics(win32con.SM_CXSCREEN)
+        sh = win32api.GetSystemMetrics(win32con.SM_CYSCREEN)
+        moveToX=int(toX*(65535/sw))
+        moveToY=int(toY*(65535/sh))
+        win32api.mouse_event(win32con.MOUSEEVENTF_ABSOLUTE + win32con.MOUSEEVENTF_MOVE, moveToX, moveToY, 0, 0)  
+        time.sleep(0.6)
+        win32api.SetCursorPos((moveToX, moveToY))
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)  
 
-
+   
     def leftClick(self,x,y):
         win32api.SetCursorPos((x, y))
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN , 0, 0, 0, 0)  
@@ -102,7 +114,7 @@ class BaseControl:
        
     def onDlgOkAndClick(self):
         win32gui.SetForegroundWindow(self.handle)
-        xylist=screen.matchResImgInWindow(self.handle,"on_dlg_ok_60_62_80_66.png",0.95)
+        xylist=screen.matchResImgInWindow(self.handle,"on_dlg_ok_60_62_80_66.png",0.9)
         if len(xylist) >0:
              x, y = xylist[0]
              self.leftClick(x+2, y+2)
