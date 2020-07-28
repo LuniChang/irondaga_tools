@@ -307,8 +307,17 @@ class ReplyMap(BaseControl):
                 print("findUnKnowMap")
                 xylist = screen.matchResImgInWindow(
                     self.handle, "map//unkown_46_46_54_50.png", threshold=0.7)
-                if len(xylist) > 0:
+
+                resList=[];    
+                minY=self.getPosY(20)
+                maxY=self.getPosY(80)
+                for point in xylist:
+                    if point[1]>=minY and point[1]<=maxY:
+                        resList.append(point)
+                        
+                if len(resList) > 0:
                     # for i in xylist:
+
                     x, y = xylist[0]
                     cx=self.getPosX(50)
                     cy=self.getPosY(50)
