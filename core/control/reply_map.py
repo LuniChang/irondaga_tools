@@ -156,6 +156,11 @@ class ReplyMap(BaseControl):
     def onBar(self):
         return self.matchResImgInWindow("map//on_bar_0_0_30_10.png")
 
+    def onArmyBar(self):
+        return self.matchResImgInWindow("map//on_army_bar_50_5_72_10.png")
+
+  
+
     def onBlackMarket(self):
         return self.matchResImgInWindow("map//on_black_market_0_0_30_10.png")
 
@@ -213,12 +218,22 @@ class ReplyMap(BaseControl):
             self.leftClick(x+2, y+2)
             self.battleEvenCode == 3
 
+    def onBlueTacketAndBattle(self):
+        win32gui.SetForegroundWindow(self.handle)
+        xylist = screen.matchResImgInWindow(
+            self.handle, "map//blue_tacket_15_15_40_20.png", 0.9)
+        if len(xylist) > 0:
+            self.leftClickPer(75, 80)
+            self.battleEvenCode == 2 
+
+
+
     def run(self):
 
         while self._isRun:
             win32gui.SetForegroundWindow(self.handle)
             self.resetCursorPos()
-
+      
             if self.onEvenSelectBattle():
                 # self.toEvenBattle()
                 self.battleEvenCode == 0
@@ -229,10 +244,10 @@ class ReplyMap(BaseControl):
             # self.onDlgBuyRoadAndClick()
             self.onDlgBuyRoadAndClick()
             self.onDlgChallengeAndClick()
-
+            self.onBlueTacketAndBattle()
             self.onYellowPvpAndBattle()
 
-            if self.inStoryLevel() or self.onGoldBar() or self.onBlackMarket():
+            if self.inStoryLevel() or self.onGoldBar() or self.onBlackMarket() or self.onArmyBar():
                 self.pressBack()
                 time.sleep(3)
                 continue
@@ -258,24 +273,21 @@ class ReplyMap(BaseControl):
                     self.toSelectTeam(self.pvpTeamNo)
                 if self.battleEvenCode == 2:
                     self.toSelectTeam(self.blueTeamNo)
-
+                if self.battleEvenCode == 3:
+                    self.toSelectTeam(self.pvpTeamNo)
                 time.sleep(3)
 
             if self.onTalk():
                 self.skipTalk()
                 time.sleep(2)
 
-            # if self.onDlgOK():
-            #     print("onDlgOK")
-            #     self.clickDlgOK()
-            #     time.sleep(2)
+
 
             self.onDlgOkAndClick()
 
             self.onBusinessAndClose()
-            # if self.onBusiness():
-            #     self.toEndBusiness()
-            #     time.sleep(2)
+        
+       
 
             print("clickOnGetItems")
             # 获取物品执行
