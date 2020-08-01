@@ -127,6 +127,7 @@ class BaseControl:
         if len(xylist) > 0:
             x, y = xylist[0]
             self.leftClick(x+2, y+2)
+            time.sleep(2)
 
     # 阵容小于3或者大于6不能用
 

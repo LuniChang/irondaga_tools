@@ -159,8 +159,6 @@ class ReplyMap(BaseControl):
     def onArmyBar(self):
         return self.matchResImgInWindow("map//on_army_bar_50_5_72_10.png")
 
-  
-
     def onBlackMarket(self):
         return self.matchResImgInWindow("map//on_black_market_0_0_30_10.png")
 
@@ -180,7 +178,7 @@ class ReplyMap(BaseControl):
         if len(xylist) > 0:
             x, y = xylist[0]
             self.leftClick(x+2, y+2)
-            self.battleEvenCode == 0
+            self.battleEvenCode = 0
 
     def onSupportDlg(self):
         return self.matchResImgInWindow("map//on_support_20_75_80_84.png")
@@ -198,7 +196,7 @@ class ReplyMap(BaseControl):
         if len(xylist) > 0:
             x, y = xylist[0]
             self.leftClick(x+2, y+2)
-            self.battleEvenCode == 0
+            self.battleEvenCode = 0
 
     def onDlgBuyRoadAndClick(self):
         win32gui.SetForegroundWindow(self.handle)
@@ -207,7 +205,7 @@ class ReplyMap(BaseControl):
         if len(xylist) > 0:
             x, y = xylist[0]
             self.leftClick(x+2, y+2)
-            self.battleEvenCode == 3
+            self.battleEvenCode = 3
 
     def onYellowPvpAndBattle(self):
         win32gui.SetForegroundWindow(self.handle)
@@ -216,7 +214,7 @@ class ReplyMap(BaseControl):
         if len(xylist) > 0:
             x, y = xylist[0]
             self.leftClick(x+2, y+2)
-            self.battleEvenCode == 3
+            self.battleEvenCode = 3
 
     def onBlueTacketAndBattle(self):
         win32gui.SetForegroundWindow(self.handle)
@@ -224,19 +222,17 @@ class ReplyMap(BaseControl):
             self.handle, "map//blue_tacket_15_15_40_20.png", 0.9)
         if len(xylist) > 0:
             self.leftClickPer(75, 80)
-            self.battleEvenCode == 2 
-
-
+            self.battleEvenCode = 2
 
     def run(self):
 
         while self._isRun:
             win32gui.SetForegroundWindow(self.handle)
             self.resetCursorPos()
-      
+
             if self.onEvenSelectBattle():
                 # self.toEvenBattle()
-                self.battleEvenCode == 0
+                self.battleEvenCode = 0
 
             # if self.onPvpSelectBattle():
             #     self.noPvp()
@@ -246,24 +242,25 @@ class ReplyMap(BaseControl):
             self.onDlgChallengeAndClick()
             self.onBlueTacketAndBattle()
             self.onYellowPvpAndBattle()
-
+            
+            if self.onBar():
+                self.leftClickPer(10, 70)
+                time.sleep(2)
+                self.leftClickPer(10, 70)
+                time.sleep(2)
+                self.leftClickPer(10, 70)
+                time.sleep(2)
+                self.pressBack()
+                time.sleep(3)
+                continue
             if self.inStoryLevel() or self.onGoldBar() or self.onBlackMarket() or self.onArmyBar():
                 self.pressBack()
                 time.sleep(3)
                 continue
-            if self.onBar():
-                self.leftClickPer(10, 70)
-                time.sleep(1)
-                self.leftClickPer(10, 70)
-                time.sleep(1)
-                self.leftClickPer(10, 70)
-                time.sleep(1)
-                self.pressBack()
-                time.sleep(3)
-                continue
+           
             if self.onYellowPvp():
                 self.leftClick(78, 78)
-                self.battleEvenCode == 1
+                self.battleEvenCode = 1
                 time.sleep(2)
 
             if self.onSelectTeam():
@@ -281,13 +278,9 @@ class ReplyMap(BaseControl):
                 self.skipTalk()
                 time.sleep(2)
 
-
-
             self.onDlgOkAndClick()
 
             self.onBusinessAndClose()
-        
-       
 
             print("clickOnGetItems")
             # 获取物品执行
@@ -320,29 +313,33 @@ class ReplyMap(BaseControl):
                 xylist = screen.matchResImgInWindow(
                     self.handle, "map//unkown_46_46_54_50.png", threshold=0.7)
 
-                resList=[];    
-                minY=self.getPosY(20)
-                maxY=self.getPosY(80)
+                resList = []
+                minY = self.getPosY(20)
+                maxY = self.getPosY(80)
                 for point in xylist:
-                    if point[1]>=minY and point[1]<=maxY:
+                    if point[1] >= minY and point[1] <= maxY:
                         resList.append(point)
-                        
+
                 if len(resList) > 0:
                     # for i in xylist:
 
                     x, y = xylist[0]
-                    cx=self.getPosX(50)
-                    cy=self.getPosY(50)
+                    cx = self.getPosX(50)
+                    cy = self.getPosY(50)
                     # dx=int(cx+(cx-x)/2)
                     # dy=int(cy+(cy-y)/2)
-                    self.drag(x,y,cx,cy) #拖动不是一比一 大概是一半
-                    time.sleep(1)
-                    self.drag(x,y,cx,cy) 
+                    self.drag(x, y, cx, cy)  # 拖动不是一比一 大概是一半
+                    time.sleep(0.5)
+                    self.drag(x, y, cx, cy)
                     time.sleep(2)
                     self.leftClick(cx, cy)
                     time.sleep(2)
-                    self.leftClick(cx, cy)  # 需要连点
-                    time.sleep(2)
+                    if self.inStoryLevel():
+                        self.pressBack()
+                        time.sleep(2)
+                    else:
+                        self.leftClick(cx, cy)  # 需要连点
+                        time.sleep(3)
                     # self.leftClick(x,y)#需要连点
                 elif self.onMap():
 
@@ -350,6 +347,7 @@ class ReplyMap(BaseControl):
                     time.sleep(2)
                     self.scranDragMap()
                     time.sleep(2)
-                continue    
+                    continue
+                
 
             time.sleep(self.interval)
