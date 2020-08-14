@@ -224,6 +224,14 @@ class ReplyMap(BaseControl):
             self.leftClickPer(75, 80)
             self.battleEvenCode = 2
 
+    def closeMapInfoMenu(self):
+        win32gui.SetForegroundWindow(self.handle)
+        xylist = screen.matchResImgInWindow(
+            self.handle, "map//map_infomenu_70_17_98_20.png", 0.9)
+        if len(xylist) > 0:
+            self.leftClickPer(98, 30)
+           
+
     def run(self):
 
         while self._isRun:
@@ -242,7 +250,7 @@ class ReplyMap(BaseControl):
             self.onDlgChallengeAndClick()
             self.onBlueTacketAndBattle()
             self.onYellowPvpAndBattle()
-            
+            self.closeMapInfoMenu()
             if self.onBar():
                 self.leftClickPer(10, 70)
                 time.sleep(2)
