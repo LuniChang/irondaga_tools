@@ -164,7 +164,7 @@ def getResImgHash(fileName):
 
 
 
-def autoCompareResImgHash(handle,fileName,alikeValue=0.3):
+def autoCompareResImgHash(handle,fileName,alikeValue=0.35):
   
   return autoCompareResImgHashValue(handle,fileName)>alikeValue
 
@@ -355,8 +355,12 @@ def matchResImgInWindow(handle,imgName,threshold=0.8,mult=True):
 
 
 def featResImgInWindow(handle,imgName):
-  targetImg=Image.open(imgName)
- 
+  imgPath=path.getResDirPath()+imgName
+  if not os.path.exists(path.getProjectPath()):
+    os.makedirs(path.getProjectPath())
+  targetImg=Image.open(imgPath)
+  targetImgWidth=targetImg.size[0]
+  targetImgHeigth=targetImg.size[1]
   wLeft, wTop, wRight, wBottom = appGetWindowRect(handle)
   winImg = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
 
@@ -367,7 +371,33 @@ def featResImgInWindow(handle,imgName):
   sift = cv2.xfeatures2d.SIFT_create()
   kp1, des1 = sift.detectAndCompute(imgTag,None)
   kp2, des2 = sift.detectAndCompute(imgWin,None)
-  bf = cv.BFMatcher(cv.NORM_HAMMING, crossCheck=True) # 匹配描述符.
+  bf = cv2.BFMatcher() # 匹配描述符.
   matches = bf.match(des1,des2) # 根据距离排序
+  # matches = bf.knnMatch(des1,des2, k=2)
   matches = sorted(matches, key = lambda x:x.distance) # 绘制前10的匹配项
-  return matches
+  # for pt in zip(*loc[::-1]):
+  #     matches.append((wLeft+pt[0]+(targetImgWidth>>1),wTop+pt[1]+(targetImgHeigth>>1)))
+
+  # list_kp1 = []
+  list_kp2 = []
+
+  # For each match...
+  for mat in matches:
+
+      # Get the matching keypoints for each of the images
+      # img1_idx = mat.queryIdx
+      img2_idx = mat.trainIdx
+
+      # x - columns
+      # y - rows
+      # Get the coordinates
+      # (x1,y1) = kp1[img1_idx].pt
+      (x2,y2) = kp2[img2_idx].pt
+
+      # Append to each list
+      # list_kp1.append((int(x1), int(y1)))
+      # list_kp2.append((int(x2), int(y2)))
+      list_kp2.append((wLeft+int(x2)+(targetImgWidth>>1),wTop+int(y2)+(targetImgHeigth>>1)))
+
+  print(list_kp2) 
+  return list_kp2
