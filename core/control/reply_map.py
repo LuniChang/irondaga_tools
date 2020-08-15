@@ -123,7 +123,7 @@ class ReplyMap(BaseControl):
                 return
 
     def inStoryLevel(self):
-        return self.matchResImgInWindow("map//story_level_40_50_55_70.png")
+        return self.matchResImgInWindow("map//story_level_40_50_55_70.png",0.7)
 
     def onEvenSelectBattle(self):
         return self.matchResImgInWindow("map//even_select_20_58_80_62.png", 0.9) or self.matchResImgInWindow("map//even_select3_20_58_80_62.png", 0.9)
