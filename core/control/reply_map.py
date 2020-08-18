@@ -331,7 +331,7 @@ class ReplyMap(BaseControl):
                 if len(resList) > 0:
                     # for i in xylist:
 
-                    x, y = xylist[0]
+                    x, y = resList[0]
                     cx = self.getPosX(50)
                     cy = self.getPosY(50)
                     # dx=int(cx+(cx-x)/2)
