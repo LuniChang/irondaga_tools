@@ -176,9 +176,22 @@ class ReplyMap(BaseControl):
         xylist = screen.matchResImgInWindow(
             self.handle, "map//on_business_65_73_85_76.png", 0.8)
         if len(xylist) > 0:
+            if self.canChangeRedAir():
+                 self.leftClickPer(75, 34)
+                 time.sleep(3)
+                 self.onDlgOkAndClick()
+                 self.leftClickPer(75, 46)
+                 time.sleep(3)
+                 self.onDlgOkAndClick()
+                 self.leftClickPer(75, 59)
+                 time.sleep(3)
+                 self.onDlgOkAndClick()
+
+
+     
             x, y = xylist[0]
             self.leftClick(x+2, y+2)
-            self.battleEvenCode = 0
+       
 
     def onSupportDlg(self):
         return self.matchResImgInWindow("map//on_support_20_75_80_84.png")
@@ -230,6 +243,14 @@ class ReplyMap(BaseControl):
             self.handle, "map//map_infomenu_70_17_98_20.png", 0.9)
         if len(xylist) > 0:
             self.leftClickPer(98, 30)
+
+    def canChangeRedAir(self):
+        win32gui.SetForegroundWindow(self.handle)
+        xylist = screen.matchResImgInWindow(
+            self.handle, "map//shop_red_air_82_40_98_48.png", 0.9)
+        return len(xylist) > 0
+
+        
            
 
     def run(self):
@@ -287,6 +308,7 @@ class ReplyMap(BaseControl):
                 time.sleep(2)
 
             self.onDlgOkAndClick()
+            
 
             self.onBusinessAndClose()
 
@@ -315,6 +337,8 @@ class ReplyMap(BaseControl):
             if self.canResetMap():
                 self.leftClickPer(65, 88)
                 self._isScranMap = False
+
+
 
             if self.onMap():
                 print("findUnKnowMap")
