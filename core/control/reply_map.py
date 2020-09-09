@@ -344,7 +344,7 @@ class ReplyMap(BaseControl):
             if self.onMap():
                 print("findUnKnowMap")
                 xylist = screen.matchResImgInWindow(
-                    self.handle, "map//unkown_46_46_54_50.png",0.7)
+                    self.handle, "map//unkown_46_46_54_50.png")
 
                 resList = []
                 minY = self.getPosY(20)
