@@ -200,7 +200,8 @@ class ReplyMap(BaseControl):
         self.leftClickPer(50, 82)
 
     def onMap(self):
-        return screen.autoCompareResImgHash(self.handle, "map//on_map_5_86_22_89.png", 0.9)
+        print("findUnKnowMap")
+        return screen.autoCompareResImgHash(self.handle, "map//on_map_5_86_22_89.png", 0.8)
 
     def onDlgChallengeAndClick(self):
         win32gui.SetForegroundWindow(self.handle)
@@ -343,7 +344,7 @@ class ReplyMap(BaseControl):
             if self.onMap():
                 print("findUnKnowMap")
                 xylist = screen.matchResImgInWindow(
-                    self.handle, "map//unkown_46_46_54_50.png")
+                    self.handle, "map//unkown_46_46_54_50.png",0.7)
 
                 resList = []
                 minY = self.getPosY(20)
