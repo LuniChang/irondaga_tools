@@ -176,16 +176,16 @@ class ReplyMap(BaseControl):
         xylist = screen.matchResImgInWindow(
             self.handle, "map//on_business_65_73_85_76.png", 0.8)
         if len(xylist) > 0:
-            if self.canChangeRedAir():
-                 self.leftClickPer(75, 34)
-                 time.sleep(3)
-                 self.onDlgOkAndClick()
-                 self.leftClickPer(75, 46)
-                 time.sleep(3)
-                 self.onDlgOkAndClick()
-                 self.leftClickPer(75, 59)
-                 time.sleep(3)
-                 self.onDlgOkAndClick()
+            # if self.canChangeRedAir():
+            #      self.leftClickPer(75, 34)
+            #      time.sleep(3)
+            #      self.onDlgOkAndClick()
+            #      self.leftClickPer(75, 46)
+            #      time.sleep(3)
+            #      self.onDlgOkAndClick()
+            #      self.leftClickPer(75, 59)
+            #      time.sleep(3)
+            #      self.onDlgOkAndClick()
 
 
      
