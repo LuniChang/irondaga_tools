@@ -12,7 +12,7 @@ class ReplyBattle(BaseControl):
   
   
     _needBuyHp=False
-    _isUseHp=False
+ 
     def __init__(self,handle,interval):
         self.handle=handle
         self.interval=interval
@@ -26,11 +26,7 @@ class ReplyBattle(BaseControl):
     def buyHp(self):
         pass
 
-    def toUseHp(self):
-        win32gui.SetForegroundWindow(self.handle)
-        win32api.SetCursorPos((self.getPosX(62), self.getPosY(60)))#点击使用体力药
-        win32api.mouse_event(
-        win32con.MOUSEEVENTF_LEFTDOWN | win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+
         
    
 
@@ -73,9 +69,6 @@ class ReplyBattle(BaseControl):
                 time.sleep(2)
                 self.closeEmptyHp()
 
-            else :
-                
-               pass
 
             time.sleep(self.interval)
             # screen.grabCaptureDir(self.handle,"reply_battle")

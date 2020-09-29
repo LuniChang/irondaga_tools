@@ -10,7 +10,7 @@ class BaseControl:
 
     handle = 0
     interval = 5
-
+    _isUseHp=False
     _isRun = False
 
     def __init__(self):
@@ -129,6 +129,15 @@ class BaseControl:
             self.leftClick(x+2, y+2)
             time.sleep(2)
 
+    def findImgAndclick(self,path):
+        win32gui.SetForegroundWindow(self.handle)
+        xylist = screen.matchResImgInWindow(
+            self.handle, path, 0.9)
+        if len(xylist) > 0:
+            x, y = xylist[0]
+            self.leftClick(x, y)
+            time.sleep(2)        
+
     # 阵容小于3或者大于6不能用
 
     def toSelectTeam(self, teamNo):
@@ -160,6 +169,9 @@ class BaseControl:
 
     def isHpEmpty(self):
         return screen.autoCompareResImgHash(self.handle, "hp_empty_10_40_90_62.png")
+
+    def toUseHp(self):
+        self.leftClickPer(62,60)
 
     def run(self):
         pass

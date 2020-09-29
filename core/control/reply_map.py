@@ -339,7 +339,10 @@ class ReplyMap(BaseControl):
                 self.leftClickPer(65, 88)
                 self._isScranMap = False
 
-
+            if self._isUseHp and self.isHpEmpty():
+                self.toUseHp()
+                time.sleep(2)
+                self.closeEmptyHp()
 
             if self.onMap():
                 print("findUnKnowMap")

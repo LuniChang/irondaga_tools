@@ -10,6 +10,9 @@ from control.reply_guess import ReplyGuess
 from control.reply_pvp import ReplyPvp
 from control.reply_map import ReplyMap
 from control.reply_wushuang import ReplyWuShuang
+
+from control.reply_aixi import ReplyAiXi
+
 import common.screen as screen
 
 
@@ -31,6 +34,8 @@ replyBattle= ReplyBattle(handle,10)
 replyGuess= ReplyGuess(handle,10)
 replyMap= ReplyMap(handle,3)
 replyWuShuang= ReplyWuShuang(handle,10)
+
+
 main.title("机动战队工具")
 main.geometry("600x700")
 
@@ -38,8 +43,6 @@ fm1=tk.Frame(main)
 fm1.pack()
 def initReplyBattle():
   
- 
-
     userHp = tk.IntVar()
 
     def checkUseHp():
@@ -56,7 +59,7 @@ def initReplyBattle():
 
 initReplyBattle()
 
-tk.Label(fm1,text="用管理员运行，请将模拟器调整和窗口相似的高度,模拟器分辨率396x701").grid(row=0,column=2,columnspan=4)
+tk.Label(fm1,text="用管理员运行,模拟器分辨率396x701,请勿调整模拟器窗口大小").grid(row=0,column=2,columnspan=4)
 tk.Button(fm1,text="开始重复竞猜",width=10,height=1,command=replyGuess.start).grid(row=2,column=1)
 tk.Button(fm1,text="结束竞猜",width=10,height=1,command=replyGuess.stop).grid(row=2,column=2)
 
@@ -99,36 +102,60 @@ tk.Button(fm1,text="结束无双",width=10,height=1,command=replyWuShuang.stop).
 
 
 
-mapTeamNo=tk.IntVar()
-blueTeamNo=tk.IntVar()
-pvpTeamNo=tk.IntVar()
-def startMap():
-    replyMap.mapTeamNo=int(mapTeamNo.get())
-    replyMap.blueTeamNo=int(blueTeamNo.get())
-    replyMap.pvpTeamNo=int(pvpTeamNo.get())
-    replyMap.start()
+def initReplyMap():
+    mapTeamNo=tk.IntVar()
+    blueTeamNo=tk.IntVar()
+    pvpTeamNo=tk.IntVar()
+    userHp = tk.IntVar()
+    def checkUseHp():
+        if userHp.get()==1:
+            replyMap.setIsUseHp(True)
+        else:
+            replyMap.setIsUseHp(False)  
 
-mapTeamNo.set(5)
-blueTeamNo.set(2)
-pvpTeamNo.set(4)
+    def startMap():
+        replyMap.mapTeamNo=int(mapTeamNo.get())
+        replyMap.blueTeamNo=int(blueTeamNo.get())
+        replyMap.pvpTeamNo=int(pvpTeamNo.get())
+        replyMap.start()
 
-
-tk.Label(fm1,text="推图队伍").grid(row=5,column=1)
-tk.Entry(fm1,textvariable=mapTeamNo,width=10).grid(row=5,column=2)
-tk.Label(fm1,text="佣兵队伍").grid(row=6,column=1)
-tk.Entry(fm1,textvariable=blueTeamNo,width=10).grid(row=6,column=2)
-tk.Label(fm1,text="pvp队伍").grid(row=7,column=1)
-tk.Entry(fm1,textvariable=pvpTeamNo,width=10).grid(row=7,column=2)
-
-
+    mapTeamNo.set(5)
+    blueTeamNo.set(2)
+    pvpTeamNo.set(4)
 
 
-tk.Button(fm1,text="开始图",width=10,height=1,command=startMap).grid(row=8,column=1)
-tk.Button(fm1,text="结束推图",width=10,height=1,command=replyMap.stop).grid(row=8,column=2)
+    tk.Label(fm1,text="推图队伍").grid(row=5,column=1)
+    tk.Entry(fm1,textvariable=mapTeamNo,width=10).grid(row=5,column=2)
+    tk.Label(fm1,text="佣兵队伍").grid(row=6,column=1)
+    tk.Entry(fm1,textvariable=blueTeamNo,width=10).grid(row=6,column=2)
+    tk.Label(fm1,text="pvp队伍").grid(row=7,column=1)
+    tk.Entry(fm1,textvariable=pvpTeamNo,width=10).grid(row=7,column=2)
+    tk.Checkbutton(fm1,text="使用体力药",variable=userHp,onvalue=1,offvalue=0,command=checkUseHp).grid(row=8,column=1)
+    
 
+    tk.Button(fm1,text="开始推图",width=10,height=1,command=startMap).grid(row=9,column=1)
+    tk.Button(fm1,text="结束推图",width=10,height=1,command=replyMap.stop).grid(row=9,column=2)
 
+initReplyMap()
 
+replyAiXi=ReplyAiXi(handle,10)
+def initReplyAiXi():
+    userHp = tk.IntVar()
 
+    def checkUseHp():
+        if userHp.get()==1:
+            replyAiXi.setIsUseHp(True)
+        else:
+            replyAiXi.setIsUseHp(False)  
+
+    tk.Checkbutton(fm1,text="使用体力药",variable=userHp,onvalue=1,offvalue=0,command=checkUseHp).grid(row=10,column=1)
+    tk.Button(fm1,text="开始艾希",width=10,height=1,command=replyAiXi.start).grid(row=10,column=2)
+    tk.Button(fm1,text="结束艾希",width=10,height=1,command=replyAiXi.stop).grid(row=10,column=3)
+
+initReplyAiXi()
+   
+   
+    
 
 
 tk.Label(main,text="工具操作").pack()
@@ -155,13 +182,13 @@ yRight.pack()
 btnPerCap=tk.Button(main,text="百分比截图",width=10,height=1,command=lambda:screen.grabCaptureRectPerHash(hwnd=handle,tLeft=xLeft.get(),tTop=yLeft.get(), tRight=xRight.get(), tBottom=yRight.get(),needShow=True))
 btnPerCap.pack()
 
-tk.Label(main,text="取图片哈希路径").pack()
-textPath=tk.Entry(main)
-textPath.pack()
-texthash=tk.Entry(main)
-texthash.pack()
-hashBtn=tk.Button(main,text="取图片哈希",width=10,height=1,command=lambda:texthash.insert(index=0,string=screen.getImgHashByPath(path=textPath.get())) )
-hashBtn.pack()
+# tk.Label(main,text="取图片哈希路径").pack()
+# textPath=tk.Entry(main)
+# textPath.pack()
+# texthash=tk.Entry(main)
+# texthash.pack()
+# hashBtn=tk.Button(main,text="取图片哈希",width=10,height=1,command=lambda:texthash.insert(index=0,string=screen.getImgHashByPath(path=textPath.get())) )
+# hashBtn.pack()
 
 
 
@@ -170,17 +197,5 @@ hashBtn.pack()
 # 进入消息循环
 main.mainloop()
 
-# while True:
-#   wLeft, wTop, wRight, wBottom = appGetWindowRect(handle)
-
-#   print(wLeft, wTop, wRight, wBottom)
-#   win32api.SetCursorPos((getWidthPer(0.27),getHeightPer(0.93)))
-#   win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN  | win32con.MOUSEEVENTF_LEFTUP, 0,0, 0, 0)
-#   time.sleep(5)
-#   win32api.SetCursorPos((getWidthPer(0.50),getHeightPer(0.65)))
-#   res= win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN  | win32con.MOUSEEVENTF_LEFTUP, 0,0, 0, 0)
-
-#   time.sleep(5)
 
 exit(0)
-# win.protocol("WM_DELETE_WINDOW", lambda: sys.exit(0))
