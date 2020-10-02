@@ -157,7 +157,7 @@ class ReplyMap(BaseControl):
         return self.matchResImgInWindow("map//on_bar_0_0_30_10.png")
 
     def onArmyBar(self):
-        return self.matchResImgInWindow("map//on_army_bar_50_5_72_10.png")
+        return self.matchResImgInWindow("map//on_army_bar_50_5_72_10.png") or self.matchResImgInWindow("map//onbar2_0_0_30_10.png")
 
     def onBlackMarket(self):
         return self.matchResImgInWindow("map//on_black_market_0_0_30_10.png")
@@ -282,11 +282,11 @@ class ReplyMap(BaseControl):
                 time.sleep(2)
                 self.pressBack()
                 time.sleep(3)
-                continue
+                
             if self.inStoryLevel() or self.onGoldBar() or self.onBlackMarket() or self.onArmyBar():
                 self.pressBack()
                 time.sleep(3)
-                continue
+                
            
             if self.onYellowPvp():
                 self.leftClick(78, 78)
@@ -321,14 +321,11 @@ class ReplyMap(BaseControl):
                 self.clickOnGetItems()
                 time.sleep(2)
 
-            print("hpempty")
-            if self.isHpEmpty():
-                self.clickOnGetItems()
-                time.sleep(2)
+       
 
             # 体力不足hash
             print("toUseHp")
-            if screen.autoCompareResImgHash(self.handle, "hpempty_10_40_80_65.png"):
+            if self._isUseHp and self.isHpEmpty():
                 self.toUseHp()
                 time.sleep(2)
                 self.closeEmptyHp()
@@ -341,10 +338,7 @@ class ReplyMap(BaseControl):
                 self.leftClickPer(65, 88)
                 self._isScranMap = False
 
-            if self._isUseHp and self.isHpEmpty():
-                self.toUseHp()
-                time.sleep(2)
-                self.closeEmptyHp()
+       
 
             if self.onMap():
                 print("findUnKnowMap")
