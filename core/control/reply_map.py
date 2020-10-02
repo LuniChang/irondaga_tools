@@ -306,8 +306,8 @@ class ReplyMap(BaseControl):
 
             if self.onTalk():
                 self.skipTalk()
-                time.sleep(2)
-                continue
+                time.sleep(3)
+                
 
             if self.onDlgOkAndClick():
                 continue
