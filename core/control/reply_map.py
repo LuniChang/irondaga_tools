@@ -325,9 +325,10 @@ class ReplyMap(BaseControl):
 
             # 体力不足hash
             print("toUseHp")
-            if self._isUseHp and self.isHpEmpty():
-                self.toUseHp()
-                time.sleep(2)
+            if  self.isHpEmpty():
+                if self._isUseHp :
+                   self.toUseHp()
+                   time.sleep(2)
                 self.closeEmptyHp()
 
             if self.onSupportDlg():
