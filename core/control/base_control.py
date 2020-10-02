@@ -128,6 +128,8 @@ class BaseControl:
             x, y = xylist[0]
             self.leftClick(x+2, y+2)
             time.sleep(2)
+            return True
+        return False    
 
     def findImgAndclick(self,path):
         win32gui.SetForegroundWindow(self.handle)

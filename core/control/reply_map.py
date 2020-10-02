@@ -273,6 +273,7 @@ class ReplyMap(BaseControl):
             self.onBlueTacketAndBattle()
             self.onYellowPvpAndBattle()
             self.closeMapInfoMenu()
+            
             if self.onBar():
                 self.leftClickPer(10, 70)
                 time.sleep(2)
@@ -307,8 +308,10 @@ class ReplyMap(BaseControl):
             if self.onTalk():
                 self.skipTalk()
                 time.sleep(2)
+                continue
 
-            self.onDlgOkAndClick()
+            if self.onDlgOkAndClick():
+                continue
             
 
             self.onBusinessAndClose()
@@ -318,6 +321,7 @@ class ReplyMap(BaseControl):
             if self.onGetItems():
                 self.clickOnGetItems()
                 time.sleep(2)
+                continue
 
             print("hpempty")
             if self.isHpEmpty():
@@ -330,6 +334,8 @@ class ReplyMap(BaseControl):
                 self.toUseHp()
                 time.sleep(2)
                 self.closeEmptyHp()
+                time.sleep(2)
+                continue
 
             if self.onSupportDlg():
                 self.noSupport()
@@ -338,11 +344,14 @@ class ReplyMap(BaseControl):
             if self.canResetMap():
                 self.leftClickPer(65, 88)
                 self._isScranMap = False
+                continue
 
             if self._isUseHp and self.isHpEmpty():
                 self.toUseHp()
                 time.sleep(2)
                 self.closeEmptyHp()
+                time.sleep(2)
+                continue
 
             if self.onMap():
                 print("findUnKnowMap")
