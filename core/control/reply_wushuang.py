@@ -64,7 +64,9 @@ class ReplyWuShuang(BaseControl):
             if  self._isInBattle==False:
                 #如果在地图
                 print("onmap")
-                if screen.autoCompareResImgHash(self.handle,"ws\\on_ws_map_40_70_60_74.png"):
+                # if screen.autoCompareResImgHash(self.handle,"ws\\on_ws_map_40_70_60_74.png"):
+     
+                if self.matchResImgInWindow("zhangjiepingjia_40_86_60_89.png")
                     # self._MapNo=self._MapNo%6
                     if self._MapNo<3:
                        self.leftClickPer(20+35*self._MapNo,30)
