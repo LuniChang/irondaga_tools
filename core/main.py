@@ -72,7 +72,7 @@ def startPvp():
     replyPvp.setTeamNo(int(teamNo.get()))
     replyPvp.start()
 
-teamNo.set(3)
+teamNo.set(4)
 
 def initReplyPvp():
   
@@ -120,7 +120,7 @@ def initReplyMap():
         replyMap.start()
 
     mapTeamNo.set(5)
-    blueTeamNo.set(2)
+    blueTeamNo.set(1)
     pvpTeamNo.set(4)
 
 
