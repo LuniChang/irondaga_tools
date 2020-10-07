@@ -282,6 +282,7 @@ class ReplyMap(BaseControl):
             self.onBlueTacketAndBattle()
             self.onYellowPvpAndBattle()
             self.closeMapInfoMenu()
+            self.skipRocket()
             if self.onBar():
                 self.leftClickPer(10, 70)
                 time.sleep(2)
