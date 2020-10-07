@@ -256,6 +256,13 @@ class ReplyMap(BaseControl):
         if len(xylist) > 0:
             self.leftClickPer(98, 30)
 
+    def closeStartDlg(self):
+        win32gui.SetForegroundWindow(self.handle)
+        xylist = screen.matchResImgInWindow(
+            self.handle, "map//start_dlg_25_25_75_38.png", 0.9)
+        if len(xylist) > 0:
+            self.leftClickPer(88, 28)        
+
     def canChangeRedAir(self):
         win32gui.SetForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
@@ -283,6 +290,7 @@ class ReplyMap(BaseControl):
             self.onYellowPvpAndBattle()
             self.closeMapInfoMenu()
             self.skipRocket()
+            self.closeStartDlg()
             if self.onBar():
                 self.leftClickPer(10, 70)
                 time.sleep(2)
