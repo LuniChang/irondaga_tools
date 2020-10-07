@@ -123,7 +123,7 @@ class ReplyMap(BaseControl):
                 return
 
     def inStoryLevel(self):
-        return self.matchResImgInWindow("map//story_level_40_50_55_70.png",0.75)
+        return self.matchResImgInWindow("map//story_level_40_50_55_70.png", 0.75)
 
     def onEvenSelectBattle(self):
         return self.matchResImgInWindow("map//even_select_20_58_80_62.png", 0.9) or self.matchResImgInWindow("map//even_select3_20_58_80_62.png", 0.9)
@@ -171,6 +171,11 @@ class ReplyMap(BaseControl):
     def toEndBusiness(self):
         self.leftClickPer(70, 74)
 
+    def skipRocket(self):
+        if screen.autoCompareResImgHash(self.handle, "rocket_ready_0_0_100_40.png", 0.8):
+            self.leftClickPer(50, 50)
+            time.sleep(2)
+
     def onBusinessAndClose(self):
         win32gui.SetForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
@@ -187,11 +192,8 @@ class ReplyMap(BaseControl):
             #      time.sleep(3)
             #      self.onDlgOkAndClick()
 
-
-     
             x, y = xylist[0]
             self.leftClick(x+2, y+2)
-       
 
     def onSupportDlg(self):
         return self.matchResImgInWindow("map//on_support_20_75_80_84.png")
@@ -202,7 +204,6 @@ class ReplyMap(BaseControl):
     def onMap(self):
         print("findUnKnowMap")
         return screen.autoCompareResImgHash(self.handle, "map//on_map_5_86_22_89.png", 0.8)
-    
 
     def onDlgAccept(self):
         win32gui.SetForegroundWindow(self.handle)
@@ -261,9 +262,6 @@ class ReplyMap(BaseControl):
             self.handle, "map//shop_red_air_82_40_98_48.png", 0.9)
         return len(xylist) > 0
 
-        
-           
-
     def run(self):
 
         while self._isRun:
@@ -293,12 +291,11 @@ class ReplyMap(BaseControl):
                 time.sleep(2)
                 self.pressBack()
                 time.sleep(3)
-                
+
             if self.inStoryLevel() or self.onGoldBar() or self.onBlackMarket() or self.onArmyBar():
                 self.pressBack()
                 time.sleep(3)
-                
-           
+
             if self.onYellowPvp():
                 self.leftClick(78, 78)
                 self.battleEvenCode = 1
@@ -318,11 +315,9 @@ class ReplyMap(BaseControl):
             if self.onTalk():
                 self.skipTalk()
                 time.sleep(3)
-                
 
             if self.onDlgOkAndClick():
                 continue
-            
 
             self.onBusinessAndClose()
 
@@ -332,14 +327,12 @@ class ReplyMap(BaseControl):
                 self.clickOnGetItems()
                 time.sleep(2)
 
-       
-
             # 体力不足hash
             print("toUseHp")
-            if  self.isHpEmpty():
-                if self._isUseHp :
-                   self.toUseHp()
-                   time.sleep(2)
+            if self.isHpEmpty():
+                if self._isUseHp:
+                    self.toUseHp()
+                    time.sleep(2)
                 self.closeEmptyHp()
 
             if self.onSupportDlg():
@@ -349,8 +342,6 @@ class ReplyMap(BaseControl):
             if self.canResetMap():
                 self.leftClickPer(65, 88)
                 self._isScranMap = False
-
-       
 
             if self.onMap():
                 print("findUnKnowMap")
@@ -392,6 +383,5 @@ class ReplyMap(BaseControl):
                     self.scranDragMap()
                     time.sleep(2)
                     continue
-                
 
             time.sleep(self.interval)
