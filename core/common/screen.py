@@ -225,7 +225,7 @@ def winScreenRectHash(hwnd,pLeft, pTop, pRight, pBottom):
   wLeft, wTop, wRight, wBottom = appGetWindowRect(hwnd)
   img = ImageGrab.grab(bbox=(wLeft+pLeft,wTop+pTop , wLeft+pRight,wTop+pBottom ))
   phash=imgHash(img,hashSize,highfreq_factor)
-  saveTmpImg(img,phash)
+  # saveTmpImg(img,phash)
   img.close()
   return phash
 
@@ -235,7 +235,7 @@ def winScreenHash(hwnd):
   wLeft, wTop, wRight, wBottom = appGetWindowRect(hwnd)
   img = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
   phash=imgHash(img,hashSize,highfreq_factor)
-  saveTmpImg(img,phash)
+  # saveTmpImg(img,phash)
   img.close()
   return phash
 
