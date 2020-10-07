@@ -202,6 +202,16 @@ class ReplyMap(BaseControl):
     def onMap(self):
         print("findUnKnowMap")
         return screen.autoCompareResImgHash(self.handle, "map//on_map_5_86_22_89.png", 0.8)
+    
+
+    def onDlgAccept(self):
+        win32gui.SetForegroundWindow(self.handle)
+        xylist = screen.matchResImgInWindow(
+            self.handle, "map//accept_60_58_80_62.png", 0.9)
+        if len(xylist) > 0:
+            x, y = xylist[0]
+            self.leftClick(x+2, y+2)
+            self.battleEvenCode = 0
 
     def onDlgChallengeAndClick(self):
         win32gui.SetForegroundWindow(self.handle)
@@ -270,6 +280,7 @@ class ReplyMap(BaseControl):
             # self.onDlgBuyRoadAndClick()
             self.onDlgBuyRoadAndClick()
             self.onDlgChallengeAndClick()
+            self.onDlgAccept()
             self.onBlueTacketAndBattle()
             self.onYellowPvpAndBattle()
             self.closeMapInfoMenu()
