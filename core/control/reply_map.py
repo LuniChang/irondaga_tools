@@ -74,22 +74,25 @@ class ReplyMap(BaseControl):
     def dragPerUp(self):
         self.dragPer(50, 20, 50, 70)
         time.sleep(0.3)
-
+    def dragPerLeftUp(self):
+        self.dragPer(5, 20, 95, 70)
+        time.sleep(0.3)
     def dragPerDown(self):
         self.dragPer(50, 70, 50, 20)
         time.sleep(0.3)
 
     def resetMapPosition(self):
         if not self._isScranMap:
-            winHash = ""
-            while not screen.alikeHash(winHash, screen.winScreenHash(self.handle), 0.9):
-                winHash = screen.winScreenHash(self.handle)
-                self.dragPerUp()
+            # winHash = ""
+            # while not screen.alikeHash(winHash, screen.winScreenHash(self.handle), 0.9):
+            #     winHash = screen.winScreenHash(self.handle)
+            #     self.dragPerUp()
 
             winHash = ""
             while not screen.alikeHash(winHash, screen.winScreenHash(self.handle), 0.9):
                 winHash = screen.winScreenHash(self.handle)
-                self.dragPerLeft()
+                # self.dragPerLeft()
+                self.dragPerLeftUp()
 
             self._needResetMap = False
             self._scranMapEnd = False
