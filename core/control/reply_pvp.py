@@ -60,7 +60,7 @@ class ReplyPvp(BaseControl):
 
 
     def toPvp(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         # win32api.SetCursorPos((self.getPosX(80), self.getPosY(28)))#点击pvp
         # win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         # win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)  
@@ -75,13 +75,13 @@ class ReplyPvp(BaseControl):
 
  
     def toSelecItemOnWin(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         win32api.SetCursorPos((self.getPosX(52), self.getPosY(60)))#默认选择中间
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)      
 
     def toPvpContinue(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         win32api.SetCursorPos((self.getPosX(80), self.getPosY(90)))
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)      
@@ -91,7 +91,7 @@ class ReplyPvp(BaseControl):
     def run(self):    
 
         while self._isRun:
-            win32gui.SetForegroundWindow(self.handle)
+            screen.setForegroundWindow(self.handle)
          
            
             #PVP列表hash 

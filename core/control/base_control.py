@@ -101,11 +101,11 @@ class BaseControl:
         self.resetCursorPos()
 
     def clickOnGetItems(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         self.leftClick(self.getPosX(50), self.getPosY(64))
 
     def closeEmptyHp(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         self.leftClick(self.getPosX(85), self.getPosY(38))
 
     def onSelectTeam(self):
@@ -117,11 +117,11 @@ class BaseControl:
         return self.matchResImgInWindow("on_dlg_ok_61_62_80_65.png", 0.95)
 
     def clickDlgOK(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         self.leftClick(self.getPosX(75), self.getPosY(60))
 
     def onDlgOkAndClick(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
             self.handle, "on_dlg_ok_60_62_80_66.png", 0.9)
         if len(xylist) > 0:
@@ -132,7 +132,7 @@ class BaseControl:
         return False    
 
     def findImgAndclick(self,path):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
             self.handle, path, 0.9)
         if len(xylist) > 0:
@@ -143,7 +143,7 @@ class BaseControl:
     # 阵容小于3或者大于6不能用
 
     def toSelectTeam(self, teamNo):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         if teamNo == 1:
             win32api.SetCursorPos((self.getPosX(30), self.getPosY(50)))  # 点击1队
         elif teamNo == 2:

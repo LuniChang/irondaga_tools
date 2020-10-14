@@ -27,7 +27,7 @@ class ReplyGuess(BaseControl):
 
 
     def clickOnMoney(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         win32api.SetCursorPos((self.getPosX(55), self.getPosY(62)))#点击物品
         win32api.mouse_event(
         win32con.MOUSEEVENTF_LEFTDOWN | win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
@@ -41,13 +41,13 @@ class ReplyGuess(BaseControl):
 
 
     def toGuess(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         win32api.SetCursorPos((self.getPosX(50), self.getPosY(30)))#点击去竞猜
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)       
 
     def selecGuessRight(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         win32api.SetCursorPos((self.getPosX(68), self.getPosY(58)))#默认选择右边
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)      
@@ -55,7 +55,7 @@ class ReplyGuess(BaseControl):
     def run(self):    
 
         while self._isRun:
-            win32gui.SetForegroundWindow(self.handle)
+            screen.setForegroundWindow(self.handle)
            
            
             #精彩页面hash 

@@ -28,7 +28,7 @@ class ReplyWuShuang(BaseControl):
         pass
 
     def toUseHp(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         win32api.SetCursorPos((self.getPosX(60), self.getPosY(62)))#点击使用体力药
         win32api.mouse_event(
         win32con.MOUSEEVENTF_LEFTDOWN | win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
@@ -40,7 +40,7 @@ class ReplyWuShuang(BaseControl):
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)  
 
     def clickReplyBattle(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         win32api.SetCursorPos((self.getPosX(15), self.getPosY(92)))#点击重复战斗
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
         win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)        
@@ -56,7 +56,7 @@ class ReplyWuShuang(BaseControl):
         self._MapNo=0
         self._isInBattle=False
         while self._isRun and self._MapNo<=6:
-            win32gui.SetForegroundWindow(self.handle)
+            screen.setForegroundWindow(self.handle)
      
  
 

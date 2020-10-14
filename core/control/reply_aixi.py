@@ -32,7 +32,7 @@ class ReplyAiXi(BaseControl):
         pass
 
     def toUseHp(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         win32api.SetCursorPos((self.getPosX(62), self.getPosY(60)))#点击使用体力药
         win32api.mouse_event(
         win32con.MOUSEEVENTF_LEFTDOWN | win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
@@ -55,7 +55,7 @@ class ReplyAiXi(BaseControl):
         self._mapBattleCount=0
         self._mapBattlePoint=0
         while self._isRun:
-            win32gui.SetForegroundWindow(self.handle)
+            screen.setForegroundWindow(self.handle)
 
             if self.onMap():
                 x,y=self._mapPointLocation[self._mapBattlePoint]

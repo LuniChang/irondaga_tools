@@ -52,13 +52,13 @@ class ReplyMap(BaseControl):
         pass
 
     def toUseHp(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         win32api.SetCursorPos((self.getPosX(60), self.getPosY(62)))  # 点击使用体力药
         win32api.mouse_event(
             win32con.MOUSEEVENTF_LEFTDOWN | win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
 
     def clickReplyBattle(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         win32api.SetCursorPos((self.getPosX(27), self.getPosY(93)))  # 点击重复战斗
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
                              win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
@@ -180,7 +180,7 @@ class ReplyMap(BaseControl):
             time.sleep(2)
 
     def onBusinessAndClose(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
             self.handle, "map//on_business_65_73_85_76.png", 0.8)
         if len(xylist) > 0:
@@ -209,7 +209,7 @@ class ReplyMap(BaseControl):
         return screen.autoCompareResImgHash(self.handle, "map//on_map_5_86_22_89.png", 0.8)
 
     def onDlgAccept(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
             self.handle, "map//accept_60_58_80_62.png", 0.9)
         if len(xylist) > 0:
@@ -218,7 +218,7 @@ class ReplyMap(BaseControl):
             self.battleEvenCode = 0
 
     def onDlgChallengeAndClick(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
             self.handle, "map//challenge_60_58_80_62.png", 0.9)
         if len(xylist) > 0:
@@ -227,7 +227,7 @@ class ReplyMap(BaseControl):
             self.battleEvenCode = 0
 
     def onDlgBuyRoadAndClick(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
             self.handle, "map//buy_road_20_58_40_62.png", 0.9)
         if len(xylist) > 0:
@@ -236,7 +236,7 @@ class ReplyMap(BaseControl):
             self.battleEvenCode = 3
 
     def onYellowPvpAndBattle(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
             self.handle, "map//yellow_pvp_60_76_80_82.png", 0.9)
         if len(xylist) > 0:
@@ -245,7 +245,7 @@ class ReplyMap(BaseControl):
             self.battleEvenCode = 3
 
     def onBlueTacketAndBattle(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
             self.handle, "map//blue_tacket_15_15_40_20.png", 0.9)
         if len(xylist) > 0:
@@ -253,29 +253,29 @@ class ReplyMap(BaseControl):
             self.battleEvenCode = 2
 
     def closeMapInfoMenu(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
             self.handle, "map//map_infomenu_70_17_98_20.png", 0.9)
         if len(xylist) > 0:
             self.leftClickPer(98, 30)
 
     def closeStartDlg(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
             self.handle, "map//start_dlg_25_25_75_38.png", 0.9)
         if len(xylist) > 0:
             self.leftClickPer(88, 28)        
 
     def canChangeRedAir(self):
-        win32gui.SetForegroundWindow(self.handle)
+        screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
             self.handle, "map//shop_red_air_82_40_98_48.png", 0.9)
         return len(xylist) > 0
 
     def run(self):
-
+        win32gui.SetForegroundWindow(self.handle)
         while self._isRun:
-            win32gui.SetForegroundWindow(self.handle)
+            #
             self.resetCursorPos()
 
             if self.onEvenSelectBattle():
