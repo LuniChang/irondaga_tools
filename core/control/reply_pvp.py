@@ -93,7 +93,7 @@ class ReplyPvp(BaseControl):
         while self._isRun:
             screen.setForegroundWindow(self.handle)
          
-           
+            
             #PVP列表hash 
            
             if self.onPvpList():
@@ -124,7 +124,7 @@ class ReplyPvp(BaseControl):
                 pass  
                 
            
-          
+            self.onDlgOkAndClick()
 
 
       
