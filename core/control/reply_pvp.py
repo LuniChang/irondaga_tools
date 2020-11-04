@@ -33,7 +33,7 @@ class ReplyPvp(BaseControl):
     def onPvpList(self):
         print("onPvpList")
         # return screen.autoCompareResImgHash(self.handle,"pvp\\pvp_list_76_20_96_90.png")
-        return self.matchResImgInWindow("pvp\\pvp_list_76_20_96_90.png",0.7)
+        return self.matchResImgInWindow("pvp\\pvp_list_76_20_96_90.png",0.7) or self.matchResImgInWindow("pvp\\on_pvp_list_5_5_90_10.png")
 
 
     def onPvpWin(self):
