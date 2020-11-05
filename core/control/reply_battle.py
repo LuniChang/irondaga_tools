@@ -73,7 +73,7 @@ class ReplyBattle(BaseControl):
                 time.sleep(2)
                 self.closeEmptyHp()
 
-
+            self.onDlgOkAndClick()
             time.sleep(self.interval)
             # screen.grabCaptureDir(self.handle,"reply_battle")
 
