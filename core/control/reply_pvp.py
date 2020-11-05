@@ -124,10 +124,6 @@ class ReplyPvp(BaseControl):
                 pass  
                 
            
-            self.onDlgOkAndClick()
-
-
-      
 
             if self.onPvpEnd():
                 self._isRun=False
