@@ -126,7 +126,7 @@ class ReplyPvp(BaseControl):
            
           
 
-
+            self.onDlgOkAndClick()
       
 
             if self.onPvpEnd():

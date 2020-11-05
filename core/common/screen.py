@@ -354,54 +354,62 @@ def matchResImgInWindow(handle,imgName,threshold=0.8,mult=True):
 
 
 
-def featResImgInWindow(handle,imgName):
-  imgPath=path.getResDirPath()+imgName
-  if not os.path.exists(path.getProjectPath()):
-    os.makedirs(path.getProjectPath())
-  targetImg=Image.open(imgPath)
-  targetImgWidth=targetImg.size[0]
-  targetImgHeigth=targetImg.size[1]
-  wLeft, wTop, wRight, wBottom = appGetWindowRect(handle)
-  winImg = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
 
-  imgTag=cv2.cvtColor(numpy.asarray(targetImg),cv2.COLOR_RGB2BGR)  
-  imgWin=cv2.cvtColor(numpy.asarray(winImg),cv2.COLOR_RGB2BGR) 
-  targetImg.close()
-  winImg.close() 
-  sift = cv2.xfeatures2d.SIFT_create()
-  kp1, des1 = sift.detectAndCompute(imgTag,None)
-  kp2, des2 = sift.detectAndCompute(imgWin,None)
-  bf = cv2.BFMatcher() # 匹配描述符.
-  matches = bf.match(des1,des2) # 根据距离排序
-  # matches = bf.knnMatch(des1,des2, k=2)
-  matches = sorted(matches, key = lambda x:x.distance) # 绘制前10的匹配项
-  # for pt in zip(*loc[::-1]):
-  #     matches.append((wLeft+pt[0]+(targetImgWidth>>1),wTop+pt[1]+(targetImgHeigth>>1)))
+def featResImgInWindow(handle,imgName,threshold=50): 
+    imgPath=path.getResDirPath()+imgName
+    if not os.path.exists(path.getProjectPath()):
+      os.makedirs(path.getProjectPath())
+    targetImg=Image.open(imgPath)
 
-  # list_kp1 = []
-  list_kp2 = []
+    wLeft, wTop, wRight, wBottom = appGetWindowRect(handle)
+    winImg = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
 
-  # For each match...
-  for mat in matches:
+    # targetImg.show()
+    imgTag=cv2.cvtColor(numpy.asarray(targetImg),cv2.COLOR_RGB2BGR)  
+    imgWin=cv2.cvtColor(numpy.asarray(winImg),cv2.COLOR_RGB2BGR) 
+    targetImg.close()
+    winImg.close() 
 
-      # Get the matching keypoints for each of the images
-      # img1_idx = mat.queryIdx
-      img2_idx = mat.trainIdx
+    
+    # fast = cv2.FastFeatureDetector_create(threshold)
+    # keypointTag = fast.detect(imgTag,None)
+    # keypointWin = fast.detect(imgWin,None)
 
-      # x - columns
-      # y - rows
-      # Get the coordinates
-      # (x1,y1) = kp1[img1_idx].pt
-      (x2,y2) = kp2[img2_idx].pt
+    # tmpimg=cv2.drawKeypoints(imgTag,keypoint1,outImage=numpy.array([]),color=(0,0,255))
+    # tmpimg=cv2.drawKeypoints(imgWin,keypoint2,outImage=numpy.array([]),color=(0,0,255))
+    # cv2.imshow("show key points",tmpimg)
+    # cv2.waitKey(0)
+    
+    surf = cv2.xfeatures2d.SURF_create(100)
 
-      # Append to each list
-      # list_kp1.append((int(x1), int(y1)))
-      # list_kp2.append((int(x2), int(y2)))
-      list_kp2.append((wLeft+int(x2)+(targetImgWidth>>1),wTop+int(y2)+(targetImgHeigth>>1)))
+    keypointTag, desTag = surf.detectAndCompute(imgTag, keypointTag)
+    keypointWin, desWin = surf.detectAndCompute(imgWin, keypointWin)
+    print(keypointTag,desTag)
+    bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+    # matches = cv2.BFMatcher().knnMatch(desTag, desWin, k=2)
+    matches = bf.match(desTag, desWin)
+    matches = sorted(matches, key=lambda x: x.distance)
+    print(matches)
+    img3 = cv2.drawMatches(imgTag, keypointTag, imgWin, keypointWin, matches,None, flags=2,  singlePointColor = (255,0,0),)
+    cv2.imshow("show key points",img3)
+    cv2.waitKey(0)
+ 
 
-  print(list_kp2) 
-  return list_kp2
 
+
+
+# 暴力特征匹配
+# img1 = cv2.imread('img/box.png', cv2.IMREAD_GRAYSCALE)
+# img2 = cv2.imread('img/box_in_scene.png', cv2.IMREAD_GRAYSCALE)
+
+# orb = cv2.ORB_create()
+# kp1, des1 = orb.detectAndCompute(img1, None)
+# kp2, des2 = orb.detectAndCompute(img2, None)
+
+# # Brute-Force暴力匹配法
+# bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+# matches = bf.match(des1, des2)
+# matches = sorted(matches, key=lambda x:x.distance)
 
 
 def setForegroundWindow(hwnd):
