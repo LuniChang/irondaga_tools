@@ -313,24 +313,41 @@ def matchResImgInWindow(handle, imgName, threshold=0.8, mult=True):
     targetImgWidth = targetImg.size[0]
     targetImgHeigth = targetImg.size[1]
 
-    perSize = (targetImgPerRightX-targetImgPerLeftX)*0.01
-    resWinWidth = int(targetImgWidth/perSize)
-    perSize = (targetImgPerRightY-targetImgPerLeftY)*0.01
-    resWinHeight = int(targetImgHeigth/perSize)
+    perSizeW = (targetImgPerRightX-targetImgPerLeftX)*0.01
+    resWinWidth = int(targetImgWidth/perSizeW)
+    perSizeH = (targetImgPerRightY-targetImgPerLeftY)*0.01
+    resWinHeight = int(targetImgHeigth/perSizeH)
+
+
 
     # 模板图片
-    temImg = cv2.cvtColor(numpy.asarray(targetImg), cv2.COLOR_RGB2BGR)
+    temImg = cv2.cvtColor(numpy.asarray(targetImg), cv2.COLOR_RGB2GRAY)
+    # temImg = cv2.cvtColor(numpy.asarray(targetImg), cv2.COLOR_RGB2GRAY)
+    
     targetImg.close()
 
     wLeft, wTop, wRight, wBottom = appGetWindowRect(handle)
     winImg = ImageGrab.grab(bbox=(wLeft, wTop, wRight, wBottom))
 
-    # 对截图缩放，适配资源图片
-    toMatchWinImgSrc = cv2.cvtColor(numpy.asarray(winImg), cv2.COLOR_RGB2BGR)
+    winNowW=wRight-wLeft
+    winNowH=wBottom-wTop
 
+    # 对截图缩放，适配资源图片
+    toMatchWinImgSrc = cv2.cvtColor(numpy.asarray(winImg), cv2.COLOR_RGB2GRAY)
+
+    
     toMatchWinImg = cv2.resize(
         toMatchWinImgSrc, (resWinWidth, resWinHeight), interpolation=cv2.INTER_AREA)
     winImg.close()
+
+    
+    
+    # print(resWinWidth, resWinHeight)
+    # cv2.imshow("temImg",temImg)
+    # cv2.waitKey(0)
+
+    scaleValueW=int(winNowW/resWinWidth )
+    scaleValueH=int(winNowH/resWinHeight )
 
     res = cv2.matchTemplate(toMatchWinImg, temImg, cv2.TM_CCOEFF_NORMED)
 
@@ -338,15 +355,16 @@ def matchResImgInWindow(handle, imgName, threshold=0.8, mult=True):
     if mult == True:
         loc = numpy.where(res >= threshold)
 
-        for pt in zip(*loc[::-1]):
+        for pt in zip(*loc[::-1]):\
+            
             xyList.append(
-                (wLeft+pt[0]+(targetImgWidth >> 1), wTop+pt[1]+(targetImgHeigth >> 1)))
+                (wLeft+pt[0]+(int(targetImgWidth * scaleValueW)>> 1), wTop+pt[1]+(int(targetImgHeigth* scaleValueH)>> 1)))
 
     else:  # 单个很不准确
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
         top_left = min_loc  # 左上角的位置
         xyList.append(
-            (wLeft+top_left[0]+(targetImgWidth >> 1), wTop+top_left[1]+(targetImgHeigth >> 1)))
+             (wLeft+pt[0]+(int(targetImgWidth * scaleValueW)>> 1), wTop+pt[1]+(int(targetImgHeigth* scaleValueH)>> 1)))
 
     print(xyList)
     return xyList

@@ -206,7 +206,7 @@ class ReplyMap(BaseControl):
 
     def onMap(self):
         print("findUnKnowMap")
-        return screen.autoCompareResImgHash(self.handle, "map//on_map_5_86_22_89.png", 0.8)
+        return self.matchResImgInWindow("map//on_map_5_86_22_89.png", 0.5)
 
     def onDlgAccept(self):
         screen.setForegroundWindow(self.handle)
@@ -358,7 +358,9 @@ class ReplyMap(BaseControl):
             if self.onMap():
                 print("findUnKnowMap")
                 xylist = screen.matchResImgInWindow(
-                    self.handle, "map//unkown_46_46_54_50.png")
+                    self.handle, "map//unkown_46_46_54_50.png",0.7)
+                
+                
 
                 resList = []
                 minY = self.getPosY(20)
