@@ -124,14 +124,14 @@ class ReplyPvp(BaseControl):
                 pass  
                 
            
-            self.onDlgOkAndClick()
-
-            self.onDlgOkAndClick()
+            
       
-
+            self.reTryNetErr()
+            
             if self.onPvpEnd():
                 self._isRun=False
                 return
 
+            
             time.sleep(self.interval)
 

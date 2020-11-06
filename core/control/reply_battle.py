@@ -45,7 +45,7 @@ class ReplyBattle(BaseControl):
         while self._isRun:
             screen.setForegroundWindow(self.handle)
 
-            # print(screen.featResImgInWindow(self.handle,"reply//end_0_90_40_95.png"))
+            # print(screen.featResImgInWindow(self.handle,"map//unkown_46_46_54_50.png"))
             
            
             #底部菜单hash 
@@ -73,7 +73,7 @@ class ReplyBattle(BaseControl):
                 time.sleep(2)
                 self.closeEmptyHp()
 
-            self.onDlgOkAndClick()
+            self.reTryNetErr()
             time.sleep(self.interval)
             # screen.grabCaptureDir(self.handle,"reply_battle")
 

@@ -175,6 +175,13 @@ class BaseControl:
     def toUseHp(self):
         self.leftClickPer(62,60)
 
+    
+    def reTryNetErr(self):
+        print("reTryNetErr")
+        if self.matchResImgInWindow("net_err_10_40_90_62.png"):
+             self.leftClickPer(62,60)
+
+   
     def run(self):
         pass
 
