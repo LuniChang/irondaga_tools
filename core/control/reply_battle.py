@@ -44,13 +44,17 @@ class ReplyBattle(BaseControl):
 
         while self._isRun:
             screen.setForegroundWindow(self.handle)
+
+            # print(screen.featResImgInWindow(self.handle,"map//unkown_46_46_54_50.png"))
+            
            
             #底部菜单hash 
-
             print("clickReplyBattle")
             if screen.autoCompareResImgHash(self.handle,"reply//end_0_90_40_95.png") or screen.autoCompareResImgHash(self.handle,"reply//end_0_90_100_95.png"):
                self.clickReplyBattle()
                time.sleep(5)
+
+            
 
 
            
@@ -69,7 +73,7 @@ class ReplyBattle(BaseControl):
                 time.sleep(2)
                 self.closeEmptyHp()
 
-            self.onDlgOkAndClick()
+            self.reTryNetErr()
             time.sleep(self.interval)
             # screen.grabCaptureDir(self.handle,"reply_battle")
 

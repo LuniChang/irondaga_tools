@@ -124,10 +124,18 @@ class ReplyPvp(BaseControl):
                 pass  
                 
            
+<<<<<<< HEAD
 
+=======
+            
+      
+            self.reTryNetErr()
+            
+>>>>>>> 23e847b90aa0ae109c367a88871ccaf3a1878e42
             if self.onPvpEnd():
                 self._isRun=False
                 return
 
+            
             time.sleep(self.interval)
 
