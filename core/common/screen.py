@@ -340,11 +340,6 @@ def matchResImgInWindow(handle, imgName, threshold=0.8, mult=True):
         toMatchWinImgSrc, (resWinWidth, resWinHeight), interpolation=cv2.INTER_AREA)
     winImg.close()
 
-    
-    
-    # print(resWinWidth, resWinHeight)
-    # cv2.imshow("temImg",temImg)
-    # cv2.waitKey(0)
 
     scaleValueW=int(winNowW/resWinWidth )
     scaleValueH=int(winNowH/resWinHeight )
