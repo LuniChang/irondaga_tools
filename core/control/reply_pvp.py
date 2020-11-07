@@ -123,11 +123,10 @@ class ReplyPvp(BaseControl):
             else :
                 pass  
                 
-           
-            
+        
       
             self.reTryNetErr()
-            
+
             if self.onPvpEnd():
                 self._isRun=False
                 return
