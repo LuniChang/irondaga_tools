@@ -50,7 +50,7 @@ class ReplyBattle(BaseControl):
            
             #底部菜单hash 
             print("clickReplyBattle")
-            if screen.autoCompareResImgHash(self.handle,"reply//end_0_90_40_95.png") or screen.autoCompareResImgHash(self.handle,"reply//end_0_90_100_95.png"):
+            if self.autoCompareResImgHash("reply//end_0_90_40_95.png") or self.autoCompareResImgHash("reply//end_0_90_100_95.png"):
                self.clickReplyBattle()
                time.sleep(5)
 

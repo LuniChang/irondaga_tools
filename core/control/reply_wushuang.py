@@ -64,7 +64,7 @@ class ReplyWuShuang(BaseControl):
             if  self._isInBattle==False:
                 #如果在地图
                 print("onmap")
-                # if screen.autoCompareResImgHash(self.handle,"ws\\on_ws_map_40_70_60_74.png"):
+                # if self.autoCompareResImgHash("ws\\on_ws_map_40_70_60_74.png"):
      
                 if self.matchResImgInWindow("zhangjiepingjia_40_86_60_89.png"):
                     # self._MapNo=self._MapNo%6
@@ -78,7 +78,7 @@ class ReplyWuShuang(BaseControl):
                         
                     time.sleep(5)
                 #如果在准备页面
-                if screen.autoCompareResImgHash(self.handle,"ws\\wx_ready_10_75_90_90.png"):
+                if self.autoCompareResImgHash("ws\\wx_ready_10_75_90_90.png"):
                     self.leftClickPer(85,78)
                     self._isInBattle=True
                     time.sleep(5)
@@ -86,7 +86,7 @@ class ReplyWuShuang(BaseControl):
 
             #挑战次数不不足
             print("挑战次数不不足",self._MapNo)
-            if screen.autoCompareResImgHash(self.handle,"ws\\on_map_end_20_40_80_65.png") :
+            if self.autoCompareResImgHash("ws\\on_map_end_20_40_80_65.png") :
                 self._battleOneMapCount=0
                 self._isInBattle=False
                 self._MapNo=self._MapNo+1
@@ -114,7 +114,7 @@ class ReplyWuShuang(BaseControl):
         
             #底部菜单hash 
             print("clickReplyBattle")
-            if screen.autoCompareResImgHash(self.handle,"ws//ws_end_0_90_100_100.png"):
+            if self.autoCompareResImgHash("ws//ws_end_0_90_100_100.png"):
                self.clickReplyBattle()
                print("_battleOneMapCount",self._battleOneMapCount)
                #第五次需要弹出买次数，所以   _MapNo可能会多1
@@ -139,7 +139,7 @@ class ReplyWuShuang(BaseControl):
             # hashCode=screen.screenRectPerHash(self.handle,10,40,80,65)
             print("toUseHp")
 
-            if self._isUseHp and screen.autoCompareResImgHash(self.handle,"hpempty_10_40_80_65.png"):
+            if self._isUseHp and self.autoCompareResImgHash("hpempty_10_40_80_65.png"):
                 self.toUseHp()
                 time.sleep(2)
                 self.closeEmptyHp()

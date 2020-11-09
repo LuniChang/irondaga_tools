@@ -32,27 +32,27 @@ class ReplyPvp(BaseControl):
 
     def onPvpList(self):
         print("onPvpList")
-        # return screen.autoCompareResImgHash(self.handle,"pvp\\pvp_list_76_20_96_90.png")
+        # return self.autoCompareResImgHash("pvp\\pvp_list_76_20_96_90.png")
         return self.matchResImgInWindow("pvp\\pvp_list_76_20_96_90.png",0.7) or self.matchResImgInWindow("pvp\\on_pvp_list_5_5_90_10.png")
 
 
     def onPvpWin(self):
         print("onPvpWin")
-        # return screen.autoCompareResImgHash(self.handle,"onpvpwin_10_50_80_60.png")
+        # return self.autoCompareResImgHash("onpvpwin_10_50_80_60.png")
         return self.matchResImgInWindow("pvp\\pvp_win_0_0_100_25.png",0.85)
 
 
 
     def onPvpLost(self):
         print("onPvpLost")
-        # return screen.autoCompareResImgHash(self.handle,"onpvplost_10_60_80_80.png")
+        # return self.autoCompareResImgHash("onpvplost_10_60_80_80.png")
         return self.matchResImgInWindow("pvp\\pvp_lost_0_0_100_25.png",0.85)
 
 
 
     def onPvpEnd(self):
         print("onPvpEnd")
-        return screen.autoCompareResImgHash(self.handle,"pvp\\pvp_end_10_40_90_60.png")
+        return self.autoCompareResImgHash("pvp\\pvp_end_10_40_90_60.png")
 
 
 

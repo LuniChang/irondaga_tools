@@ -47,7 +47,7 @@ class ReplyAiXi(BaseControl):
 
     def onMap(self):
         print("findUnKnowMap")
-        return screen.autoCompareResImgHash(self.handle, "zhangjiepingjia_40_86_60_89.png", 0.8)
+        return self.autoCompareResImgHash( "zhangjiepingjia_40_86_60_89.png", 0.8)
 
     
 
@@ -75,7 +75,7 @@ class ReplyAiXi(BaseControl):
             self.findImgAndclick("aixi/mapread_40_50_60_70.png")
             #底部菜单hash 
             print("clickReplyBattle")
-            if screen.autoCompareResImgHash(self.handle,"reply/end_0_90_40_95.png") or screen.autoCompareResImgHash(self.handle,"reply//end_0_90_100_95.png"):
+            if self.autoCompareResImgHash("reply/end_0_90_40_95.png") or self.autoCompareResImgHash("reply//end_0_90_100_95.png"):
                
                 self._isInBattle=True
                 self.clickReplyBattle()

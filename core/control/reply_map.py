@@ -135,7 +135,7 @@ class ReplyMap(BaseControl):
         self.leftClickPer(70, 60)
 
     def onPvpSelectBattle(self):
-        # return screen.autoCompareResImgHash(self.handle,"map//buy_road_20_58_40_62.png", 0.9)
+        # return self.autoCompareResImgHash("map//buy_road_20_58_40_62.png", 0.9)
         return self.matchResImgInWindow("map//buy_road_20_48_80_62.png")
 
     def noPvp(self):
@@ -175,14 +175,16 @@ class ReplyMap(BaseControl):
         self.leftClickPer(70, 74)
 
     def skipRocket(self):
-        if screen.autoCompareResImgHash(self.handle, "rocket_ready_0_0_100_40.png", 0.8):
+        if self.autoCompareResImgHash( "rocket_ready_0_0_100_40.png", 0.8):
             self.leftClickPer(50, 50)
             time.sleep(2)
 
     def onBusinessAndClose(self):
         screen.setForegroundWindow(self.handle)
+        print("onBusinessAndClose")
         xylist = screen.matchResImgInWindow(
             self.handle, "map//on_business_65_73_85_76.png", 0.8)
+        
         if len(xylist) > 0:
             # if self.canChangeRedAir():
             #      self.leftClickPer(75, 34)
@@ -196,7 +198,7 @@ class ReplyMap(BaseControl):
             #      self.onDlgOkAndClick()
 
             x, y = xylist[0]
-            self.leftClick(x+2, y+2)
+            self.leftClick(x, y)
 
     def onSupportDlg(self):
         return self.matchResImgInWindow("map//on_support_20_75_80_84.png")

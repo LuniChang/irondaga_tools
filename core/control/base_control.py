@@ -50,7 +50,7 @@ class BaseControl:
 
     def onGetItems(self):
         print("onGetItems")
-        return screen.autoCompareResImgHash(self.handle, "on_get_item_10_35_85_65.png")
+        return self.autoCompareResImgHash( "on_get_item_10_35_85_65.png")
 
     def resetCursorPos(self):
         win32api.SetCursorPos((0, 0))
@@ -170,7 +170,7 @@ class BaseControl:
             return False
 
     def isHpEmpty(self):
-        return screen.autoCompareResImgHash(self.handle, "hp_empty_10_40_90_62.png")
+        return self.autoCompareResImgHash( "hp_empty_10_40_90_62.png")
 
     def toUseHp(self):
         self.leftClickPer(62,60)
@@ -180,6 +180,9 @@ class BaseControl:
         print("reTryNetErr")
         if self.matchResImgInWindow("net_err_10_40_90_62.png"):
              self.leftClickPer(62,60)
+
+    def autoCompareResImgHash(self, img,alikeValue=0.35):
+        return screen.autoCompareResImgHash(self.handle, img,alikeValue)
 
    
     def run(self):
