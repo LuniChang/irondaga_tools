@@ -48,6 +48,7 @@ class BaseControl:
         height = wBottom-wTop
         return int(wTop+(height*(srcPer)))
 
+
     def onGetItems(self):
         print("onGetItems")
         return self.autoCompareResImgHash( "on_get_item_10_35_85_65.png")
@@ -141,8 +142,7 @@ class BaseControl:
             time.sleep(2)        
 
     # 阵容小于3或者大于6不能用
-
-    def toSelectTeam(self, teamNo):
+    def toSelectTeamBack(self, teamNo):
         screen.setForegroundWindow(self.handle)
         if teamNo == 1:
             win32api.SetCursorPos((self.getPosX(30), self.getPosY(50)))  # 点击1队
@@ -161,7 +161,29 @@ class BaseControl:
 
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
                              win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+    
+    def toSelectTeam(self, teamNo):
+        xyList= screen.matchResImgInWindow(self.handle, "on_select_team_10_35_90_45.png")
+        x,y=xyList[0]
+        winH=self.getWinH()
+        winW=self.getWinW()
+        winW25=int(winW*0.25)
+        winH10=int(winH*0.1)
+        winH5=int(winH*0.05)
 
+        offsetY=int(teamNo/3)
+        offsetX=(teamNo%3)-1
+
+        teamX=x-winW25+(winW25*offsetX)
+        teamY=y+winH10+(winH5*offsetX)
+        win32api.SetCursorPos((teamX,teamY))
+        print("teamloc",teamX,teamY)
+
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN |
+                             win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+    
+
+ 
     def matchResImgInWindow(self, imgName, threshold=0.8):
         xylist = screen.matchResImgInWindow(self.handle, imgName, threshold)
         if len(xylist) > 0:

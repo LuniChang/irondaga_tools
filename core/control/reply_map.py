@@ -177,7 +177,8 @@ class ReplyMap(BaseControl):
     def skipRocket(self):
         if self.autoCompareResImgHash( "rocket_ready_0_0_100_40.png", 0.8):
             self.leftClickPer(50, 50)
-            time.sleep(2)
+            time.sleep(10)
+            self.leftClickPer(50, 50)
 
     def onBusinessAndClose(self):
         screen.setForegroundWindow(self.handle)
@@ -221,13 +222,19 @@ class ReplyMap(BaseControl):
 
     def onDlgChallengeAndClick(self):
         screen.setForegroundWindow(self.handle)
-        xylist = screen.matchResImgInWindow(
-            self.handle, "map//challenge_60_58_80_62.png", 0.9)
-        if len(xylist) > 0:
-            x, y = xylist[0]
-            self.leftClick(x+2, y+2)
-            self.battleEvenCode = 0
 
+        tarImgs=[
+            "map//challenge_60_58_80_62.png",
+            "map//challenge2_60_58_80_62.png",
+        ]
+        for img in tarImgs:
+            xylist = screen.matchResImgInWindow(
+                self.handle, img, 0.9)
+            if len(xylist) > 0:
+                x, y = xylist[0]
+                self.leftClick(x+2, y+2)
+                self.battleEvenCode = 0
+    
     def onDlgBuyRoadAndClick(self):
         screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
