@@ -364,7 +364,7 @@ def matchResImgInWindow(handle, imgName, threshold=0.8, mult=True):
         xyList.append((x,y))
 
 
-    print(xyList)
+    print(xyList[:10])
     return xyList
 
 
