@@ -180,8 +180,10 @@ class ReplyMap(BaseControl):
     def skipRocket(self):
         if self.autoCompareResImgHash("rocket_ready_0_0_100_40.png", 0.8):
             self.leftClickPer(50, 50)
+           
             time.sleep(10)
-            self.leftClickPer(50, 50)
+            self.leftClickPer(62, 58)
+        self.clickMacthImg("rock_back_60_56_75_62.png",0.9)
 
     def onBusinessAndClose(self):
         screen.setForegroundWindow(self.handle)
@@ -374,6 +376,8 @@ class ReplyMap(BaseControl):
 
             if self.canResetMap():
                 self.leftClickPer(65, 88)
+                time.sleep(2)
+                self.onDlgOkAndClick()
                 self._isScranMap = False
                 self._canUseOil = True
 
