@@ -169,13 +169,13 @@ class BaseControl:
         winW=self.getWinW()
         winW25=int(winW*0.25)
         winH10=int(winH*0.1)
-        winH5=int(winH*0.05)
+        # winH5=int(winH*0.05)
 
         offsetY=int(teamNo/3)
         offsetX=(teamNo%3)-1
 
         teamX=x-winW25+(winW25*offsetX)
-        teamY=y+winH10+(winH5*offsetX)
+        teamY=y+winH10+(winH10*offsetX)
         win32api.SetCursorPos((teamX,teamY))
         print("teamloc",teamX,teamY)
 
