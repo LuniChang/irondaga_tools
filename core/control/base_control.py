@@ -132,6 +132,17 @@ class BaseControl:
             return True
         return False    
 
+    def clickMacthImg(self,imgPath,threshold=0.9):
+        screen.setForegroundWindow(self.handle)
+        xylist = screen.matchResImgInWindow(
+            self.handle,imgPath,threshold)
+        if len(xylist) > 0:
+            x, y = xylist[0]
+            self.leftClick(x, y)
+            time.sleep(2)
+            return True
+        return False      
+
     def findImgAndclick(self,path):
         screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(

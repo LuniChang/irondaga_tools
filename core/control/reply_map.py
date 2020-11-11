@@ -26,6 +26,7 @@ class ReplyMap(BaseControl):
     _nextScranDirection = 0
 
     battleEvenCode = 0  # 0 普通事件  1 黄票  2蓝票
+    _canUseOil = False
 
     def __init__(self, handle, interval):
         self.handle = handle
@@ -74,9 +75,11 @@ class ReplyMap(BaseControl):
     def dragPerUp(self):
         self.dragPer(50, 20, 50, 70)
         time.sleep(0.3)
+
     def dragPerLeftUp(self):
         self.dragPer(5, 20, 95, 70)
         time.sleep(0.3)
+
     def dragPerDown(self):
         self.dragPer(50, 70, 50, 20)
         time.sleep(0.3)
@@ -175,7 +178,7 @@ class ReplyMap(BaseControl):
         self.leftClickPer(70, 74)
 
     def skipRocket(self):
-        if self.autoCompareResImgHash( "rocket_ready_0_0_100_40.png", 0.8):
+        if self.autoCompareResImgHash("rocket_ready_0_0_100_40.png", 0.8):
             self.leftClickPer(50, 50)
             time.sleep(10)
             self.leftClickPer(50, 50)
@@ -185,7 +188,7 @@ class ReplyMap(BaseControl):
         print("onBusinessAndClose")
         xylist = screen.matchResImgInWindow(
             self.handle, "map//on_business_65_73_85_76.png", 0.8)
-        
+
         if len(xylist) > 0:
             # if self.canChangeRedAir():
             #      self.leftClickPer(75, 34)
@@ -223,7 +226,7 @@ class ReplyMap(BaseControl):
     def onDlgChallengeAndClick(self):
         screen.setForegroundWindow(self.handle)
 
-        tarImgs=[
+        tarImgs = [
             "map//challenge_60_58_80_62.png",
             "map//challenge2_60_58_80_62.png",
         ]
@@ -234,7 +237,7 @@ class ReplyMap(BaseControl):
                 x, y = xylist[0]
                 self.leftClick(x+2, y+2)
                 self.battleEvenCode = 0
-    
+
     def onDlgBuyRoadAndClick(self):
         screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
@@ -273,13 +276,18 @@ class ReplyMap(BaseControl):
         xylist = screen.matchResImgInWindow(
             self.handle, "map//start_dlg_25_25_75_38.png", 0.9)
         if len(xylist) > 0:
-            self.leftClickPer(88, 28)        
+            self.leftClickPer(88, 28)
 
     def canChangeRedAir(self):
         screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(
             self.handle, "map//shop_red_air_82_40_98_48.png", 0.9)
         return len(xylist) > 0
+
+    def useOil(self):
+        self.clickMacthImg("map/oil_58_8_71_15.png")
+        time.sleep(5)
+        self.clickMacthImg("map/use_60_56_80_62.png")
 
     def run(self):
         win32gui.SetForegroundWindow(self.handle)
@@ -360,16 +368,19 @@ class ReplyMap(BaseControl):
                 self.noSupport()
                 time.sleep(2)
 
+            if self._canUseOil:
+                self.useOil()
+                self._canUseOil = False
+
             if self.canResetMap():
                 self.leftClickPer(65, 88)
                 self._isScranMap = False
+                self._canUseOil = True
 
             if self.onMap():
                 print("findUnKnowMap")
                 xylist = screen.matchResImgInWindow(
-                    self.handle, "map//unkown_46_46_54_50.png",0.7)
-                
-                
+                    self.handle, "map//unkown_46_46_54_50.png", 0.7)
 
                 resList = []
                 minY = self.getPosY(20)
