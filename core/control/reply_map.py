@@ -28,6 +28,8 @@ class ReplyMap(BaseControl):
     battleEvenCode = 0  # 0 普通事件  1 黄票  2蓝票
     _canUseOil = False
 
+    needBuyRoad=True
+
     def __init__(self, handle, interval):
         self.handle = handle
         self.interval = interval
@@ -305,7 +307,8 @@ class ReplyMap(BaseControl):
             #     self.noPvp()
             #     time.sleep(2)
             # self.onDlgBuyRoadAndClick()
-            self.onDlgBuyRoadAndClick()
+            if self.needBuyRoad:
+                self.onDlgBuyRoadAndClick()
             self.onDlgChallengeAndClick()
             self.onDlgAccept()
             self.onBlueTacketAndBattle()
