@@ -293,6 +293,9 @@ class ReplyMap(BaseControl):
         time.sleep(5)
         self.clickMacthImg("map/use_60_56_80_62.png")
 
+
+
+
     def run(self):
         win32gui.SetForegroundWindow(self.handle)
         while self._isRun:

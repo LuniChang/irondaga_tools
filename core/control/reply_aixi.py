@@ -47,7 +47,7 @@ class ReplyAiXi(BaseControl):
 
     def onMap(self):
         print("findUnKnowMap")
-        return self.autoCompareResImgHash( "zhangjiepingjia_40_86_60_89.png", 0.8)
+        return self.matchResImgInWindow( "zhangjiepingjia_40_86_60_89.png", 0.8)
 
     
 
@@ -65,6 +65,8 @@ class ReplyAiXi(BaseControl):
                     return
                 time.sleep(5)    
 
+
+            self.battleStory()
 
             if self.onSelectTeam():
                self.toSelectTeam(self.mapTeamNo)
@@ -91,8 +93,8 @@ class ReplyAiXi(BaseControl):
             if self.onGetItems() :
                 self.clickOnGetItems()
                 time.sleep(2)
-            else :
-                pass
+            
+           
 
             #体力不足hash 
             print("toUseHp")
@@ -101,9 +103,7 @@ class ReplyAiXi(BaseControl):
                 time.sleep(2)
                 self.closeEmptyHp()
 
-            else :
-                
-               pass
+           
 
             time.sleep(self.interval)
             # screen.grabCaptureDir(self.handle,"reply_battle")

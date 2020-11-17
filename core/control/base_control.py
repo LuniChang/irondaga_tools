@@ -143,6 +143,9 @@ class BaseControl:
             return True
         return False      
 
+    def battleStory(self):
+        self.clickMacthImg("map/story_level_40_50_55_70.png")    
+        
     def findImgAndclick(self,path):
         screen.setForegroundWindow(self.handle)
         xylist = screen.matchResImgInWindow(

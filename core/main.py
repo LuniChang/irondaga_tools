@@ -108,6 +108,7 @@ def initReplyMap():
     pvpTeamNo=tk.IntVar()
     userHp = tk.IntVar()
     buyRoad = tk.IntVar()
+    buyRoad.set(1)
     def checkUseHp():
         if userHp.get()==1:
             replyMap.setIsUseHp(True)
@@ -138,7 +139,7 @@ def initReplyMap():
     tk.Label(fm1,text="pvp队伍").grid(row=7,column=1)
     tk.Entry(fm1,textvariable=pvpTeamNo,width=10).grid(row=7,column=2)
     tk.Checkbutton(fm1,text="使用体力药",variable=userHp,onvalue=1,offvalue=0,command=checkUseHp).grid(row=8,column=1)
-    tk.Checkbutton(fm1,text="不买路",variable=buyRoad,onvalue=1,offvalue=0,command=checkBuyRoad).grid(row=8,column=2)
+    tk.Checkbutton(fm1,text="买路",variable=buyRoad,onvalue=1,offvalue=0,command=checkBuyRoad).grid(row=8,column=2)
 
     tk.Button(fm1,text="开始推图",width=10,height=1,command=startMap).grid(row=9,column=1)
     tk.Button(fm1,text="结束推图",width=10,height=1,command=replyMap.stop).grid(row=9,column=2)
@@ -148,16 +149,24 @@ initReplyMap()
 replyAiXi=ReplyAiXi(handle,10)
 def initReplyAiXi():
     userHp = tk.IntVar()
-
+    mapTeamNo=tk.IntVar()
+    mapTeamNo.set(1)
     def checkUseHp():
         if userHp.get()==1:
             replyAiXi.setIsUseHp(True)
         else:
             replyAiXi.setIsUseHp(False)  
+    def startMap():
+        replyAiXi.mapTeamNo=int(mapTeamNo.get())
+        
+        replyAiXi.start()    
 
-    tk.Checkbutton(fm1,text="使用体力药",variable=userHp,onvalue=1,offvalue=0,command=checkUseHp).grid(row=10,column=1)
-    tk.Button(fm1,text="开始艾希",width=10,height=1,command=replyAiXi.start).grid(row=10,column=2)
-    tk.Button(fm1,text="结束艾希",width=10,height=1,command=replyAiXi.stop).grid(row=10,column=3)
+    tk.Label(fm1,text="推图队伍").grid(row=10,column=0)
+    tk.Entry(fm1,textvariable=mapTeamNo,width=10).grid(row=10,column=1)
+
+    tk.Checkbutton(fm1,text="使用体力药",variable=userHp,onvalue=1,offvalue=0,command=checkUseHp).grid(row=10,column=2)
+    tk.Button(fm1,text="开始艾希",width=10,height=1,command=startMap).grid(row=10,column=3)
+    tk.Button(fm1,text="结束艾希",width=10,height=1,command=replyAiXi.stop).grid(row=10,column=4)
 
 initReplyAiXi()
    
