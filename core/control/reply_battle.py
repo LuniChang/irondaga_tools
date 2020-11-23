@@ -63,8 +63,8 @@ class ReplyBattle(BaseControl):
             if self.onGetItems() :
                 self.clickOnGetItems()
                 time.sleep(2)
-            else :
-                pass
+            
+            self.clickMacthImg("reply/retbattle_28_91_48_94.png")    
 
             #体力不足hash 
             print("toUseHp")
