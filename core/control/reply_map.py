@@ -175,6 +175,10 @@ class ReplyMap(BaseControl):
 
     def onBusiness(self):
         return self.matchResImgInWindow("map//on_business_65_73_85_76.png")
+    
+
+    def clickYellowOK(self):
+        self.clickMacthImg("y_ok_56_60_80_65.png")
 
     def toEndBusiness(self):
         self.leftClickPer(70, 74)
@@ -355,6 +359,8 @@ class ReplyMap(BaseControl):
 
             if self.onDlgOkAndClick():
                 continue
+
+            self.clickYellowOK()
 
             self.onBusinessAndClose()
 
