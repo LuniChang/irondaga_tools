@@ -237,6 +237,7 @@ class ReplyMap(BaseControl):
         tarImgs = [
             "map//challenge_60_58_80_62.png",
             "map//challenge2_60_58_80_62.png",
+             "map//touxi_60_58_80_62.png",
         ]
         for img in tarImgs:
             xylist = screen.matchResImgInWindow(
