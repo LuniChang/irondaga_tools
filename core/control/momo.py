@@ -39,11 +39,12 @@ class Momo(BaseControl):
                 self.onDlgOkAndClick()
                 time.sleep(3)
                 self.clickMacthImg("momo/next_88_70_98_88.png")
+                self._count=self._count+1
 
   
 
             self.reTryNetErr()
-            self._count=self._count+1
+            
             time.sleep(self.interval)   
            
 
