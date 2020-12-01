@@ -33,18 +33,17 @@ class Momo(BaseControl):
             screen.setForegroundWindow(self.handle)
 
      
-            if self.matchResImgInWindow("momo/home_0_0_30_5.png"):
+            if self.matchResImgInWindow("momo/momo_5_50_15_56.png"):
                 self.leftClickPer(8, 50)
                 time.sleep(3)
                 self.onDlgOkAndClick()
                 time.sleep(4)
-                self.clickMacthImg("momo/next_88_70_98_88.png")
-                self.leftClickPer(95, 80)
-                
                 self._count=self._count+1
                 time.sleep(4)
-
-  
+                
+            # self.clickMacthImg("momo/next_88_70_98_88.png")
+            self.leftClickPer(95, 80)
+            time.sleep(2)
 
             self.reTryNetErr()
             
