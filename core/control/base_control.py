@@ -111,7 +111,7 @@ class BaseControl:
 
     def onSelectTeam(self):
         print("onSelectTeam")
-        return self.matchResImgInWindow("on_select_team_10_35_90_45.png")
+        return self.matchResImgInWindow("on_select_team_10_35_90_45.png",0.7)
 
     def onDlgOK(self):
         print("onDlgOK")
