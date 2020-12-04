@@ -45,6 +45,9 @@ class Momo(BaseControl):
             self.leftClickPer(95, 80)
             time.sleep(2)
 
+            self.onDlgOkAndClick()
+            time.sleep(2)
+
             self.reTryNetErr()
             
             time.sleep(self.interval)   
