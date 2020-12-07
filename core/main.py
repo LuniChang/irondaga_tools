@@ -256,5 +256,5 @@ btnPerCap.pack()
 # 进入消息循环
 main.mainloop()
 
+main.protocol("WM_DELETE_WINDOW", exit(0))
 
-exit(0)
